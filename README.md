@@ -1,7 +1,7 @@
 # Frame Economics
 Frame Economics
 
-🌐 Live Site (pending domain registrar): icecoldfroste.com
+🌐 Live Site (🙏): [icecoldfroste.com](https://icecoldfroste.com/)
 
 🔗 Temporary Preview: [frame-economics.netlify.app](https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/)
 
