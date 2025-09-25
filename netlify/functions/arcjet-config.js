@@ -8,28 +8,80 @@ export const aj = arcjet({
   rules: [
     // Block common attacks e.g. SQL injection, XSS, CSRF
     shield({
-      // Will block requests. Use "DRY_RUN" to log only
-      mode: "LIVE",
+      // Use DRY_RUN for development, LIVE for production
+      mode: process.env.NODE_ENV === "production" ? "LIVE" : "DRY_RUN",
     }),
     // Detect bots
     detectBot({
-      mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
-      // Block all bots except search engine crawlers. See the full list of bots
-      // for other options: https://arcjet.com/bot-list
-      allow: ["CATEGORY:SEARCH_ENGINE"],
+      // Use DRY_RUN for development to allow testing tools
+      mode: process.env.NODE_ENV === "production" ? "LIVE" : "DRY_RUN",
+      // Allow search engines, legitimate tools, and development access
+      allow: [
+        "CATEGORY:SEARCH_ENGINE",
+        "CATEGORY:PREVIEW",
+        "CATEGORY:MONITOR",
+        // Allow specific user agents for development
+        "curl",
+        "Postman",
+        "Insomnia",
+        "HTTPie",
+      ],
     }),
-    // Rate limiting for API endpoints
+    // Rate limiting for API endpoints - more generous for development
     rateLimit({
-      mode: "LIVE",
+      mode: process.env.NODE_ENV === "production" ? "LIVE" : "DRY_RUN",
       characteristics: ["ip"],
       window: "1m",
-      max: 60, // 60 requests per minute
+      max: process.env.NODE_ENV === "production" ? 60 : 200, // Higher limit for dev
     }),
   ],
 });
 
+// Developer allowlist - IPs that should bypass all restrictions
+const DEVELOPER_ALLOWLIST = [
+  '127.0.0.1',
+  'localhost',
+  // Add your IP addresses here for development
+  // '192.168.1.100', // Example: your local IP
+  // '10.0.0.50',     // Example: VPN IP
+];
+
+// Check if request is from an allowed developer IP
+export const isDeveloperRequest = (event) => {
+  const ip = event.headers["x-forwarded-for"] || event.headers["client-ip"] || event.headers["x-real-ip"];
+  const userAgent = event.headers["user-agent"] || '';
+  
+  // Allow local development
+  if (ip && DEVELOPER_ALLOWLIST.some(allowedIp => ip.includes(allowedIp))) {
+    return true;
+  }
+  
+  // Allow development tools and browsers in non-production
+  if (process.env.NODE_ENV !== "production") {
+    const devUserAgents = [
+      'chrome', 'firefox', 'safari', 'edge',
+      'curl', 'postman', 'insomnia', 'httpie',
+      'vscode', 'axios', 'fetch'
+    ];
+    
+    if (devUserAgents.some(agent => userAgent.toLowerCase().includes(agent))) {
+      return true;
+    }
+  }
+  
+  return false;
+};
+
 // Helper function to handle Arcjet decisions
 export const handleArcjetDecision = (decision, event, context) => {
+  // Skip Arcjet checks for developer requests
+  if (isDeveloperRequest(event)) {
+    console.log('Developer request detected - bypassing Arcjet protection', {
+      ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
+      userAgent: event.headers["user-agent"],
+    });
+    return null; // Allow the request
+  }
   if (decision.isDenied()) {
     const reason = decision.reason;
     

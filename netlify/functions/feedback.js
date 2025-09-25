@@ -1,22 +1,25 @@
 // Protected feedback endpoint for Frame Economics
-import { aj, handleArcjetDecision } from "./arcjet-config.js";
+import { aj, handleArcjetDecision, isDeveloperRequest } from "./arcjet-config.js";
 
 export const handler = async (event, context) => {
-  // Apply Arcjet protection with stricter rate limiting for feedback
-  const decision = await aj.protect(event, {
-    ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
-    method: event.httpMethod,
-    protocol: "http",
-    host: event.headers.host,
-    path: event.path,
-    headers: event.headers,
-    "user-agent": event.headers["user-agent"],
-  });
+  // Skip Arcjet for developer requests
+  if (!isDeveloperRequest(event)) {
+    // Apply Arcjet protection with stricter rate limiting for feedback
+    const decision = await aj.protect(event, {
+      ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
+      method: event.httpMethod,
+      protocol: "http",
+      host: event.headers.host,
+      path: event.path,
+      headers: event.headers,
+      "user-agent": event.headers["user-agent"],
+    });
 
-  // Handle blocked requests
-  const blockResponse = handleArcjetDecision(decision, event, context);
-  if (blockResponse) {
-    return blockResponse;
+    // Handle blocked requests
+    const blockResponse = handleArcjetDecision(decision, event, context);
+    if (blockResponse) {
+      return blockResponse;
+    }
   }
 
   // Only allow POST for feedback submission

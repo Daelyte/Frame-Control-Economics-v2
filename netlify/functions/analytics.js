@@ -1,23 +1,26 @@
 // Protected analytics endpoint for Frame Economics
-import { aj, handleArcjetDecision } from "./arcjet-config.js";
+import { aj, handleArcjetDecision, isDeveloperRequest } from "./arcjet-config.js";
 
 export const handler = async (event, context) => {
-  // Apply Arcjet protection
-  const decision = await aj.protect(event, {
-    ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
-    method: event.httpMethod,
-    protocol: "http",
-    host: event.headers.host,
-    path: event.path,
-    headers: event.headers,
-    // Add user agent for bot detection
-    "user-agent": event.headers["user-agent"],
-  });
+  // Skip Arcjet for developer requests
+  if (!isDeveloperRequest(event)) {
+    // Apply Arcjet protection for non-developer requests
+    const decision = await aj.protect(event, {
+      ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
+      method: event.httpMethod,
+      protocol: "http",
+      host: event.headers.host,
+      path: event.path,
+      headers: event.headers,
+      // Add user agent for bot detection
+      "user-agent": event.headers["user-agent"],
+    });
 
-  // Handle blocked requests
-  const blockResponse = handleArcjetDecision(decision, event, context);
-  if (blockResponse) {
-    return blockResponse;
+    // Handle blocked requests
+    const blockResponse = handleArcjetDecision(decision, event, context);
+    if (blockResponse) {
+      return blockResponse;
+    }
   }
 
   // Handle different HTTP methods
