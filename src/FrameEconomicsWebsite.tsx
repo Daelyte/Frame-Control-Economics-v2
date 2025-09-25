@@ -2,10 +2,14 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BookOpen, Brain, Users, TrendingUp, ChevronDown, ChevronRight,
   CheckCircle, ArrowRight, Target, Shield, Clock, Zap,
-  Download, AlertTriangle, Lightbulb, BarChart3
+  Download, AlertTriangle, Lightbulb, BarChart3, Calendar,
+  Layers, Globe
 } from "lucide-react";
 import Assessment from "./components/Assessment";
 import ScenarioSimulator from "./components/ScenarioSimulator";
+import HabitTracker from "./components/HabitTracker";
+import Flashcards from "./components/Flashcards";
+import Community from "./components/Community";
 
 interface Rule {
   id: number;
@@ -20,7 +24,7 @@ interface Rule {
   practicalExample: string;
 }
 
-type SectionId = "introduction" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice";
+type SectionId = "introduction" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community";
 
 const STORAGE_KEY = "frame_econ_completed_rules_v2";
 const PROGRESS_KEY = "frame_econ_progress_v1";
@@ -33,6 +37,9 @@ const HASH_TO_SECTION: Record<string, SectionId> = {
   "#advanced": "advanced", 
   "#casestudies": "casestudies", 
   "#practice": "practice",
+  "#habits": "habits",
+  "#flashcards": "flashcards",
+  "#community": "community",
 };
 
 const FrameEconomicsWebsite: React.FC = () => {
@@ -210,10 +217,13 @@ const FrameEconomicsWebsite: React.FC = () => {
     { id: "introduction", title: "Introduction", icon: <BookOpen className="w-5 h-5" /> },
     { id: "assessment", title: "Assessment", icon: <BarChart3 className="w-5 h-5" /> },
     { id: "rules", title: "The 10 Rules", icon: <Target className="w-5 h-5" /> },
+    { id: "practice", title: "Practice", icon: <CheckCircle className="w-5 h-5" /> },
+    { id: "habits", title: "Habit Tracker", icon: <Calendar className="w-5 h-5" /> },
+    { id: "flashcards", title: "Flashcards", icon: <Layers className="w-5 h-5" /> },
     { id: "science", title: "The Science", icon: <Brain className="w-5 h-5" /> },
     { id: "advanced", title: "Advanced Theory", icon: <TrendingUp className="w-5 h-5" /> },
     { id: "casestudies", title: "Case Studies", icon: <Users className="w-5 h-5" /> },
-    { id: "practice", title: "Practice Guide", icon: <CheckCircle className="w-5 h-5" /> },
+    { id: "community", title: "Community", icon: <Globe className="w-5 h-5" /> },
   ], []);
 
   const toggleRule = useCallback((id: number) => {
@@ -336,9 +346,10 @@ const FrameEconomicsWebsite: React.FC = () => {
                     Masters don't fight for control—they become the stable center others orbit.
                   </p>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6 mt-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                   <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6">
-                    <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">
+                    <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
+                      <Target className="w-5 h-5" />
                       What You'll Learn
                     </h4>
                     <ul className="space-y-2 text-blue-900 dark:text-blue-100">
@@ -349,34 +360,79 @@ const FrameEconomicsWebsite: React.FC = () => {
                     </ul>
                   </div>
                   <div className="bg-green-50 dark:bg-green-900/30 rounded-xl p-6">
-                    <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3">
-                      How It Works
+                    <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5" />
+                      Interactive Learning
                     </h4>
                     <ul className="space-y-2 text-green-900 dark:text-green-100">
-                      <li>• Interactive rule exploration</li>
-                      <li>• Progress tracking</li>
-                      <li>• Print-friendly guides</li>
-                      <li>• Practice exercises</li>
+                      <li>• Scenario-based practice</li>
+                      <li>• Habit tracking system</li>
+                      <li>• Spaced repetition flashcards</li>
+                      <li>• Progress analytics</li>
+                    </ul>
+                  </div>
+                  <div className="bg-purple-50 dark:bg-purple-900/30 rounded-xl p-6">
+                    <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-3 flex items-center gap-2">
+                      <Globe className="w-5 h-5" />
+                      Community Wisdom
+                    </h4>
+                    <ul className="space-y-2 text-purple-900 dark:text-purple-100">
+                      <li>• Peer success stories</li>
+                      <li>• Expert insights</li>
+                      <li>• Practice statistics</li>
+                      <li>• Learning community</li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="text-center space-x-4">
-              <button
-                onClick={() => setSectionAndHash("assessment")}
-                className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
-              >
-                Take Assessment
-                <BarChart3 className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setSectionAndHash("rules")}
-                className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
-              >
-                Browse Rules
-                <ArrowRight className="w-5 h-5" />
-              </button>
+            <div className="text-center space-y-4">
+              <div className="flex justify-center gap-4 flex-wrap">
+                <button
+                  onClick={() => setSectionAndHash("assessment")}
+                  className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                >
+                  <BarChart3 className="w-5 h-5" />
+                  Take Assessment
+                </button>
+                <button
+                  onClick={() => setSectionAndHash("rules")}
+                  className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                >
+                  <Target className="w-5 h-5" />
+                  Browse Rules
+                </button>
+              </div>
+              <div className="flex justify-center gap-2 flex-wrap">
+                <button
+                  onClick={() => setSectionAndHash("practice")}
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  Practice
+                </button>
+                <button
+                  onClick={() => setSectionAndHash("habits")}
+                  className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Track Habits
+                </button>
+                <button
+                  onClick={() => setSectionAndHash("flashcards")}
+                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
+                >
+                  <Layers className="w-4 h-4" />
+                  Study Cards
+                </button>
+                <button
+                  onClick={() => setSectionAndHash("community")}
+                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
+                >
+                  <Globe className="w-4 h-4" />
+                  Join Community
+                </button>
+              </div>
             </div>
           </section>
         )}
@@ -999,6 +1055,36 @@ const FrameEconomicsWebsite: React.FC = () => {
           </section>
         )}
 
+        {currentSection === "habits" && (
+          <section 
+            id="section-habits" 
+            aria-labelledby="tab-habits" 
+            className="animate-fade-in"
+          >
+            <HabitTracker />
+          </section>
+        )}
+
+        {currentSection === "flashcards" && (
+          <section 
+            id="section-flashcards" 
+            aria-labelledby="tab-flashcards" 
+            className="animate-fade-in"
+          >
+            <Flashcards />
+          </section>
+        )}
+
+        {currentSection === "community" && (
+          <section 
+            id="section-community" 
+            aria-labelledby="tab-community" 
+            className="animate-fade-in"
+          >
+            <Community />
+          </section>
+        )}
+
         {/* Footer */}
         <footer className="mt-12 md:mt-16 text-center">
           <div className="glass-effect rounded-2xl px-8 py-6 mb-8 shadow-xl">
@@ -1009,31 +1095,55 @@ const FrameEconomicsWebsite: React.FC = () => {
               </p>
             </div>
             
-            <div className="flex justify-center gap-4 mb-6 no-print">
+            <div className="flex justify-center gap-2 mb-6 no-print flex-wrap">
               {completedRules.size < rules.length ? (
                 <button
                   onClick={() => setSectionAndHash("rules")}
-                  className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
                 >
                   Continue Learning
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               ) : (
                 <button
                   onClick={() => setSectionAndHash("practice")}
-                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
                 >
-                  <Target className="w-5 h-5" />
-                  Master Your Practice
+                  <Target className="w-4 h-4" />
+                  Practice
                 </button>
               )}
               
               <button
-                onClick={handlePrint}
-                className="inline-flex items-center gap-2 glass-effect hover:bg-white/15 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                onClick={() => setSectionAndHash("habits")}
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
               >
-                <Download className="w-5 h-5" />
-                Save as PDF
+                <Calendar className="w-4 h-4" />
+                Track
+              </button>
+              
+              <button
+                onClick={() => setSectionAndHash("flashcards")}
+                className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
+              >
+                <Layers className="w-4 h-4" />
+                Study
+              </button>
+              
+              <button
+                onClick={() => setSectionAndHash("community")}
+                className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
+              >
+                <Globe className="w-4 h-4" />
+                Connect
+              </button>
+              
+              <button
+                onClick={handlePrint}
+                className="inline-flex items-center gap-2 glass-effect hover:bg-white/15 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
+              >
+                <Download className="w-4 h-4" />
+                PDF
               </button>
             </div>
           </div>
