@@ -3,9 +3,9 @@ Frame Economics
 
 🌐 Live Site (pending domain registrar): icecoldfroste.com
 
-🔗 Temporary Preview: frame-economics.netlify.app
+🔗 Temporary Preview: [frame-economics.netlify.app](https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/)
 
-About
+About:
 
 Frame Economics explores the hidden psychology of influence—combining behavioral economics with frame control strategies.
 
