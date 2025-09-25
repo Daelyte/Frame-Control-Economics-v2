@@ -1,42 +1,57 @@
 -- Frame Economics Community Platform Database Schema
 -- Run this script in your Supabase SQL Editor
+-- SECURITY: This schema implements comprehensive Row Level Security (RLS)
 
--- Enable Row Level Security
+-- Enable Row Level Security and additional security settings
 ALTER DATABASE postgres SET "app.jwt_secret" TO 'your-jwt-secret';
+ALTER DATABASE postgres SET log_statement TO 'all';
+ALTER DATABASE postgres SET log_min_duration_statement TO 1000;
 
 -- Create users table (extends Supabase auth.users)
+-- SECURITY: Strict validation and constraints applied
 CREATE TABLE public.users (
   id UUID REFERENCES auth.users ON DELETE CASCADE,
-  email TEXT,
-  full_name TEXT,
-  avatar_url TEXT,
-  username TEXT UNIQUE,
+  email TEXT NOT NULL CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+  full_name TEXT CHECK (length(full_name) BETWEEN 1 AND 100),
+  avatar_url TEXT CHECK (avatar_url ~* '^https?://'),
+  username TEXT UNIQUE NOT NULL CHECK (length(username) BETWEEN 3 AND 30 AND username ~* '^[a-zA-Z0-9_-]+$'),
+  bio TEXT CHECK (length(bio) <= 500),
+  is_banned BOOLEAN DEFAULT FALSE,
+  reputation_score INTEGER DEFAULT 0,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   PRIMARY KEY (id)
 );
 
 -- Create stories table
+-- SECURITY: Content validation and moderation features
 CREATE TABLE public.stories (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  title TEXT NOT NULL,
-  content TEXT NOT NULL,
+  title TEXT NOT NULL CHECK (length(title) BETWEEN 5 AND 200),
+  content TEXT NOT NULL CHECK (length(content) BETWEEN 10 AND 5000),
   category TEXT NOT NULL CHECK (category IN ('success', 'challenge', 'insight', 'question')),
   author_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
-  likes_count INTEGER DEFAULT 0,
-  comments_count INTEGER DEFAULT 0,
+  likes_count INTEGER DEFAULT 0 CHECK (likes_count >= 0),
+  comments_count INTEGER DEFAULT 0 CHECK (comments_count >= 0),
+  is_flagged BOOLEAN DEFAULT FALSE,
+  is_approved BOOLEAN DEFAULT TRUE,
+  flagged_reason TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
 -- Create comments table
+-- SECURITY: Content validation and nesting limits
 CREATE TABLE public.comments (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  content TEXT NOT NULL,
+  content TEXT NOT NULL CHECK (length(content) BETWEEN 1 AND 2000),
   story_id UUID REFERENCES public.stories(id) ON DELETE CASCADE,
   author_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
   parent_id UUID REFERENCES public.comments(id) ON DELETE CASCADE,
-  likes_count INTEGER DEFAULT 0,
+  depth INTEGER DEFAULT 0 CHECK (depth >= 0 AND depth <= 5), -- Max 5 levels deep
+  likes_count INTEGER DEFAULT 0 CHECK (likes_count >= 0),
+  is_flagged BOOLEAN DEFAULT FALSE,
+  is_approved BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
@@ -70,15 +85,44 @@ ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.likes ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for users table
-CREATE POLICY "Users can view all profiles" ON public.users FOR SELECT USING (true);
-CREATE POLICY "Users can update own profile" ON public.users FOR UPDATE USING (auth.uid() = id);
-CREATE POLICY "Users can insert own profile" ON public.users FOR INSERT WITH CHECK (auth.uid() = id);
+-- SECURITY: Enhanced policies with ban checks and data protection
+CREATE POLICY "Users can view non-banned profiles" ON public.users 
+  FOR SELECT USING (NOT is_banned OR auth.uid() = id);
+  
+CREATE POLICY "Users can update own profile" ON public.users 
+  FOR UPDATE USING (auth.uid() = id AND NOT is_banned)
+  WITH CHECK (auth.uid() = id AND NOT is_banned);
+  
+CREATE POLICY "Users can insert own profile" ON public.users 
+  FOR INSERT WITH CHECK (auth.uid() = id);
+  
+-- Prevent banned users from performing most actions
+CREATE POLICY "Prevent banned user operations" ON public.users 
+  FOR ALL USING (NOT is_banned OR auth.uid() = id);
 
 -- RLS Policies for stories table
-CREATE POLICY "Anyone can view stories" ON public.stories FOR SELECT USING (true);
-CREATE POLICY "Users can insert own stories" ON public.stories FOR INSERT WITH CHECK (auth.uid() = author_id);
-CREATE POLICY "Users can update own stories" ON public.stories FOR UPDATE USING (auth.uid() = author_id);
-CREATE POLICY "Users can delete own stories" ON public.stories FOR DELETE USING (auth.uid() = author_id);
+-- SECURITY: Enhanced policies with moderation and user verification
+CREATE POLICY "Anyone can view approved stories" ON public.stories 
+  FOR SELECT USING (is_approved AND NOT is_flagged);
+  
+CREATE POLICY "Authors can view own stories" ON public.stories 
+  FOR SELECT USING (auth.uid() = author_id);
+  
+CREATE POLICY "Non-banned users can insert stories" ON public.stories 
+  FOR INSERT WITH CHECK (
+    auth.uid() = author_id 
+    AND EXISTS (
+      SELECT 1 FROM public.users 
+      WHERE id = auth.uid() AND NOT is_banned
+    )
+  );
+  
+CREATE POLICY "Users can update own non-flagged stories" ON public.stories 
+  FOR UPDATE USING (auth.uid() = author_id AND NOT is_flagged)
+  WITH CHECK (auth.uid() = author_id);
+  
+CREATE POLICY "Users can delete own stories" ON public.stories 
+  FOR DELETE USING (auth.uid() = author_id);
 
 -- RLS Policies for comments table
 CREATE POLICY "Anyone can view comments" ON public.comments FOR SELECT USING (true);

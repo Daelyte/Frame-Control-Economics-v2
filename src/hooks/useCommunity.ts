@@ -1,6 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase, Story, Comment } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { 
+  validateStoryTitle, 
+  validateStoryContent, 
+  validateCommentContent,
+  sanitizeText,
+  sanitizeError,
+  rateLimiter
+} from '../utils/security';
 
 export const useCommunityStories = () => {
   const [stories, setStories] = useState<Story[]>([]);
@@ -36,7 +44,7 @@ export const useCommunityStories = () => {
 
       setStories(processedStories);
     } catch (err: any) {
-      setError(err.message);
+      setError(sanitizeError(err));
     } finally {
       setLoading(false);
     }
@@ -55,30 +63,65 @@ export const useCommunityStories = () => {
   }) => {
     if (!user) throw new Error('Must be logged in to create stories');
 
-    const { data, error } = await supabase
-      .from('stories')
-      .insert([{
-        ...storyData,
-        user_id: user.id,
-        tags: storyData.tags || []
-      }])
-      .select(`
-        *,
-        profiles!stories_user_id_fkey (
-          id, full_name, avatar_url, username
-        )
-      `)
-      .single();
+    // Rate limiting check
+    const rateLimitCheck = rateLimiter.canPerformAction('stories', 'hour');
+    if (!rateLimitCheck.allowed) {
+      throw new Error(rateLimitCheck.error || 'Rate limit exceeded');
+    }
 
-    if (error) throw error;
+    // Validate and sanitize input
+    const titleValidation = validateStoryTitle(storyData.title);
+    if (!titleValidation.valid) {
+      throw new Error(titleValidation.error);
+    }
 
-    // Add to local state
-    setStories(prev => [{ ...data, user_liked: false }, ...prev]);
-    return data;
+    const contentValidation = validateStoryContent(storyData.content);
+    if (!contentValidation.valid) {
+      throw new Error(contentValidation.error);
+    }
+
+    // Sanitize inputs
+    const sanitizedData = {
+      title: sanitizeText(storyData.title),
+      content: sanitizeText(storyData.content),
+      category: storyData.category,
+      rule_id: storyData.rule_id,
+      tags: storyData.tags?.map(tag => sanitizeText(tag)) || []
+    };
+
+    try {
+      const { data, error } = await supabase
+        .from('stories')
+        .insert([{
+          ...sanitizedData,
+          author_id: user.id, // Use author_id to match database schema
+        }])
+        .select(`
+          *,
+          users!stories_author_id_fkey (
+            id, full_name, avatar_url, username
+          )
+        `)
+        .single();
+
+      if (error) throw error;
+
+      // Add to local state
+      setStories(prev => [{ ...data, user_liked: false }, ...prev]);
+      return data;
+    } catch (error: any) {
+      throw new Error(sanitizeError(error));
+    }
   };
 
   const toggleLike = async (storyId: string) => {
     if (!user) throw new Error('Must be logged in to like stories');
+
+    // Rate limiting check
+    const rateLimitCheck = rateLimiter.canPerformAction('likes', 'minute');
+    if (!rateLimitCheck.allowed) {
+      throw new Error(rateLimitCheck.error || 'Rate limit exceeded');
+    }
 
     try {
       // Check if user already liked this story
@@ -202,27 +245,45 @@ export const useStoryComments = (storyId: string) => {
   const createComment = async (content: string, parentId?: string) => {
     if (!user) throw new Error('Must be logged in to comment');
 
-    const { data, error } = await supabase
-      .from('comments')
-      .insert([{
-        story_id: storyId,
-        user_id: user.id,
-        content,
-        parent_id: parentId || null
-      }])
-      .select(`
-        *,
-        profiles!comments_user_id_fkey (
-          id, full_name, avatar_url, username
-        )
-      `)
-      .single();
+    // Rate limiting check
+    const rateLimitCheck = rateLimiter.canPerformAction('comments', 'minute');
+    if (!rateLimitCheck.allowed) {
+      throw new Error(rateLimitCheck.error || 'Rate limit exceeded');
+    }
 
-    if (error) throw error;
+    // Validate and sanitize content
+    const contentValidation = validateCommentContent(content);
+    if (!contentValidation.valid) {
+      throw new Error(contentValidation.error);
+    }
 
-    // Refresh comments to get updated threaded structure
-    await fetchComments();
-    return data;
+    const sanitizedContent = sanitizeText(content);
+
+    try {
+      const { data, error } = await supabase
+        .from('comments')
+        .insert([{
+          story_id: storyId,
+          author_id: user.id, // Use author_id to match database schema
+          content: sanitizedContent,
+          parent_id: parentId || null
+        }])
+        .select(`
+          *,
+          users!comments_author_id_fkey (
+            id, full_name, avatar_url, username
+          )
+        `)
+        .single();
+
+      if (error) throw error;
+
+      // Refresh comments to get updated threaded structure
+      await fetchComments();
+      return data;
+    } catch (error: any) {
+      throw new Error(sanitizeError(error));
+    }
   };
 
   const toggleCommentLike = async (commentId: string) => {
