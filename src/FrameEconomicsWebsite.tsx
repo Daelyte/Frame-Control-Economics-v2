@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BookOpen, Brain, Users, TrendingUp, ChevronDown, ChevronRight,
-  CheckCircle, ArrowRight, Target, Shield, Clock, Zap, Printer,
+  CheckCircle, ArrowRight, Target, Shield, Clock, Zap,
   Download, AlertTriangle, Lightbulb, BarChart3
 } from "lucide-react";
 import Assessment from "./components/Assessment";
+import ScenarioSimulator from "./components/ScenarioSimulator";
 
 interface Rule {
   id: number;
@@ -992,148 +993,9 @@ const FrameEconomicsWebsite: React.FC = () => {
           <section 
             id="section-practice" 
             aria-labelledby="tab-practice" 
-            className="max-w-4xl mx-auto animate-fade-in"
+            className="animate-fade-in"
           >
-            <div className="glass-effect rounded-3xl p-8 shadow-xl">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                  Practice Guide & Daily Exercises
-                </h2>
-                <p className="text-lg text-slate-700 dark:text-purple-200">
-                  Turn knowledge into instinct through structured practice.
-                </p>
-              </div>
-              
-              <div className="space-y-8">
-                <div className="bg-blue-50 dark:bg-blue-900/30 rounded-2xl p-6">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
-                    <Clock className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                    Daily Practice Routine
-                  </h3>
-                  <ol className="list-decimal pl-6 space-y-4 text-blue-900 dark:text-blue-100">
-                    <li>
-                      <strong>10-Second Pause:</strong> Before responding to any trigger, 
-                      pause and scan for the underlying bias or frame being deployed.
-                    </li>
-                    <li>
-                      <strong>Reframe Script:</strong> Practice saying: "We may be using different frames here. 
-                      Let me share mine..." This acknowledges the frame battle without fighting it.
-                    </li>
-                    <li>
-                      <strong>Silence Drill:</strong> Practice holding 3-5 seconds of composed quiet 
-                      when others expect immediate reaction. Silence is powerful.
-                    </li>
-                    <li>
-                      <strong>Boundary Statement:</strong> "That's not a standard I use. If we can align on X, I'm in. 
-                      Otherwise, let's find a different approach."
-                    </li>
-                    <li>
-                      <strong>Tempo Control:</strong> Declare your communication windows and stick to them. 
-                      "I check messages at 9 AM and 4 PM" sets expectations.
-                    </li>
-                  </ol>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-green-50 dark:bg-green-900/30 rounded-xl p-6">
-                    <h4 className="font-bold mb-3 text-green-800 dark:text-green-200">
-                      Weekly Challenges
-                    </h4>
-                    <ul className="space-y-2 text-green-900 dark:text-green-100">
-                      <li>• Identify one frame battle you're currently in</li>
-                      <li>• Practice one counter-move from the 10 rules</li>
-                      <li>• Notice when others try to control the emotional pace</li>
-                      <li>• Experiment with reframing a recurring conflict</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-purple-50 dark:bg-purple-900/30 rounded-xl p-6">
-                    <h4 className="font-bold mb-3 text-purple-800 dark:text-purple-200">
-                      Self-Assessment
-                    </h4>
-                    <ul className="space-y-2 text-purple-900 dark:text-purple-100">
-                      <li>• How quickly do you recognize frame attacks?</li>
-                      <li>• Can you stay calm under emotional pressure?</li>
-                      <li>• Do you chase when others withdraw?</li>
-                      <li>• Are you defending or leading conversations?</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="bg-amber-50 dark:bg-amber-900/30 rounded-2xl p-6">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
-                    <Target className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-                    Scenario Training
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2">Email Pressure</h5>
-                      <p className="text-sm mb-2">
-                        <em>"I need this by end of day or we'll miss the deadline."</em>
-                      </p>
-                      <p className="text-sm">
-                        <strong>Practice response:</strong> "I can deliver quality work by [realistic timeframe]. 
-                        If that doesn't work for your timeline, let's discuss prioritization."
-                      </p>
-                    </div>
-                    
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2">Social Comparison</h5>
-                      <p className="text-sm mb-2">
-                        <em>"Everyone else is already doing X. Why aren't you?"</em>
-                      </p>
-                      <p className="text-sm">
-                        <strong>Practice response:</strong> "I make decisions based on what works for my situation. 
-                        What works for others might not work for me."
-                      </p>
-                    </div>
-                    
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2">Guilt Induction</h5>
-                      <p className="text-sm mb-2">
-                        <em>"I can't believe you forgot [important thing]. I'm so disappointed."</em>
-                      </p>
-                      <p className="text-sm">
-                        <strong>Practice response:</strong> "I understand you're disappointed. 
-                        Let's focus on how to address this moving forward."
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-violet-100 dark:bg-purple-900/40 rounded-2xl p-6 border-l-4 border-purple-500">
-                  <h3 className="text-xl font-semibold text-purple-800 dark:text-purple-200 mb-4">
-                    Master's Mindset
-                  </h3>
-                  <p className="text-purple-900 dark:text-purple-100 text-lg leading-relaxed">
-                    Remember: You're not trying to "win" every interaction. You're building an unshakeable 
-                    internal frame based on your values, standards, and long-term vision. 
-                    The goal is authentic power, not manipulation.
-                  </p>
-                </div>
-                
-                <div className="flex justify-center gap-4 pt-6 no-print">
-                  <button
-                    onClick={handlePrint}
-                    className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
-                  >
-                    <Printer className="w-5 h-5" />
-                    Print Practice Guide
-                  </button>
-                  <a
-                    href="#rules"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSectionAndHash("rules");
-                    }}
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
-                  >
-                    <BookOpen className="w-5 h-5" />
-                    Review the Rules
-                  </a>
-                </div>
-              </div>
-            </div>
+            <ScenarioSimulator />
           </section>
         )}
 
