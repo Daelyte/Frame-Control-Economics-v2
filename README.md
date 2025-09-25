@@ -31,13 +31,25 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 
 ## ✨ Features
 
-- **Interactive Learning**: 10 comprehensive rules with real-world examples
+### 🎯 **Interactive Learning System**
+- **Personal Assessment**: 5-question diagnostic to identify your frame control strengths and weaknesses
+- **Interactive Scenarios**: Practice real-world situations with branching storylines and immediate feedback
+- **10 Comprehensive Rules**: Each rule pairs behavioral psychology with tactical responses
 - **Progress Tracking**: Mark rules as mastered and track your learning journey
+- **Personalized Recommendations**: Get targeted suggestions based on your assessment results
+
+### 🛠️ **Technical Features**
 - **Dark/Light Theme**: Seamless theme switching with localStorage persistence
 - **Print-Friendly**: Export guides as PDF or print for offline reference
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile
 - **Accessibility**: Full keyboard navigation and screen reader support
+- **Performance Scoring**: Real-time feedback on scenario choices with effectiveness ratings
+
+### 📚 **Educational Content**
 - **Case Studies**: Real-world applications in business and personal relationships
+- **Scientific Foundation**: Based on Kahneman, Cialdini, and behavioral economics research
+- **Advanced Theory**: Game theory and cognitive load management insights
+- **Practical Applications**: Immediate, actionable techniques for daily use
 
 ##  Quick Start
 
@@ -95,6 +107,12 @@ npm run preview
 
 ## 🎯 Learning Approach
 
+### **1. Assessment Phase**
+- Take the interactive diagnostic to identify your current frame control level
+- Discover your strongest and weakest areas
+- Get personalized recommendations for improvement
+
+### **2. Study Phase**
 Each rule includes:
 - **Behavioral Principle**: The psychology behind the tactic
 - **The Test**: How the manipulation appears
@@ -102,6 +120,13 @@ Each rule includes:
 - **Counter-Move**: Your strategic response
 - **Key Insight**: Scientific backing
 - **Practical Example**: Real-world application
+
+### **3. Practice Phase**
+- Work through realistic scenarios with branching storylines
+- Make choices and see immediate consequences
+- Get detailed feedback on effectiveness (Poor/Fair/Good/Excellent)
+- Learn which rules apply in different situations
+- Build confidence through safe practice
 
 ## 🔬 Scientific Foundation
 
