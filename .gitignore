@@ -124,3 +124,18 @@ dist-ssr
 *.local
 # Local Netlify folder
 .netlify
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Security and API keys (never commit!)
+*.key
+*.pem
+config/keys.js
+
+# Function build artifacts
+.netlify/functions-internal/
