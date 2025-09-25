@@ -23,8 +23,7 @@ The project is designed as an educational and practical toolkit:
 
 ## 🌟 Live Demo
 
-Visit the live application:  (pending domain registrar)
-
+Visit the live application:  BOOOOOOOOOOOOOOOOOOOM --------> [icecoldfroste.com](https://icecoldfroste.com/)
 ## 🧠 What is Frame Economics?
 
 Frame Economics is an interactive learning platform that teaches you 10 powerful rules for maintaining psychological composure when others try to destabilize you. Each rule combines behavioral psychology principles with practical tactics you can use immediately.
