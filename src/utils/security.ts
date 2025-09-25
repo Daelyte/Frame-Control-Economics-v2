@@ -190,9 +190,9 @@ class RateLimiter {
       
       // Get rate limit for this action
       const limits = RATE_LIMITS[action];
-      const maxActions = timeWindow === 'minute' ? limits.maxPerMinute || 10 :
-                        timeWindow === 'hour' ? limits.maxPerHour || 100 :
-                        limits.maxPerDay || 1000;
+      const maxActions = timeWindow === 'minute' ? limits?.maxPerMinute || 10 :
+                        timeWindow === 'hour' ? limits?.maxPerHour || 100 :
+                        limits?.maxPerDay || 1000;
       
       if (recentEntries.length >= maxActions) {
         const oldestEntry = Math.min(...recentEntries);
