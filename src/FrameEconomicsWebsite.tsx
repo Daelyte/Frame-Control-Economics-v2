@@ -10,6 +10,7 @@ import ScenarioSimulator from "./components/ScenarioSimulator";
 import HabitTracker from "./components/HabitTracker";
 import Flashcards from "./components/Flashcards";
 import Community from "./components/Community";
+import Connect from "./components/Connect";
 
 interface Rule {
   id: number;
@@ -24,7 +25,7 @@ interface Rule {
   practicalExample: string;
 }
 
-type SectionId = "introduction" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community";
+type SectionId = "introduction" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community" | "connect";
 
 const STORAGE_KEY = "frame_econ_completed_rules_v2";
 const PROGRESS_KEY = "frame_econ_progress_v1";
@@ -40,6 +41,7 @@ const HASH_TO_SECTION: Record<string, SectionId> = {
   "#habits": "habits",
   "#flashcards": "flashcards",
   "#community": "community",
+  "#connect": "connect",
 };
 
 const FrameEconomicsWebsite: React.FC = () => {
@@ -224,6 +226,7 @@ const FrameEconomicsWebsite: React.FC = () => {
     { id: "advanced", title: "Advanced Theory", icon: <TrendingUp className="w-5 h-5" /> },
     { id: "casestudies", title: "Case Studies", icon: <Users className="w-5 h-5" /> },
     { id: "community", title: "Community", icon: <Globe className="w-5 h-5" /> },
+    { id: "connect", title: "Connect", icon: <Users className="w-5 h-5" /> },
   ], []);
 
   const toggleRule = useCallback((id: number) => {
@@ -430,7 +433,14 @@ const FrameEconomicsWebsite: React.FC = () => {
                   className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
                 >
                   <Globe className="w-4 h-4" />
-                  Join Community
+                  Community
+                </button>
+                <button
+                  onClick={() => setSectionAndHash("connect")}
+                  className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
+                >
+                  <Users className="w-4 h-4" />
+                  Connect
                 </button>
               </div>
             </div>
@@ -1085,6 +1095,16 @@ const FrameEconomicsWebsite: React.FC = () => {
           </section>
         )}
 
+        {currentSection === "connect" && (
+          <section 
+            id="section-connect" 
+            aria-labelledby="tab-connect" 
+            className="animate-fade-in"
+          >
+            <Connect />
+          </section>
+        )}
+
         {/* Footer */}
         <footer className="mt-12 md:mt-16 text-center">
           <div className="glass-effect rounded-2xl px-8 py-6 mb-8 shadow-xl">
@@ -1135,6 +1155,14 @@ const FrameEconomicsWebsite: React.FC = () => {
                 className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
               >
                 <Globe className="w-4 h-4" />
+                Community
+              </button>
+              
+              <button
+                onClick={() => setSectionAndHash("connect")}
+                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl font-semibold transition-colors duration-200"
+              >
+                <Users className="w-4 h-4" />
                 Connect
               </button>
               
