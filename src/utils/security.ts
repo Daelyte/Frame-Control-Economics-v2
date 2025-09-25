@@ -190,9 +190,30 @@ class RateLimiter {
       
       // Get rate limit for this action
       const limits = RATE_LIMITS[action];
-      const maxActions = timeWindow === 'minute' ? limits?.maxPerMinute || 10 :
-                        timeWindow === 'hour' ? limits?.maxPerHour || 100 :
-                        limits?.maxPerDay || 1000;
+      
+      // Safely extract max actions based on time window and available limits
+      let maxActions = 1000; // default fallback
+      
+      if (timeWindow === 'minute' && 'maxPerMinute' in limits) {
+        maxActions = limits.maxPerMinute;
+      } else if (timeWindow === 'hour') {
+        if ('maxPerHour' in limits) {
+          maxActions = limits.maxPerHour;
+        } else if ('maxPerMinute' in limits) {
+          // If only minute limit exists, scale it up for hour
+          maxActions = limits.maxPerMinute * 60;
+        }
+      } else if (timeWindow === 'day') {
+        if ('maxPerDay' in limits) {
+          maxActions = limits.maxPerDay;
+        } else if ('maxPerHour' in limits) {
+          // If only hour limit exists, scale it up for day
+          maxActions = limits.maxPerHour * 24;
+        } else if ('maxPerMinute' in limits) {
+          // If only minute limit exists, scale it up for day
+          maxActions = limits.maxPerMinute * 60 * 24;
+        }
+      }
       
       if (recentEntries.length >= maxActions) {
         const oldestEntry = Math.min(...recentEntries);
