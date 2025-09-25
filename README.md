@@ -37,6 +37,8 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 - **10 Comprehensive Rules**: Each rule pairs behavioral psychology with tactical responses
 - **Progress Tracking**: Mark rules as mastered and track your learning journey
 - **Personalized Recommendations**: Get targeted suggestions based on your assessment results
+- **Community Insights**: Learn from collective wisdom and peer statistics
+- **Networking Platform**: Connect with fellow learners, find mentors, and join study groups
 
 ### 🛠️ **Technical Features**
 - **Dark/Light Theme**: Seamless theme switching with localStorage persistence
@@ -44,12 +46,16 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile
 - **Accessibility**: Full keyboard navigation and screen reader support
 - **Performance Scoring**: Real-time feedback on scenario choices with effectiveness ratings
+- **Advanced Filtering**: Search and filter peers by location, expertise, and experience
+- **Real-time Status**: Online/offline indicators and user availability
 
 ### 📚 **Educational Content**
 - **Case Studies**: Real-world applications in business and personal relationships
 - **Scientific Foundation**: Based on Kahneman, Cialdini, and behavioral economics research
 - **Advanced Theory**: Game theory and cognitive load management insights
 - **Practical Applications**: Immediate, actionable techniques for daily use
+- **Community Wisdom**: Insights from experienced practitioners and success stories
+- **Peer Learning**: Study groups, events, and collaborative learning opportunities
 
 ##  Quick Start
 
@@ -142,6 +148,34 @@ Based on research from:
 - **Personal**: Relationships, social situations, conflict resolution
 - **Professional**: Client interactions, stakeholder management
 - **Daily Life**: Maintaining composure under pressure
+
+## 🌐 Connect Features
+
+The Connect tab offers comprehensive networking and peer learning capabilities:
+
+### 👥 Find Peers
+- **Smart Matching**: AI-powered compatibility scoring based on expertise and interests
+- **Advanced Filtering**: Search by location, skill level, expertise areas, and availability
+- **User Profiles**: Detailed profiles with progress tracking and mentorship availability
+- **Status Indicators**: Real-time online/offline status for immediate connection
+
+### 📅 Networking Events
+- **Event Types**: Virtual, in-person, and hybrid networking opportunities
+- **Skill-Based Workshops**: Focused sessions on specific frame control techniques
+- **Research Forums**: Academic discussions with psychology professionals
+- **Calendar Integration**: Easy scheduling and reminder systems
+
+### 📚 Study Groups
+- **Difficulty Levels**: Beginner, intermediate, and advanced learning circles
+- **Language Support**: Multilingual groups for global accessibility
+- **Flexible Scheduling**: Weekly, bi-weekly, and custom meeting cadences
+- **Private Groups**: Invite-only circles for focused learning
+
+### 🎓 Mentorship Platform
+- **Mentor Discovery**: Browse experienced practitioners offering guidance
+- **Skill Matching**: Connect with mentors specializing in your focus areas
+- **Structured Programs**: Formal mentorship arrangements with goal tracking
+- **Peer Mentoring**: Collaborative learning between similar skill levels
 
 ## 🎨 Design Features
 

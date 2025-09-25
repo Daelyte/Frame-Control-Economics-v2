@@ -61,6 +61,18 @@ npm ci
 - **`ThemeToggle.tsx`**: Theme switcher component
 - **`main.tsx`**: Application entry point with React 18 StrictMode
 
+### Interactive Components (src/components/)
+- **`Assessment.tsx`**: Interactive diagnostic tool for frame control skills
+- **`Community.tsx`**: Community insights, statistics, and peer learning data
+- **`Connect.tsx`**: Peer networking platform with:
+  - User profile matching and filtering system
+  - Virtual and in-person networking events
+  - Study group formation and management
+  - Mentorship matching platform
+- **`ScenarioSimulator.tsx`**: Practice scenarios with branching storylines
+- **`HabitTracker.tsx`**: Progress tracking and habit formation tools
+- **`Flashcards.tsx`**: Spaced repetition learning system
+
 ### Data Architecture
 The application centers around a `Rule` interface that structures each behavioral principle:
 - Behavioral principle (psychology concept)
@@ -156,6 +168,10 @@ Content is based on research from:
 - **Responsive Design**: Works on desktop, tablet, and mobile
 - **Theme Persistence**: User theme preference saved locally
 - **Deep Linking**: URL hash routing for direct section access
+- **Interactive Learning**: Scenario simulators, assessments, and flashcards
+- **Community Features**: Insights, statistics, and peer learning analytics
+- **Networking Platform**: Peer matching, events, study groups, and mentorship
+- **Gamification**: Progress tracking, completion badges, and achievement systems
 
 ## Development Workflow
 
