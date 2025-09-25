@@ -17,6 +17,10 @@ The project is designed as an educational and practical toolkit:
 
 🎯 Apply frame control principles in real-world interactions.
 
+## 🚀 UI Preview
+<img width="1259" height="1018" alt="Screenshot 2025-09-25 001756" src="https://github.com/user-attachments/assets/e214ab0d-cfd9-493b-9716-143237300c3a" />
+
+
 
 ## 🌟 Live Demo
 
@@ -36,7 +40,7 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 - **Accessibility**: Full keyboard navigation and screen reader support
 - **Case Studies**: Real-world applications in business and personal relationships
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
