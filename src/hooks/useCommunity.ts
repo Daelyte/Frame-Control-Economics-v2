@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase, Story, Comment, Like, Profile } from '../lib/supabase';
+import { supabase, Story, Comment } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
 export const useCommunityStories = () => {

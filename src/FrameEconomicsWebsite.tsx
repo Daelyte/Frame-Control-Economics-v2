@@ -9,7 +9,7 @@ import Assessment from "./components/Assessment";
 import ScenarioSimulator from "./components/ScenarioSimulator";
 import HabitTracker from "./components/HabitTracker";
 import Flashcards from "./components/Flashcards";
-import Community from "./components/Community";
+import InteractiveCommunity from "./components/InteractiveCommunity";
 import Connect from "./components/Connect";
 
 interface Rule {
@@ -1091,7 +1091,7 @@ const FrameEconomicsWebsite: React.FC = () => {
             aria-labelledby="tab-community" 
             className="animate-fade-in"
           >
-            <Community />
+            <InteractiveCommunity />
           </section>
         )}
 

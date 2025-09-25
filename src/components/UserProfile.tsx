@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Settings, LogOut, Edit3, Save, X, Github, Mail } from 'lucide-react';
+import { User, LogOut, Edit3, Save, X, Github, Mail } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface UserProfileProps {
@@ -8,7 +8,7 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => {
-  const { user, profile, signOut, updateUserProfile } = useAuth();
+  const { profile, signOut, updateUserProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
     full_name: profile?.full_name || '',

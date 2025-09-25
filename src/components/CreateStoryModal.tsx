@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, PenTool, Tag, Target } from 'lucide-react';
+import { X, PenTool, Tag } from 'lucide-react';
 import { Story } from '../lib/supabase';
 import { useCommunityStories } from '../hooks/useCommunity';
 
