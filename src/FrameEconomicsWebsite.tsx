@@ -251,13 +251,13 @@ const FrameEconomicsWebsite: React.FC = () => {
               Frame Economics
             </h1>
           </div>
-          <p className="text-xl text-slate-700 dark:text-purple-200 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
             Master the hidden psychology of influence through behavioral economics and frame control.
           </p>
           {completedRules.size > 0 && (
             <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 glass-effect rounded-xl">
               <CheckCircle className="w-5 h-5 text-green-500" />
-              <span className="text-sm font-medium text-slate-700 dark:text-purple-200">
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 {completionPercentage}% Complete ({completedRules.size}/{rules.length} rules mastered)
               </span>
             </div>
@@ -297,7 +297,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                     focus:ring-purple-400/60
                     ${selected 
                       ? "bg-purple-600 text-white shadow-lg transform scale-105" 
-                      : "text-slate-700 dark:text-purple-200 hover:text-white hover:bg-white/10"
+                      : "text-slate-700 dark:text-slate-300 hover:text-white hover:bg-white/10"
                     }
                   `}
                 >
@@ -570,7 +570,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                     Congratulations!
                   </h3>
-                  <p className="text-lg text-slate-700 dark:text-purple-200 mb-6">
+                  <p className="text-lg text-slate-700 dark:text-slate-300 mb-6">
                     You've mastered all 10 rules of Frame Economics. Ready to put them into practice?
                   </p>
                   <button
@@ -598,21 +598,21 @@ const FrameEconomicsWebsite: React.FC = () => {
               </h2>
               <div className="space-y-8">
                 <div className="rounded-2xl p-6 bg-violet-50 dark:bg-purple-900/30 border border-violet-200 dark:border-purple-800">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-slate-900 dark:text-white">
                     <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     Behavioral Economics Foundations
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3 text-slate-700 dark:text-slate-300">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
                       <div>
-                        <strong>System 1:</strong> Fast, automatic, emotional decision-making
+                        <strong className="text-slate-900 dark:text-white">System 1:</strong> Fast, automatic, emotional decision-making
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
                       <div>
-                        <strong>System 2:</strong> Slow, deliberate, rational thinking
+                        <strong className="text-slate-900 dark:text-white">System 2:</strong> Slow, deliberate, rational thinking
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
@@ -625,11 +625,11 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </div>
                 
                 <div className="rounded-2xl p-6 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-slate-900 dark:text-white">
                     <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     Frame Control Psychology
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3 text-slate-700 dark:text-slate-300">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                       <div>
@@ -652,11 +652,11 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </div>
                 
                 <div className="rounded-2xl p-6 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-slate-900 dark:text-white">
                     <Zap className="w-6 h-6 text-green-600 dark:text-green-400" />
                     Neuroscience Insights
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3 text-slate-700 dark:text-slate-300">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                       <div>
@@ -679,7 +679,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </div>
                 
                 <div className="rounded-2xl p-6 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3">
+                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-3 text-slate-900 dark:text-white">
                     <BookOpen className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                     Key Research Studies
                   </h3>
@@ -725,14 +725,14 @@ const FrameEconomicsWebsite: React.FC = () => {
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
                 Advanced Theoretical Framework
               </h2>
-              <p className="text-lg text-slate-700 dark:text-purple-200">
+              <p className="text-lg text-slate-700 dark:text-slate-300">
                 Deep dive into game theory and cognitive load management.
               </p>
             </div>
             
             <div className="grid lg:grid-cols-2 gap-8 mb-8">
               <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
                   <Target className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                   Game Theory Applications
                 </h3>
@@ -746,8 +746,8 @@ const FrameEconomicsWebsite: React.FC = () => {
                       The person with the steadier frame often reaches equilibrium first.
                     </p>
                     <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2">Example:</h5>
-                      <p className="text-sm">
+                      <h5 className="font-semibold mb-2 text-slate-900 dark:text-white">Example:</h5>
+                      <p className="text-sm text-slate-700 dark:text-slate-300">
                         In a heated argument, if one person remains calm while the other escalates, 
                         the calm person's frame becomes the stable equilibrium that others eventually adopt.
                       </p>
@@ -767,7 +767,7 @@ const FrameEconomicsWebsite: React.FC = () => {
               </div>
               
               <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
                   <Brain className="w-7 h-7 text-green-600 dark:text-green-400" />
                   Cognitive Load Theory
                 </h3>
@@ -781,8 +781,8 @@ const FrameEconomicsWebsite: React.FC = () => {
                       is a common attack vector in frame battles.
                     </p>
                     <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2">Defense Strategy:</h5>
-                      <p className="text-sm">
+                      <h5 className="font-semibold mb-2 text-slate-900 dark:text-white">Defense Strategy:</h5>
+                      <p className="text-sm text-slate-700 dark:text-slate-300">
                         When overwhelmed by complexity, simplify the situation into a binary choice: 
                         "This either works for both of us, or it doesn't."
                       </p>
@@ -803,7 +803,7 @@ const FrameEconomicsWebsite: React.FC = () => {
             </div>
             
             <div className="glass-effect rounded-3xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
+              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
                 <TrendingUp className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 Advanced Frame Dynamics
               </h3>
@@ -852,21 +852,21 @@ const FrameEconomicsWebsite: React.FC = () => {
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
                 Frame Economics Case Studies
               </h2>
-              <p className="text-lg text-slate-700 dark:text-purple-200">
+              <p className="text-lg text-slate-700 dark:text-slate-300">
                 Real-world applications and detailed breakdowns.
               </p>
             </div>
             
             <div className="space-y-8">
               <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-                  <TrendingUp className="w-7 h-7 text-green-700 dark:text-green-400" />
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+                  <TrendingUp className="w-7 h-7 text-green-600 dark:text-green-400" />
                   High-Stakes Business Negotiation
                 </h3>
                 <div className="space-y-6">
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
-                    <h4 className="font-bold mb-3">Scenario</h4>
-                    <p className="mb-4">
+                    <h4 className="font-bold mb-3 text-slate-900 dark:text-white">Scenario</h4>
+                    <p className="mb-4 text-slate-700 dark:text-slate-300">
                       Startup acquisition negotiation. Initial offer: $50M. Target value: $120M. 
                       Buyer uses time pressure and anchoring attacks.
                     </p>
@@ -901,14 +901,14 @@ const FrameEconomicsWebsite: React.FC = () => {
               </div>
               
               <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-                  <Users className="w-7 h-7 text-blue-700 dark:text-blue-400" />
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+                  <Users className="w-7 h-7 text-blue-600 dark:text-blue-400" />
                   Team Leadership Challenge
                 </h3>
                 <div className="space-y-6">
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
-                    <h4 className="font-bold mb-3">Scenario</h4>
-                    <p className="mb-4">
+                    <h4 className="font-bold mb-3 text-slate-900 dark:text-white">Scenario</h4>
+                    <p className="mb-4 text-slate-700 dark:text-slate-300">
                       Project team facing tight deadlines and quality concerns. Team member publicly challenges 
                       leader's prioritization in front of stakeholders.
                     </p>
@@ -944,14 +944,14 @@ const FrameEconomicsWebsite: React.FC = () => {
               </div>
               
               <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-                  <Shield className="w-7 h-7 text-purple-700 dark:text-purple-400" />
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+                  <Shield className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                   Personal Relationship Dynamics
                 </h3>
                 <div className="space-y-6">
                   <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
-                    <h4 className="font-bold mb-3">Scenario</h4>
-                    <p className="mb-4">
+                    <h4 className="font-bold mb-3 text-slate-900 dark:text-white">Scenario</h4>
+                    <p className="mb-4 text-slate-700 dark:text-slate-300">
                       Partner uses silent treatment after disagreement about weekend plans. 
                       Classic silence game combined with guilt induction.
                     </p>
@@ -1004,7 +1004,7 @@ const FrameEconomicsWebsite: React.FC = () => {
           <div className="glass-effect rounded-2xl px-8 py-6 mb-8 shadow-xl">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Shield className="w-6 h-6 text-purple-700 dark:text-purple-300" />
-              <p className="text-lg font-medium text-slate-800 dark:text-purple-200">
+              <p className="text-lg font-medium text-slate-800 dark:text-slate-200">
                 Build an unshakeable frame: calm, consistent, value-anchored.
               </p>
             </div>
@@ -1030,7 +1030,7 @@ const FrameEconomicsWebsite: React.FC = () => {
               
               <button
                 onClick={handlePrint}
-                className="inline-flex items-center gap-2 glass-effect hover:bg-white/15 text-slate-700 dark:text-purple-200 px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                className="inline-flex items-center gap-2 glass-effect hover:bg-white/15 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
               >
                 <Download className="w-5 h-5" />
                 Save as PDF
@@ -1038,7 +1038,7 @@ const FrameEconomicsWebsite: React.FC = () => {
             </div>
           </div>
           
-          <p className="text-sm text-slate-600 dark:text-purple-300/80">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             © {new Date().getFullYear()} Frame Economics • 
             Master the psychology of influence through behavioral economics
           </p>
