@@ -38,6 +38,8 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 - **Personalized Recommendations**: Get targeted suggestions based on your assessment results
 - **Community Insights**: Learn from collective wisdom and peer statistics
 - **Networking Platform**: Connect with fellow learners, find mentors, and join study groups
+- **Community Forum**: Share success stories, challenges, and insights with authenticated users
+- **Real-time Engagement**: Like, comment, and interact with community content
 
 ### 🛠️ **Technical Features**
 - **Dark/Light Theme**: Seamless theme switching with localStorage persistence
@@ -55,6 +57,19 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 - **Practical Applications**: Immediate, actionable techniques for daily use
 - **Community Wisdom**: Insights from experienced practitioners and success stories
 - **Peer Learning**: Study groups, events, and collaborative learning opportunities
+
+### 🌐 **Community Platform**
+- **Authentication System**: Secure login with GitHub and Google OAuth
+- **User Profiles**: Personalized profiles with progress tracking and achievements
+- **Story Sharing**: Post and categorize your Frame Economics experiences
+  - **Success Stories**: Share your wins and breakthroughs
+  - **Challenges**: Discuss obstacles and get community support
+  - **Insights**: Share discoveries and learning moments
+  - **Questions**: Ask for help and guidance from the community
+- **Interactive Engagement**: Like stories, post comments, and build discussions
+- **Threaded Comments**: Nested reply system for detailed conversations
+- **Community Stats**: Real-time metrics on community activity and engagement
+- **Content Moderation**: Safe, respectful environment with community guidelines
 
 ##  Quick Start
 
@@ -75,12 +90,23 @@ cd frame-economics
 npm install
 ```
 
-3. Start the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+
+4. Configure your Supabase project (see [DATABASE_SETUP.md](DATABASE_SETUP.md) for detailed instructions):
+   - Create a Supabase project
+   - Set up authentication providers (GitHub, Google)
+   - Run the database schema setup
+   - Add your Supabase credentials to `.env.local`
+
+5. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Open your browser to `http://localhost:5173`
+6. Open your browser to `http://localhost:5173`
 
 ### Building for Production
 
@@ -95,7 +121,9 @@ npm run preview
 - **Styling**: Tailwind CSS with custom animations
 - **Icons**: Lucide React
 - **Build Tool**: Vite
-- **Deployment**: GitHub Pages
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth with OAuth (GitHub, Google)
+- **Deployment**: Netlify
 
 ## 📚 The 10 Rules
 
