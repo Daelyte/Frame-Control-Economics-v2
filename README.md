@@ -1,10 +1,30 @@
 # Frame Economics
+Frame Economics
 
-Master the hidden psychology of influence through behavioral economics and frame control.
+🌐 Live Site (pending domain registrar): icecoldfroste.com
+
+🔗 Temporary Preview: [frame-economics.netlify.app](https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/)
+
+About:
+
+Frame Economics explores the hidden psychology of influence—combining behavioral economics with frame control strategies.
+
+The project is designed as an educational and practical toolkit:
+
+📖 Learn how subtle behavioral triggers shape decisions.
+
+🧠 Master psychological resilience and influence dynamics.
+
+🎯 Apply frame control principles in real-world interactions.
+
+## 🚀 UI Preview
+<img width="1259" height="1018" alt="Screenshot 2025-09-25 001756" src="https://github.com/user-attachments/assets/e214ab0d-cfd9-493b-9716-143237300c3a" />
+
+
 
 ## 🌟 Live Demo
 
-Visit the live application: [Frame Economics](https://your-username.github.io/frame-economics)
+Visit the live application:  (pending domain registrar)
 
 ## 🧠 What is Frame Economics?
 
@@ -20,7 +40,7 @@ Frame Economics is an interactive learning platform that teaches you 10 powerful
 - **Accessibility**: Full keyboard navigation and screen reader support
 - **Case Studies**: Real-world applications in business and personal relationships
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
