@@ -1,8 +1,21 @@
 # Frame Economics
-----> https://www.icecoldfroste.com/      | waiting on domain registrar to complete | will go live here 
-Master the hidden psychology of influence through behavioral economics and frame control.
-Temporary Site URL: https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/
+Frame Economics
 
+🌐 Live Site (pending domain registrar): icecoldfroste.com
+
+🔗 Temporary Preview: frame-economics.netlify.app
+
+About
+
+Frame Economics explores the hidden psychology of influence—combining behavioral economics with frame control strategies.
+
+The project is designed as an educational and practical toolkit:
+
+📖 Learn how subtle behavioral triggers shape decisions.
+
+🧠 Master psychological resilience and influence dynamics.
+
+🎯 Apply frame control principles in real-world interactions.
 
 
 ## 🌟 Live Demo
