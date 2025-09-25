@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BookOpen, Brain, Users, TrendingUp, ChevronDown, ChevronRight,
   CheckCircle, ArrowRight, Target, Shield, Clock, Zap, Printer,
-  Download, AlertTriangle, Lightbulb
+  Download, AlertTriangle, Lightbulb, BarChart3
 } from "lucide-react";
+import Assessment from "./components/Assessment";
 
 interface Rule {
   id: number;
@@ -18,13 +19,14 @@ interface Rule {
   practicalExample: string;
 }
 
-type SectionId = "introduction" | "rules" | "science" | "advanced" | "casestudies" | "practice";
+type SectionId = "introduction" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice";
 
 const STORAGE_KEY = "frame_econ_completed_rules_v2";
 const PROGRESS_KEY = "frame_econ_progress_v1";
 
 const HASH_TO_SECTION: Record<string, SectionId> = {
   "#introduction": "introduction",
+  "#assessment": "assessment",
   "#rules": "rules", 
   "#science": "science",
   "#advanced": "advanced", 
@@ -205,6 +207,7 @@ const FrameEconomicsWebsite: React.FC = () => {
 
   const sections: { id: SectionId; title: string; icon: React.ReactNode }[] = useMemo(() => [
     { id: "introduction", title: "Introduction", icon: <BookOpen className="w-5 h-5" /> },
+    { id: "assessment", title: "Assessment", icon: <BarChart3 className="w-5 h-5" /> },
     { id: "rules", title: "The 10 Rules", icon: <Target className="w-5 h-5" /> },
     { id: "science", title: "The Science", icon: <Brain className="w-5 h-5" /> },
     { id: "advanced", title: "Advanced Theory", icon: <TrendingUp className="w-5 h-5" /> },
@@ -358,15 +361,32 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="text-center">
+            <div className="text-center space-x-4">
               <button
-                onClick={() => setSectionAndHash("rules")}
+                onClick={() => setSectionAndHash("assessment")}
                 className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
               >
-                Start Learning the Rules
+                Take Assessment
+                <BarChart3 className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => setSectionAndHash("rules")}
+                className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+              >
+                Browse Rules
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
+          </section>
+        )}
+
+        {currentSection === "assessment" && (
+          <section 
+            id="section-assessment" 
+            aria-labelledby="tab-assessment" 
+            className="animate-fade-in"
+          >
+            <Assessment />
           </section>
         )}
 
