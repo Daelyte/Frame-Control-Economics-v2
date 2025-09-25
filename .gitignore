@@ -122,3 +122,5 @@ Thumbs.db
 # Vite
 dist-ssr
 *.local
+# Local Netlify folder
+.netlify
