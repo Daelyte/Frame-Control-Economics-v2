@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .page-gradient {
+    @apply bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900;
+  }
+  
+  .page-light {
+    @apply bg-gradient-to-br from-white via-violet-50 to-white;
+  }
+  
+  .glass-effect {
+    @apply bg-white/70 dark:bg-white/10 backdrop-blur-sm;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+}
+
+/* Focus management for accessibility */
+@layer base {
+  *:focus-visible {
+    @apply outline-none ring-2 ring-purple-400/60 ring-offset-2 ring-offset-white dark:ring-offset-slate-900;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .page-gradient,
+  .page-light {
+    background: #fff !important;
+  }
+  
+  .glass-effect {
+    background: #fff !important;
+    backdrop-filter: none !important;
+  }
+  
+  /* Hide interactive elements */
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Optimize layout for print */
+  .container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  
+  /* Remove shadows and effects */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  /* Ensure good contrast */
+  .dark\:text-white,
+  .text-purple-200,
+  .text-purple-300 {
+    color: #000 !important;
+  }
+  
+  /* Hide links after content for print */
+  a::after {
+    content: "";
+  }
+  
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+  
+  /* Prevent breaking inside elements */
+  .rule-card {
+    page-break-inside: avoid;
+  }
+}

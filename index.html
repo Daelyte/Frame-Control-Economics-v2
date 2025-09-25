@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Frame Economics - Master Behavioral Psychology & Influence</title>
+    <meta name="description" content="Master the hidden psychology of influence through behavioral economics and frame control. Learn 10 powerful rules to maintain your center when others try to destabilize you." />
+    <meta name="keywords" content="frame economics, behavioral psychology, influence, frame control, behavioral economics, psychology of persuasion" />
+    <meta name="author" content="Frame Economics" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Frame Economics - Master Behavioral Psychology & Influence" />
+    <meta property="og:description" content="Master the hidden psychology of influence through behavioral economics and frame control." />
+    <meta property="og:url" content="https://frame-economics.github.io" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Frame Economics" />
+    <meta property="twitter:description" content="Master the hidden psychology of influence through behavioral economics and frame control." />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Theme script to prevent FOUC -->
+    <script>
+      try {
+        const theme = localStorage.getItem('fe_theme');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        // Fallback to dark mode
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
