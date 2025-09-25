@@ -20,7 +20,7 @@ The project is designed as an educational and practical toolkit:
 
 ## 🌟 Live Demo
 
-Visit the live application: [Frame Economics](https://your-username.github.io/frame-economics)
+Visit the live application:  (pending domain registrar)
 
 ## 🧠 What is Frame Economics?
 
