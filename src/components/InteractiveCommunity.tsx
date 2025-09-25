@@ -14,6 +14,7 @@ import { useCommunityStories, useCommunityStats } from '../hooks/useCommunity';
 import LoginModal from './LoginModal';
 import CreateStoryModal from './CreateStoryModal';
 import UserProfile from './UserProfile';
+import CommentsSection from './CommentsSection';
 import { Story } from '../lib/supabase';
 
 const InteractiveCommunity: React.FC = () => {
@@ -26,6 +27,7 @@ const InteractiveCommunity: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showCreateStoryModal, setShowCreateStoryModal] = useState(false);
   const [showUserProfile, setShowUserProfile] = useState(false);
+  const [showComments, setShowComments] = useState<string | null>(null);
 
   const categories = ['all', 'success_story', 'challenge', 'insight', 'question'];
   const categoryLabels: Record<string, string> = {
@@ -323,7 +325,10 @@ const InteractiveCommunity: React.FC = () => {
                         <span className="text-sm">{story.likes_count}</span>
                       </button>
                       
-                      <button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-purple-600 transition-colors duration-200">
+                      <button 
+                        onClick={() => setShowComments(story.id)}
+                        className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-purple-600 transition-colors duration-200"
+                      >
                         <Reply className="w-4 h-4" />
                         <span className="text-sm">{story.comments_count}</span>
                       </button>
@@ -357,6 +362,14 @@ const InteractiveCommunity: React.FC = () => {
         isOpen={showUserProfile}
         onClose={() => setShowUserProfile(false)}
       />
+      
+      {showComments && (
+        <CommentsSection
+          storyId={showComments}
+          isOpen={true}
+          onClose={() => setShowComments(null)}
+        />
+      )}
     </div>
   );
 };
