@@ -1,9 +1,8 @@
 # Frame Economics
 Frame Economics
 
-🌐 Live Site (🙏): [icecoldfroste.com](https://icecoldfroste.com/)
+🌐 Live Site (🙏): [icecoldfroste.com](https://icecoldfroste.com/) | 🔗 | [frame-economics.netlify.app](https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/)
 
-🔗 Temporary Preview: [frame-economics.netlify.app](https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/)
 
 About:
 
