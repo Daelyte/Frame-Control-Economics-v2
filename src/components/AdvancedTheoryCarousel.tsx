@@ -171,6 +171,151 @@ const AdvancedTheoryCarousel: React.FC = () => {
         </div>
       )
     },
+    {
+      id: "neuroscience-influence",
+      title: "Neuroscience of Influence",
+      subtitle: "Mirror neurons, emotional contagion, and cortisol management",
+      icon: <Brain className="w-6 h-6" />,
+      color: "from-emerald-500 to-teal-500",
+      content: (
+        <div className="space-y-4">
+          <div className="rounded-xl p-4 sm:p-6 bg-emerald-50 dark:bg-emerald-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-emerald-800 dark:text-emerald-200">Mirror Neurons & Emotional Contagion</h4>
+            <p className="text-emerald-900 dark:text-emerald-100 text-sm sm:text-base mb-3">
+              Mirror neurons fire both when acting and observing actions. Your calm becomes their calm through unconscious mimicry.
+            </p>
+            <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3 sm:p-4">
+              <h5 className="font-semibold mb-1 sm:mb-2 text-slate-900 dark:text-white">Application</h5>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                Lower your voice 20% when others escalate. Their brain automatically mirrors your calm energy.
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl p-4 sm:p-6 bg-teal-50 dark:bg-teal-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-teal-800 dark:text-teal-200">Cortisol & Decision Making</h4>
+            <p className="text-teal-900 dark:text-teal-100 text-sm sm:text-base">
+              High cortisol narrows cognitive flexibility by 40%. Calm frames literally expand their thinking capacity.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: "behavioral-economics",
+      title: "Advanced Behavioral Economics",
+      subtitle: "Prospect theory, mental accounting, and choice architecture",
+      icon: <TrendingUp className="w-6 h-6" />,
+      color: "from-indigo-500 to-purple-500",
+      content: (
+        <div className="space-y-4">
+          <div className="rounded-xl p-4 sm:p-6 bg-indigo-50 dark:bg-indigo-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-indigo-800 dark:text-indigo-200">Mental Accounting Frames</h4>
+            <p className="text-indigo-900 dark:text-indigo-100 text-sm sm:text-base mb-3">
+              People categorize money/time differently. A "business investment" feels different than "personal expense" even for identical amounts.
+            </p>
+            <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3 sm:p-4">
+              <h5 className="font-semibold mb-1 sm:mb-2 text-slate-900 dark:text-white">Frame Technique</h5>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                "This isn't about the money, it's about the principle" vs. "What's the actual dollar impact?"
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl p-4 sm:p-6 bg-purple-50 dark:bg-purple-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-purple-800 dark:text-purple-200">Endowment Effect Leverage</h4>
+            <p className="text-purple-900 dark:text-purple-100 text-sm sm:text-base">
+              Once someone mentally "owns" an idea or outcome, they'll defend it irrationally. Help them own the right solution.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: "power-dynamics",
+      title: "Power Dynamics & Status",
+      subtitle: "Hierarchy signals, status games, and influence vectors",
+      icon: <Target className="w-6 h-6" />,
+      color: "from-red-500 to-orange-500",
+      content: (
+        <div className="space-y-4">
+          <div className="rounded-xl p-4 sm:p-6 bg-red-50 dark:bg-red-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-red-800 dark:text-red-200">Status Signal Recognition</h4>
+            <p className="text-red-900 dark:text-red-100 text-sm sm:text-base mb-3">
+              Voice tone, posture, response timing, and interruption patterns reveal hidden power structures in real-time.
+            </p>
+            <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3 sm:p-4">
+              <h5 className="font-semibold mb-1 sm:mb-2 text-slate-900 dark:text-white">Counter-Status Moves</h5>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                Acknowledge their expertise first, then redirect: "You're the expert on X, so you'll appreciate Y perspective."
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl p-4 sm:p-6 bg-orange-50 dark:bg-orange-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-orange-800 dark:text-orange-200">Authority Without Dominance</h4>
+            <p className="text-orange-900 dark:text-orange-100 text-sm sm:text-base">
+              True influence comes from competence + benevolence signals, not dominance displays. Be the stable center.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: "temporal-dynamics",
+      title: "Temporal Frame Dynamics",
+      subtitle: "Time horizons, urgency manipulation, and temporal reframing",
+      icon: <Clock className="w-6 h-6" />,
+      color: "from-violet-500 to-indigo-500",
+      content: (
+        <div className="space-y-4">
+          <div className="rounded-xl p-4 sm:p-6 bg-violet-50 dark:bg-violet-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-violet-800 dark:text-violet-200">Time Horizon Expansion</h4>
+            <p className="text-violet-900 dark:text-violet-100 text-sm sm:text-base mb-3">
+              When pressured for immediate decisions, expand the time frame: "Let's think about this quarterly/annually."
+            </p>
+            <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3 sm:p-4">
+              <h5 className="font-semibold mb-1 sm:mb-2 text-slate-900 dark:text-white">Pressure Relief</h5>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                "I want to give this the consideration it deserves" vs. "I need to think about it."
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl p-4 sm:p-6 bg-indigo-50 dark:bg-indigo-900/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-indigo-800 dark:text-indigo-200">Urgency Inoculation</h4>
+            <p className="text-indigo-900 dark:text-indigo-100 text-sm sm:text-base">
+              Pre-establish your decision timeline: "I evaluate opportunities on Fridays." Creates urgency immunity.
+            </p>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: "information-warfare",
+      title: "Information Architecture",
+      subtitle: "Data framing, selective disclosure, and narrative control",
+      icon: <BookOpen className="w-6 h-6" />,
+      color: "from-slate-500 to-gray-500",
+      content: (
+        <div className="space-y-4">
+          <div className="rounded-xl p-4 sm:p-6 bg-slate-50 dark:bg-slate-800/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-slate-800 dark:text-slate-200">Information Sequencing</h4>
+            <p className="text-slate-900 dark:text-slate-100 text-sm sm:text-base mb-3">
+              Order of information creates narrative. Lead with context, then data, then implications. Control the story arc.
+            </p>
+            <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3 sm:p-4">
+              <h5 className="font-semibold mb-1 sm:mb-2 text-slate-900 dark:text-white">Narrative Frames</h5>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                "Here's what happened" vs. "Here's the context, what happened, and what it means."
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl p-4 sm:p-6 bg-gray-50 dark:bg-gray-800/40">
+            <h4 className="font-bold mb-2 sm:mb-3 text-gray-800 dark:text-gray-200">Cognitive Load Management</h4>
+            <p className="text-gray-900 dark:text-gray-100 text-sm sm:text-base">
+              Present 3 options max. Overwhelming choice creates decision paralysis and reactive responses.
+            </p>
+          </div>
+        </div>
+      )
+    }
   ], []);
 
   const next = () => {
