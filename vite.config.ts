@@ -7,6 +7,16 @@ export default defineConfig({
   base: './', // For GitHub Pages compatibility
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
+          ui: ['lucide-react', 'framer-motion']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
   }
 })

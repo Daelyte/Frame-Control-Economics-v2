@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { ModernHero } from './ModernHero';
-import { ModernRuleCard, Rule } from './ModernRuleCard';
+import ModernHeroV2 from './hero/ModernHeroV2';
+import PremiumRuleCard from './cards/PremiumRuleCard';
+import { Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
-import DragonBoot from './dragon/DragonBoot';
 import DragonNuclear from './ambient/DragonNuclear';
+import StormLite from './ambient/StormLite';
+import LightningBoot from './ambient/LightningBoot';
+import LightningBolts from './ambient/LightningBolts';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -91,10 +94,12 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <main className="relative isolate z-0" style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
-      {/* Nuclear Dragon - Guaranteed visible fallback */}
-      <DragonNuclear opacity={0.14} hue={170} />
-      {/* Main Dragon System - Advanced effects */}
-      <DragonBoot enabled={true} debug={process.env.NODE_ENV === 'development'} />
+      {/* Background visual stack (fixed) - Guaranteed to work */}
+      <StormLite intensity={1} lightning={true} />   {/* rain + flash overlay */}
+      <DragonNuclear hue={170} opacity={0.12} />    {/* guaranteed outline */}
+      <LightningBoot>
+        <LightningBolts period={22000} />           {/* bolt strokes (client-only) */}
+      </LightningBoot>
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">
@@ -161,10 +166,9 @@ export const ModernDemo: React.FC = () => {
       {/* Demo Content */}
       <div>
         {currentView === 'hero' && (
-          <ModernHero
+          <ModernHeroV2
             onStartAssessment={handleStartAssessment}
             onExploreRules={handleExploreRules}
-            completionProgress={completionProgress}
           />
         )}
 
@@ -236,7 +240,7 @@ export const ModernDemo: React.FC = () => {
               <div className="card-grid-container">
                 <div className="space-y-6">
                   {sampleRules.map(rule => (
-                    <ModernRuleCard
+                    <PremiumRuleCard
                       key={rule.id}
                       rule={rule}
                       isCompleted={completedRules.has(rule.id)}
