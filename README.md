@@ -1,20 +1,23 @@
 # Frame Economics
-Frame Economics
 
-🌐 Live Site (🙏): [icecoldfroste.com](https://icecoldfroste.com/) | 🔗 | [frame-economics.netlify.app](https://68d4bef8bc1a6c0008b28c54--frame-economics.netlify.app/)
+> **⚠️ PRIVATE REPOSITORY - ALL RIGHTS RESERVED**  
+> This repository contains proprietary intellectual property and trade secrets.
 
+🌐 **Live Platform:** [icecoldfroste.com](https://icecoldfroste.com/)
 
-About:
+## About Frame Economics
 
-Frame Economics explores the hidden psychology of influence—combining behavioral economics with frame control strategies.
+Frame Economics is a proprietary behavioral psychology and frame control training platform that explores the hidden psychology of influence through advanced behavioral economics principles.
 
-The project is designed as an educational and practical toolkit:
+**Commercial Platform Features:**
 
-📖 Learn how subtle behavioral triggers shape decisions.
+📖 **Proprietary 10 Rules Methodology** - Unique framework pairing behavioral economics with tactical responses
 
-🧠 Master psychological resilience and influence dynamics.
+🧠 **Advanced Theory Systems** - Sophisticated behavioral economics content with interactive learning  
 
-🎯 Apply frame control principles in real-world interactions.
+🎯 **Assessment & Analytics** - Personalized diagnostic and progress tracking systems
+
+🔒 **Enterprise Features** - Professional training and development solutions
 
 ## 🚀 UI Preview
 <img width="1259" height="1018" alt="Screenshot 2025-09-25 001756" src="https://github.com/user-attachments/assets/e214ab0d-cfd9-493b-9716-143237300c3a" />
@@ -197,6 +200,25 @@ The Connect tab offers comprehensive networking and peer learning capabilities:
 - **Language Support**: Multilingual groups for global accessibility
 - **Flexible Scheduling**: Weekly, bi-weekly, and custom meeting cadences
 - **Private Groups**: Invite-only circles for focused learning
+
+---
+
+## 🔐 Business & Legal Information
+
+### Intellectual Property
+This repository contains proprietary software and educational content protected by copyright and trade secret laws. See [COPYRIGHT.md](./COPYRIGHT.md) for full details.
+
+### Commercial Licensing
+For business partnerships, enterprise licensing, or commercial use inquiries, please contact through official channels.
+
+### Repository Access
+This is a private repository. Access is restricted to authorized team members and collaborators only.
+
+---
+
+**© 2024 Frame Economics. All rights reserved.**
+
+*Frame Economics - Where behavioral science meets practical power.* ⚡
 
 ### 🎓 Mentorship Platform
 - **Mentor Discovery**: Browse experienced practitioners offering guidance
