@@ -3,6 +3,7 @@ import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
 import DragonBackdrop from './ambient/DragonPresets';
+import StormBackdrop from './ambient/StormBackdrop';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -90,8 +91,13 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <div style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
-      {/* Ominous Dragon Backdrop - subtle and professional */}
-      <DragonBackdrop preset="executive" />
+      {/* Storm Dragon Backdrop - Intelligence + Danger + Allure */}
+      <StormBackdrop 
+        hue={170} 
+        baseOpacity={0.18} 
+        rainIntensity={1} 
+        lightning={true} 
+      />
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">

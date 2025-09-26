@@ -306,6 +306,67 @@
   }
 }
 
+/* Storm system keyframes */
+@keyframes stormAura {
+  0%, 100% { 
+    transform: translateY(0) scale(1) rotate(0deg); 
+    opacity: 0.7;
+  }
+  33% { 
+    transform: translateY(-2%) scale(1.03) rotate(0.8deg); 
+    opacity: 0.85;
+  }
+  66% { 
+    transform: translateY(1%) scale(0.97) rotate(-0.5deg); 
+    opacity: 0.6;
+  }
+}
+
+/* Rain animation layers */
+@keyframes rain-heavy { 
+  0% { background-position: 0 0; } 
+  100% { background-position: -140px 260px; } 
+}
+@keyframes rain-medium { 
+  0% { background-position: 0 0; } 
+  100% { background-position: -190px 360px; } 
+}
+@keyframes rain-light { 
+  0% { background-position: 0 0; } 
+  100% { background-position: -230px 420px; } 
+}
+
+/* Lightning system */
+@keyframes lightning-flash {
+  0%, 8%, 100% { opacity: 0; }
+  9% { opacity: 0.6; } 
+  10% { opacity: 0; }
+  11% { opacity: 0.4; } 
+  12% { opacity: 0; }
+  40%, 41% { opacity: 0.3; } 
+  42% { opacity: 0; }
+  68% { opacity: 0.45; } 
+  69% { opacity: 0; }
+}
+
+@keyframes lightning-bolt-left {
+  0%, 8% { opacity: 0; transform: translateY(-6vh) scale(0.98); }
+  9% { opacity: 0.95; transform: translateY(0) scale(1); }
+  10% { opacity: 0; }
+  40% { opacity: 0.9; } 
+  41% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes lightning-bolt-right {
+  0%, 39% { opacity: 0; transform: translateY(-4vh) scale(0.98); }
+  40% { opacity: 0.9; transform: translateY(0) scale(1); }
+  41% { opacity: 0; }
+  68% { opacity: 0.8; } 
+  69% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
 /* Page transitions */
 .page-enter {
   animation: fade-in var(--motion-duration-slow) var(--motion-ease-out);

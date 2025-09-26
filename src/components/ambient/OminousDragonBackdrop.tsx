@@ -275,36 +275,7 @@ export default function OminousDragonBackdrop({
         </g>
       </svg>
 
-      {/* Enhanced animation keyframes for behavioral psychology education */}
-      <style jsx global>{`
-        @keyframes dragonAura {
-          0%, 100% { 
-            transform: translateY(0) scale(1) rotate(0deg); 
-            opacity: 0.75;
-          }
-          33% { 
-            transform: translateY(-2%) scale(1.02) rotate(0.5deg); 
-            opacity: 0.85;
-          }
-          66% { 
-            transform: translateY(1%) scale(0.98) rotate(-0.3deg); 
-            opacity: 0.65;
-          }
-        }
-        
-        /* Disable all dragon animations for accessibility */
-        @media (prefers-reduced-motion: reduce) {
-          [style*="animation"] { animation: none !important; }
-          svg animate { display: none !important; }
-          svg circle[r] { r: 12 !important; }
-        }
-        
-        /* Performance optimizations */
-        svg {
-          will-change: transform;
-          transform: translateZ(0); /* GPU layer */
-        }
-      `}</style>
+      {/* Keyframes are defined in motion.css */}
     </div>
   );
 }
