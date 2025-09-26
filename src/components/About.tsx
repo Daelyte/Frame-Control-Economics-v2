@@ -103,16 +103,27 @@ const About: React.FC<AboutProps> = ({ onNavigateToProjects }) => {
             <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
           
-          <a 
-            href="https://icecoldfroste.com/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm font-medium"
-          >
-            <Globe className="w-4 h-4" />
-            Latest Project
-            <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </a>
+          {onNavigateToProjects ? (
+            <button
+              onClick={onNavigateToProjects}
+              className="group inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm font-medium"
+            >
+              <Rocket className="w-4 h-4" />
+              View Projects & Roadmap
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </button>
+          ) : (
+            <a 
+              href="https://icecoldfroste.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm font-medium"
+            >
+              <Globe className="w-4 h-4" />
+              Latest Project
+              <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </a>
+          )}
         </div>
       </div>
 

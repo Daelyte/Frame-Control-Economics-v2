@@ -1,29 +1,8 @@
 [build]
   publish = "dist"
-  command = "npm run build"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
-  NETLIFY_SKIP_PLUGIN_INSTALL = "true"
-
-# Temporarily disable plugins for deployment
-# [[plugins]]
-#   package = "@netlify/plugin-emails"
-# [[plugins]]
-#   package = "netlify-plugin-a11y"
-# [[plugins]]
-#   package = "@21yunbox/netlify-plugin-21yunbox-deploy-to-china-cdn"
-# [[plugins]]
-#   package = "@netlify/plugin-lighthouse"
-# [[plugins]]
-#   package = "netlify-plugin-ghost-markdown"
-# [[plugins]]
-#   package = "netlify-plugin-fetch-feeds"
-# [[plugins]]
-#   package = "netlify-plugin-minify-html"
-# [[plugins]]
-#   package = "netlify-plugin-pagewatch"
 
 # Security headers for enhanced protection
 [[headers]]
@@ -42,17 +21,6 @@
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Content-Type"
     Access-Control-Allow-Methods = "GET, POST, OPTIONS"
-
-# Redirects for API endpoints (optional cleaner URLs)
-[[redirects]]
-  from = "/api/analytics"
-  to = "/.netlify/functions/analytics"
-  status = 200
-
-[[redirects]]
-  from = "/api/feedback"
-  to = "/.netlify/functions/feedback"
-  status = 200
 
 # SPA fallback - must be last
 [[redirects]]
