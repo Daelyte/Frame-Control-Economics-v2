@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
-import StormLayerLite from './ambient/StormLayerLite';
-import DragonBackdropWorking from './ambient/DragonBackdropWorking';
+import SimplestDragon from './ambient/SimplestDragon';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -91,9 +90,8 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <div style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
-      {/* Bulletproof Dragon Storm System - Storm under, dragon over */}
-      <StormLayerLite intensity={1} lightning />
-      <DragonBackdropWorking hue={170} opacity={0.15} />
+      {/* SIMPLEST DRAGON - BASIC CSS ONLY */}
+      <SimplestDragon />
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">
