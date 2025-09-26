@@ -5,6 +5,14 @@ import {
   Download, AlertTriangle, Lightbulb, BarChart3, Calendar,
   Layers, Globe, Briefcase, GraduationCap, Home
 } from "lucide-react";
+import { 
+  FloatingParticles, 
+  ProgressRing, 
+  GradientText, 
+  PremiumSpinner,
+  FeatureCard,
+  SectionDivider
+} from "./components/BrandElements";
 import Assessment from "./components/Assessment";
 import About from "./components/About";
 import ScenarioSimulator from "./components/ScenarioSimulator";
@@ -258,15 +266,29 @@ const FrameEconomicsWebsite: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <FloatingParticles />
+        <div className="text-center space-y-6 z-10 relative">
+          <div className="flex items-center justify-center">
+            <PremiumSpinner size="lg" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold">
+              <GradientText>Frame Economics</GradientText>
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 animate-pulse">
+              Loading your behavioral psychology toolkit...
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen safe-area-padding desktop-enhanced bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-      <div className="container mx-auto container-mobile ultrawide-container py-4 sm:py-8 tablet-optimized">
+    <div className="min-h-screen safe-area-padding desktop-enhanced bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative">
+      <FloatingParticles />
+      <div className="container mx-auto container-mobile ultrawide-container py-4 sm:py-8 tablet-optimized relative z-10">
         {/* Hero Section */}
         <section className="relative py-8 sm:py-12 md:py-16 lg:py-24 mb-6 sm:mb-8 md:mb-12 overflow-hidden">
           {/* Enhanced background pattern */}

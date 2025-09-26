@@ -53,6 +53,34 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
   
+  /* Desktop enhancements */
+  .desktop-enhanced {
+    @media (min-width: 1024px) {
+      background-attachment: fixed;
+    }
+  }
+  
+  /* Ultrawide container for large screens */
+  .ultrawide-container {
+    @media (min-width: 1536px) {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  /* Premium glass effects */
+  .glass-premium {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  }
+  
+  .glass-premium.dark {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%);
+  }
+  
   /* Touch-friendly buttons */
   .btn-touch {
     @apply min-h-[44px] min-w-[44px] px-4 py-3;
@@ -148,6 +176,74 @@ body {
       transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
+  }
+  
+  /* Premium interactive elements */
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-interactive {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-interactive::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+  }
+  
+  .card-interactive:hover::before {
+    left: 100%;
+  }
+  
+  /* Gradient animations */
+  .gradient-animate {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Safe area handling for modern devices */
+  .safe-area-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+  
+  /* Tablet optimizations */
+  .tablet-optimized {
+    @media (min-width: 768px) and (max-width: 1023px) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  
+  /* Hide scrollbars consistently */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
