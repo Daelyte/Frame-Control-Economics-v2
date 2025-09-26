@@ -26,6 +26,9 @@ const App: React.FC = () => {
                 <a href="#introduction" className="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">
                   Home
                 </a>
+                <a href="#about" className="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">
+                  About
+                </a>
                 <a href="#rules" className="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-colors">
                   Rules
                 </a>

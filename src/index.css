@@ -30,6 +30,28 @@ html {
   .animate-slide-up {
     animation: slideUp 0.4s ease-out;
   }
+  
+  .profile-image {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  }
+  
+  .profile-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3), 0 0 30px rgba(147, 51, 234, 0.2);
+    filter: brightness(1.1);
+  }
+  
+  .section-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .section-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* Focus management for accessibility */

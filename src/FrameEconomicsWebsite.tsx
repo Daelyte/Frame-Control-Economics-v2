@@ -6,6 +6,7 @@ import {
   Layers, Globe
 } from "lucide-react";
 import Assessment from "./components/Assessment";
+import About from "./components/About";
 import ScenarioSimulator from "./components/ScenarioSimulator";
 import HabitTracker from "./components/HabitTracker";
 import Flashcards from "./components/Flashcards";
@@ -25,14 +26,15 @@ interface Rule {
   practicalExample: string;
 }
 
-type SectionId = "introduction" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community" | "connect";
+type SectionId = "introduction" | "about" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community" | "connect";
 
 const STORAGE_KEY = "frame_econ_completed_rules_v2";
 const PROGRESS_KEY = "frame_econ_progress_v1";
 
 const HASH_TO_SECTION: Record<string, SectionId> = {
-  "#introduction": "introduction",
-  "#assessment": "assessment",
+  "": "introduction",
+  "#introduction": "introduction", 
+  "#about": "about",
   "#rules": "rules", 
   "#science": "science",
   "#advanced": "advanced", 
@@ -217,6 +219,7 @@ const FrameEconomicsWebsite: React.FC = () => {
 
   const sections: { id: SectionId; title: string; icon: React.ReactNode }[] = useMemo(() => [
     { id: "introduction", title: "Introduction", icon: <BookOpen className="w-5 h-5" /> },
+    { id: "about", title: "About", icon: <Users className="w-5 h-5" /> },
     { id: "assessment", title: "Assessment", icon: <BarChart3 className="w-5 h-5" /> },
     { id: "rules", title: "The 10 Rules", icon: <Target className="w-5 h-5" /> },
     { id: "practice", title: "Practice", icon: <CheckCircle className="w-5 h-5" /> },
@@ -584,6 +587,16 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </div>
               </div>
             </div>
+          </section>
+        )}
+
+        {currentSection === "about" && (
+          <section 
+            id="section-about" 
+            aria-labelledby="tab-about" 
+            className="max-w-4xl mx-auto animate-fade-in"
+          >
+            <About />
           </section>
         )}
 
