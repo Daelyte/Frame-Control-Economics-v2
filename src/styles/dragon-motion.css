@@ -1,0 +1,217 @@
+/* dragon-motion.css */
+/* Global keyframes for the Bulletproof Storm Dragon Backdrop */
+/* These must be global CSS (not CSS-in-JS) for consistent keyframe timing */
+
+/* Aurora Movement */
+@keyframes stormAura {
+  0%, 100% { 
+    transform: rotate(0deg) scale(1.02) translate(0, 0);
+    opacity: 0.7;
+  }
+  16% { 
+    transform: rotate(0.3deg) scale(1.04) translate(8px, -4px);
+    opacity: 0.8;
+  }
+  33% { 
+    transform: rotate(-0.2deg) scale(1.03) translate(-6px, 6px);
+    opacity: 0.75;
+  }
+  50% { 
+    transform: rotate(0.4deg) scale(1.05) translate(4px, -8px);
+    opacity: 0.85;
+  }
+  66% { 
+    transform: rotate(-0.3deg) scale(1.02) translate(-8px, 4px);
+    opacity: 0.72;
+  }
+  83% { 
+    transform: rotate(0.1deg) scale(1.04) translate(6px, -2px);
+    opacity: 0.78;
+  }
+}
+
+/* Enhanced Rain Animation Layers - Multi-depth parallax system */
+@keyframes rain-heavy {
+  0% { background-position: 0px -100vh; }
+  100% { background-position: 30px 100vh; }
+}
+
+@keyframes rain-medium {
+  0% { background-position: 0px -100vh; }
+  100% { background-position: 45px 100vh; }
+}
+
+@keyframes rain-light {
+  0% { background-position: 0px -100vh; }
+  100% { background-position: 60px 100vh; }
+}
+
+/* Rain splash effects for heavy storms */
+@keyframes rainSplash {
+  0%, 100% {
+    opacity: 0.04;
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    opacity: 0.08;
+    transform: scaleX(1.1) scaleY(0.9);
+  }
+}
+
+/* Enhanced Lightning System - CodePen-inspired stroke dash animations */
+@keyframes lightning-flash {
+  0%, 96%, 100% { opacity: 0; }
+  4% { opacity: 0.15; }
+  4.2% { opacity: 0.05; }
+  4.4% { opacity: 0.25; }
+  4.8% { opacity: 0; }
+  18% { opacity: 0.18; }
+  18.3% { opacity: 0; }
+  45% { opacity: 0.12; }
+  45.5% { opacity: 0; }
+}
+
+/* Main lightning bolt with path drawing */
+@keyframes lightning-bolt-main {
+  0%, 3%, 100% { 
+    opacity: 0; 
+    transform: translateZ(0) scale(0.95) translateY(-2vh); 
+  }
+  4% { 
+    opacity: 1; 
+    transform: translateZ(0) scale(1.1) translateY(0); 
+  }
+  4.2% { opacity: 0.6; }
+  4.4% { 
+    opacity: 1; 
+    transform: translateZ(0) scale(1.05) translateY(0); 
+  }
+  5% { opacity: 0; }
+  17.5%, 18.5% { 
+    opacity: 0.8;
+    transform: translateZ(0) scale(1) translateY(0);
+  }
+}
+
+/* Secondary lightning bolt with delay */
+@keyframes lightning-bolt-secondary {
+  0%, 3.8%, 100% { 
+    opacity: 0; 
+    transform: translateZ(0) scale(0.98) translateY(-1vh); 
+  }
+  4.3% { 
+    opacity: 0.9; 
+    transform: translateZ(0) scale(1.05) translateY(0); 
+  }
+  4.6% { opacity: 0.5; }
+  4.8% { 
+    opacity: 0.8; 
+    transform: translateZ(0) scale(1.02) translateY(0); 
+  }
+  5.2% { opacity: 0; }
+  44.5%, 45.5% { 
+    opacity: 0.7;
+    transform: translateZ(0) scale(1) translateY(0);
+  }
+}
+
+/* Distant atmospheric flash */
+@keyframes lightning-bolt-distant {
+  0%, 16%, 100% { opacity: 0; }
+  17% { opacity: 0.6; }
+  17.2% { opacity: 0.3; }
+  17.4% { opacity: 0.5; }
+  18% { opacity: 0; }
+}
+
+/* Lightning path drawing effect */
+@keyframes lightning-draw {
+  0%, 3.5% { 
+    stroke-dashoffset: 800; 
+    opacity: 0;
+  }
+  4% { 
+    stroke-dashoffset: 0; 
+    opacity: 1;
+  }
+  4.2% { opacity: 0.7; }
+  4.4% { 
+    stroke-dashoffset: 0; 
+    opacity: 1;
+  }
+  4.8% { opacity: 0; }
+  100% { 
+    stroke-dashoffset: 0; 
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-draw-secondary {
+  0%, 4% { 
+    stroke-dashoffset: 600; 
+    opacity: 0;
+  }
+  4.3% { 
+    stroke-dashoffset: 0; 
+    opacity: 0.9;
+  }
+  4.6% { opacity: 0.5; }
+  4.8% { 
+    stroke-dashoffset: 0; 
+    opacity: 0.8;
+  }
+  5.2% { opacity: 0; }
+  100% { 
+    stroke-dashoffset: 0; 
+    opacity: 0;
+  }
+}
+
+/* Eye Cursor Following (via CSS variables from JS if needed) */
+@keyframes dragonEyeGaze {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(var(--eye-x, 0px), var(--eye-y, 0px)); }
+}
+
+/* Breathing/Pulsing Effects */
+@keyframes dragonBreath {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.25; }
+  50% { transform: scale(1.05) rotate(0.5deg); opacity: 0.35; }
+}
+
+/* Teeth Shimmer (optional enhancement) */
+@keyframes toothShimmer {
+  0%, 90%, 100% { filter: brightness(1); }
+  95% { filter: brightness(1.3); }
+}
+
+/* Danger Eye Flash */
+@keyframes dangerFlash {
+  0%, 85%, 100% { opacity: 0; transform: scale(1); }
+  90% { opacity: 0.15; transform: scale(1.1); }
+  95% { opacity: 0.08; transform: scale(1.05); }
+}
+
+/* Motion-Reduce Support - Disable all animations */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-backdrop,
+  .rain-heavy-layer,
+  .rain-medium-layer, 
+  .rain-light-layer,
+  .lightning-flash-overlay,
+  [class*="lightning-bolt"] {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Keep static storm presence but no movement */
+  .aurora-backdrop {
+    opacity: 0.4 !important;
+  }
+  
+  .rain-heavy-layer,
+  .rain-medium-layer,
+  .rain-light-layer {
+    opacity: 0.05 !important;
+  }
+}

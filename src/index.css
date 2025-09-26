@@ -2,6 +2,7 @@
 @import './styles/tokens.css';
 @import './styles/layout.css';
 @import './styles/motion.css';
+@import './styles/dragon-motion.css';
 
 @tailwind base;
 @tailwind components;

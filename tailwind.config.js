@@ -171,4 +171,35 @@ export default {
     },
   },
   plugins: [require('@tailwindcss/typography')],
+  safelist: [
+    // Dragon Storm System Classes - Prevent purging of dynamic/arbitrary values
+    'fixed', 'inset-0', 'absolute', 'isolate', 'overflow-hidden', 'pointer-events-none',
+    'z-[-1]', 'z-10',
+    'opacity-0', 'opacity-75',
+    '-inset-[3%]', '-inset-[2%]', 'inset-[3%]',
+    'motion-reduce:animate-none', 'motion-reduce:hidden',
+    'w-[34vmin]', 'h-[34vmin]', 'w-[26vmin]', 'h-[26vmin]', 'w-[20vmin]', 'h-[20vmin]',
+    'left-[10%]', 'top-[6%]', 'right-[6%]', 'top-[12%]', 'left-[28%]', 'top-[3%]',
+    'left-[12%]', 'top-[8%]', 'right-[8%]', 'top-[15%]', 'left-[25%]', 'top-[5%]',
+    'bg-black/90', 'bg-black/80',
+    'text-white', 'text-xs', 'font-mono', 'rounded',
+    'p-3', 'p-2',
+    'will-change-transform',
+    'bottom-0', 'left-0', 'right-0', 'h-40', 'h-32',
+    'top-4', 'left-4', 'right-4',
+    // Custom animation classes
+    'aurora-backdrop',
+    'rain-heavy-layer', 'rain-medium-layer', 'rain-light-layer',
+    'lightning-flash-overlay',
+    'rain-heavy-fast', 'rain-medium-fast', 'rain-light-fast',
+    // Container query responsive classes
+    'sm:opacity-50', 'md:opacity-75', 'lg:opacity-100',
+    // Froste Dragon System safelist
+    'inset-0','-z-10','opacity-[0.12]','opacity-[0.10]','opacity-[0.08]',
+    'mix-blend-screen','-inset-[2%]','[filter:blur(70px)]',
+    'animate-[aurora_14s_ease-in-out_infinite]',
+    'animate-[rainA_3.6s_linear_infinite]','animate-[rainB_4.6s_linear_infinite]','animate-[rainC_5.2s_linear_infinite]',
+    'animate-[rainA_2.8s_linear_infinite]','animate-[rainB_3.6s_linear_infinite]','animate-[rainC_4.2s_linear_infinite]',
+    'animate-[flash_22s_ease-in-out_infinite]', 'animate-[boltFlash_22s_ease-in-out_infinite]',
+  ],
 }
