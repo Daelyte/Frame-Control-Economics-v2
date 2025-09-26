@@ -1,7 +1,8 @@
 // Arcjet configuration for Frame Economics
-import arcjet, { shield, detectBot, rateLimit } from "@arcjet/node";
+const arcjet = require("@arcjet/node").default;
+const { shield, detectBot, rateLimit } = require("@arcjet/node");
 
-export const aj = arcjet({
+const aj = arcjet({
   // ARCJET_KEY automatically set by the Netlify integration
   // Log in at https://app.arcjet.com to get your key
   key: process.env.ARCJET_KEY,
@@ -47,7 +48,7 @@ const DEVELOPER_ALLOWLIST = [
 ];
 
 // Check if request is from an allowed developer IP
-export const isDeveloperRequest = (event) => {
+const isDeveloperRequest = (event) => {
   const ip = event.headers["x-forwarded-for"] || event.headers["client-ip"] || event.headers["x-real-ip"];
   const userAgent = event.headers["user-agent"] || '';
   
@@ -73,7 +74,7 @@ export const isDeveloperRequest = (event) => {
 };
 
 // Helper function to handle Arcjet decisions
-export const handleArcjetDecision = (decision, event, context) => {
+const handleArcjetDecision = (decision, event, context) => {
   // Skip Arcjet checks for developer requests
   if (isDeveloperRequest(event)) {
     console.log('Developer request detected - bypassing Arcjet protection', {
@@ -153,4 +154,10 @@ export const handleArcjetDecision = (decision, event, context) => {
   }
   
   return null; // Allow the request to continue
+};
+
+module.exports = {
+  aj,
+  isDeveloperRequest,
+  handleArcjetDecision
 };

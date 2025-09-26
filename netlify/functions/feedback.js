@@ -1,7 +1,7 @@
 // Protected feedback endpoint for Frame Economics
-import { aj, handleArcjetDecision, isDeveloperRequest } from "./arcjet-config.js";
+const { aj, handleArcjetDecision, isDeveloperRequest } = require("./arcjet-config.js");
 
-export const handler = async (event, context) => {
+const handler = async (event, context) => {
   // Skip Arcjet for developer requests
   if (!isDeveloperRequest(event)) {
     // Apply Arcjet protection with stricter rate limiting for feedback
@@ -164,3 +164,5 @@ function generateFeedbackId() {
   const random = Math.random().toString(36).substr(2, 8);
   return `fb_${timestamp}_${random}`;
 }
+
+module.exports = { handler };

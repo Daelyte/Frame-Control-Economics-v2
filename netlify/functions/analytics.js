@@ -1,7 +1,7 @@
 // Protected analytics endpoint for Frame Economics
-import { aj, handleArcjetDecision, isDeveloperRequest } from "./arcjet-config.js";
+const { aj, handleArcjetDecision, isDeveloperRequest } = require("./arcjet-config.js");
 
-export const handler = async (event, context) => {
+const handler = async (event, context) => {
   // Skip Arcjet for developer requests
   if (!isDeveloperRequest(event)) {
     // Apply Arcjet protection for non-developer requests
@@ -120,3 +120,5 @@ async function handleAnalyticsGet(event, context) {
 function generateEventId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
+
+module.exports = { handler };
