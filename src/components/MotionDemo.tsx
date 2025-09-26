@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion as m } from 'framer-motion';
-import TechBackdrop from './motion/TechBackdrop';
+import { DramaticDragon } from './ambient/DragonPresets';
 import DragonMark from './motion/DragonMark';
 import ParallaxCards from './ParallaxCards';
 import RevealSection, { RevealText } from './RevealSection';
@@ -38,7 +38,7 @@ const MotionDemo: React.FC = () => {
 
   return (
     <div className="relative min-h-screen">
-      <TechBackdrop />
+      <DramaticDragon />
       
       {/* Hero Section */}
       <section className="relative z-10 min-h-screen flex items-center justify-center px-4">

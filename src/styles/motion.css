@@ -40,6 +40,14 @@
     animation-duration: 80ms !important;
     transition-duration: 80ms !important;
   }
+  
+  /* Disable dragon backdrop animations */
+  [style*="animation"] {
+    animation: none !important;
+  }
+  svg animate {
+    display: none !important;
+  }
 }
 
 /* Performance-optimized animations - only transform and opacity */
@@ -257,6 +265,16 @@
 @keyframes shimmer {
   to {
     transform: translateX(100%);
+  }
+}
+
+/* Dragon backdrop orbital motion */
+@keyframes orbital {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-1.5%) scale(1.015);
   }
 }
 

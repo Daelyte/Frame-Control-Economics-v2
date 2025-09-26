@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
+import DragonBackdrop from './ambient/DragonPresets';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -89,6 +90,8 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <div style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
+      {/* Ominous Dragon Backdrop - subtle and professional */}
+      <DragonBackdrop preset="executive" />
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">
