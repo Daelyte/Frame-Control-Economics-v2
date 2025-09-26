@@ -7,6 +7,13 @@
   NODE_VERSION = "18"
   NETLIFY_SKIP_PLUGIN_INSTALL = "true"
 
+# Enable prerendering for SEO (crawlers get real HTML)
+[build.processing]
+  skip_processing = false
+
+[build.processing.prerender]
+  enabled = true
+
 # Temporarily disable plugins for deployment
 # [[plugins]]
 #   package = "@netlify/plugin-emails"
@@ -25,15 +32,16 @@
 # [[plugins]]
 #   package = "netlify-plugin-pagewatch"
 
-# Security headers for enhanced protection
+# Enhanced security headers per audit recommendations
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    X-XSS-Protection = "1; mode=block"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
 # API endpoints with CORS headers
 [[headers]]

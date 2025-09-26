@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FrameEconomicsWebsite from "./FrameEconomicsWebsite";
 import ThemeToggle from "./ThemeToggle";
+import SkipLink from "./components/SkipLink";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Menu, X } from "lucide-react";
 
@@ -17,9 +18,11 @@ const App: React.FC = () => {
 
   return (
     <AuthProvider>
-      <main className="min-h-screen page-light dark:page-gradient transition-colors duration-300">
+      <div className="min-h-screen page-light dark:page-gradient transition-colors duration-300">
+        <SkipLink />
+        
         {/* Professional top navigation */}
-        <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/20 dark:border-slate-700/20">
+        <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/20 dark:border-slate-700/20" role="navigation" aria-label="Main navigation">
           <div className="container mx-auto px-4 py-3 sm:py-4">
             <div className="flex items-center justify-between">
               {/* Logo/Brand */}
@@ -114,10 +117,10 @@ const App: React.FC = () => {
         </nav>
         
         {/* Main content */}
-        <div className="animate-fade-in">
+        <main id="main" className="animate-fade-in" role="main">
           <FrameEconomicsWebsite />
-        </div>
-      </main>
+        </main>
+      </div>
     </AuthProvider>
   );
 };

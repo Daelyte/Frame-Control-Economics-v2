@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://icecoldfroste.com/sitemap.xml
+
+# Disallow admin/private areas (none for now)
+# Disallow: /admin/
+# Disallow: /private/
