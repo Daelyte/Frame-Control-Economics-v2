@@ -1,28 +1,7 @@
-// Protected analytics endpoint for Frame Economics
-const { aj, handleArcjetDecision, isDeveloperRequest } = require("./arcjet-config.js");
+// Analytics endpoint for Frame Economics
+// TODO: Re-enable Arcjet protection once module compatibility is resolved
 
 const handler = async (event, context) => {
-  // Skip Arcjet for developer requests
-  if (!isDeveloperRequest(event)) {
-    // Apply Arcjet protection for non-developer requests
-    const decision = await aj.protect(event, {
-      ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
-      method: event.httpMethod,
-      protocol: "http",
-      host: event.headers.host,
-      path: event.path,
-      headers: event.headers,
-      // Add user agent for bot detection
-      "user-agent": event.headers["user-agent"],
-    });
-
-    // Handle blocked requests
-    const blockResponse = handleArcjetDecision(decision, event, context);
-    if (blockResponse) {
-      return blockResponse;
-    }
-  }
-
   // Handle different HTTP methods
   switch (event.httpMethod) {
     case "POST":

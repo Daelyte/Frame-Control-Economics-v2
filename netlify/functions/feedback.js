@@ -1,27 +1,7 @@
-// Protected feedback endpoint for Frame Economics
-const { aj, handleArcjetDecision, isDeveloperRequest } = require("./arcjet-config.js");
+// Feedback endpoint for Frame Economics
+// TODO: Re-enable Arcjet protection once module compatibility is resolved
 
 const handler = async (event, context) => {
-  // Skip Arcjet for developer requests
-  if (!isDeveloperRequest(event)) {
-    // Apply Arcjet protection with stricter rate limiting for feedback
-    const decision = await aj.protect(event, {
-      ip: event.headers["x-forwarded-for"] || event.headers["client-ip"],
-      method: event.httpMethod,
-      protocol: "http",
-      host: event.headers.host,
-      path: event.path,
-      headers: event.headers,
-      "user-agent": event.headers["user-agent"],
-    });
-
-    // Handle blocked requests
-    const blockResponse = handleArcjetDecision(decision, event, context);
-    if (blockResponse) {
-      return blockResponse;
-    }
-  }
-
   // Only allow POST for feedback submission
   if (event.httpMethod !== "POST") {
     return {

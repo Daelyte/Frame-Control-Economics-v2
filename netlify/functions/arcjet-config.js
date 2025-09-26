@@ -1,6 +1,5 @@
 // Arcjet configuration for Frame Economics
-const arcjet = require("@arcjet/node").default;
-const { shield, detectBot, rateLimit } = require("@arcjet/node");
+const { default: arcjet, shield, detectBot, rateLimit } = require("@arcjet/node");
 
 const aj = arcjet({
   // ARCJET_KEY automatically set by the Netlify integration
