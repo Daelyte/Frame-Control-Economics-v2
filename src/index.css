@@ -269,16 +269,30 @@ body {
     --dragon-glow: #78FFF3;
     --dragon-shadow: rgba(57, 215, 201, 0.4);
     
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: var(--dragon-size);
     height: var(--dragon-size);
-    background-image: url('/dragon-mark.png');
+    /* background-image: url('/dragon-mark.png'); */
+    background: radial-gradient(circle, var(--dragon-base) 30%, var(--dragon-glow) 100%);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    border-radius: 50%;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     cursor: pointer;
+    font-size: calc(var(--dragon-size) * 0.5);
+  }
+  
+  /* Dragon emoji as temporary placeholder */
+  .dragon-logo::after,
+  .dragon-logo-hero::after {
+    content: '🐉';
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.3));
   }
   
   /* Hero version with enhanced effects */
@@ -300,7 +314,7 @@ body {
     z-index: -1;
   }
   
-  /* Rotating glint effect */
+  /* Rotating glint effect - disabled temporarily while using emoji placeholder
   .dragon-logo::after,
   .dragon-logo-hero::after {
     content: '';
@@ -314,7 +328,7 @@ body {
     -webkit-mask: radial-gradient(circle, black 30%, transparent 50%);
     z-index: 1;
     pointer-events: none;
-  }
+  } */
   
   /* Hover effects */
   .dragon-logo:hover,
