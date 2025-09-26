@@ -263,93 +263,93 @@ const FrameEconomicsWebsite: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen safe-area-top safe-area-bottom">
+      <div className="container mx-auto container-mobile py-4 sm:py-8">
         {/* Hero Section */}
-        <section className="relative py-16 md:py-24 mb-12 overflow-hidden">
+        <section className="relative py-8 sm:py-12 md:py-16 lg:py-24 mb-6 sm:mb-8 md:mb-12 overflow-hidden">
           {/* Enhanced background pattern */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-50/90 via-blue-50/60 to-purple-50/70 dark:from-slate-900/90 dark:via-blue-900/30 dark:to-purple-900/50"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(120,119,198,0.15),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top_left,rgba(120,119,198,0.08),transparent_50%)]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.12),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.06),transparent_50%)]"></div>
           
-          {/* Enhanced floating elements */}
-          <div className="absolute top-12 left-12 w-24 h-24 rotate-45 bg-gradient-to-br from-blue-200/25 to-purple-200/25 dark:from-blue-800/15 dark:to-purple-800/15 blur-sm animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-36 h-36 rotate-12 bg-gradient-to-br from-purple-200/20 to-indigo-200/20 dark:from-purple-800/12 dark:to-indigo-800/12 blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-24 left-1/3 w-20 h-20 -rotate-12 bg-gradient-to-br from-cyan-200/25 to-blue-200/25 dark:from-cyan-800/15 dark:to-blue-800/15 blur-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-20 right-1/4 w-14 h-14 rotate-45 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 dark:from-emerald-800/10 dark:to-teal-800/10 blur-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+          {/* Enhanced floating elements - reduced on mobile */}
+          <div className="hidden sm:block absolute top-12 left-12 w-16 h-16 sm:w-24 sm:h-24 rotate-45 bg-gradient-to-br from-blue-200/25 to-purple-200/25 dark:from-blue-800/15 dark:to-purple-800/15 blur-sm animate-pulse"></div>
+          <div className="hidden md:block absolute top-40 right-20 w-24 h-24 sm:w-36 sm:h-36 rotate-12 bg-gradient-to-br from-purple-200/20 to-indigo-200/20 dark:from-purple-800/12 dark:to-indigo-800/12 blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="hidden sm:block absolute bottom-24 left-1/3 w-12 h-12 sm:w-20 sm:h-20 -rotate-12 bg-gradient-to-br from-cyan-200/25 to-blue-200/25 dark:from-cyan-800/15 dark:to-blue-800/15 blur-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="hidden md:block absolute top-20 right-1/4 w-10 h-10 sm:w-14 sm:h-14 rotate-45 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 dark:from-emerald-800/10 dark:to-teal-800/10 blur-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
           
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container mx-auto container-mobile relative z-10">
             <div className="text-center max-w-5xl mx-auto">
-              {/* Strong tagline - above the fold */}
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
-                <span className="bg-gradient-to-r from-slate-900 via-purple-900 to-blue-900 dark:from-white dark:via-purple-200 dark:to-blue-200 bg-clip-text text-transparent leading-tight">
+              {/* Strong tagline - mobile optimized */}
+              <h1 className="text-responsive-4xl font-bold mb-4 sm:mb-6 animate-slide-up">
+                <span className="bg-gradient-to-r from-slate-900 via-purple-900 to-blue-900 dark:from-white dark:via-purple-200 dark:to-blue-200 bg-clip-text text-transparent leading-tight block">
                   Master the Hidden
                 </span>
-                <br />
-                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent block">
                   Psychology of Influence
                 </span>
               </h1>
               
               {/* Compelling subtitle */}
-              <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 mb-8 leading-relaxed font-medium">
+              <p className="text-responsive-xl text-slate-700 dark:text-slate-300 mb-6 sm:mb-8 leading-relaxed font-medium">
                 Through behavioral economics and frame control
               </p>
               
-              {/* Value proposition - enhanced */}
-              <div className="grid md:grid-cols-3 gap-8 mb-12 max-w-5xl mx-auto">
-                <div className="group text-center p-6 glass-effect rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Brain className="w-8 h-8 text-white" />
+              {/* Value proposition - mobile optimized */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 max-w-5xl mx-auto">
+                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">10 Proven Rules</h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Science-backed behavioral economics principles that reveal the hidden psychology of influence</p>
+                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">10 Proven Rules</h3>
+                  <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Science-backed behavioral economics principles that reveal the hidden psychology of influence</p>
                 </div>
-                <div className="group text-center p-6 glass-effect rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Target className="w-8 h-8 text-white" />
+                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Interactive Training</h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Practice real-world scenarios with instant feedback and personalized learning paths</p>
+                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">Interactive Training</h3>
+                  <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Practice real-world scenarios with instant feedback and personalized learning paths</p>
                 </div>
-                <div className="group text-center p-6 glass-effect rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Shield className="w-8 h-8 text-white" />
+                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl sm:col-span-2 md:col-span-1">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Unshakeable Frame</h3>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Build authentic confidence rooted in your values, not reactive to others' manipulation</p>
+                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">Unshakeable Frame</h3>
+                  <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Build authentic confidence rooted in your values, not reactive to others' manipulation</p>
                 </div>
               </div>
               
-              {/* Clear call to action */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+              {/* Clear call to action - mobile optimized */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-6 sm:mb-8">
                 <button
                   onClick={() => setSectionAndHash("assessment")}
-                  className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="group w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  <span className="flex items-center gap-3">
-                    <BarChart3 className="w-5 h-5" />
-                    Start Your Assessment
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="flex items-center justify-center gap-2 sm:gap-3">
+                    <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="text-sm sm:text-base">Start Your Assessment</span>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
                 <button
                   onClick={() => setSectionAndHash("rules")}
-                  className="px-8 py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300"
+                  className="w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300"
                 >
-                  <span className="flex items-center gap-3">
-                    <Target className="w-5 h-5" />
-                    Explore the Rules
+                  <span className="flex items-center justify-center gap-2 sm:gap-3">
+                    <Target className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="text-sm sm:text-base">Explore the Rules</span>
                   </span>
                 </button>
               </div>
               
-              {/* Progress indicator for returning users */}
+              {/* Progress indicator for returning users - mobile optimized */}
               {completedRules.size > 0 && (
-                <div className="inline-flex items-center gap-3 px-6 py-3 glass-effect rounded-xl backdrop-blur-sm">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <span className="font-medium text-slate-700 dark:text-slate-300">
-                    {completionPercentage}% Complete • {completedRules.size}/{rules.length} rules mastered
+                <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 glass-effect-mobile rounded-lg sm:rounded-xl backdrop-blur-sm">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                  <span className="font-medium text-slate-700 dark:text-slate-300 text-responsive-sm text-center">
+                    <span className="hidden xs:inline">{completionPercentage}% Complete • {completedRules.size}/{rules.length} rules mastered</span>
+                    <span className="xs:hidden">{completedRules.size}/{rules.length} Complete</span>
                   </span>
                 </div>
               )}
@@ -357,12 +357,18 @@ const FrameEconomicsWebsite: React.FC = () => {
           </div>
         </section>
 
-        {/* Navigation */}
-        <nav className="flex justify-center mb-12 md:mb-16 sticky top-4 z-30" aria-label="Primary">
+        {/* Navigation - Mobile Optimized */}
+        <nav className="flex justify-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 sticky top-16 sm:top-4 z-30 container-mobile" aria-label="Primary">
           <div 
             role="tablist" 
             aria-orientation="horizontal"
-            className="flex glass-effect rounded-2xl p-2 overflow-x-auto shadow-xl border border-white/20 dark:border-white/10 backdrop-blur-md"
+            className="flex glass-effect-mobile rounded-xl sm:rounded-2xl p-1.5 sm:p-2 overflow-x-auto shadow-lg sm:shadow-xl border border-white/20 dark:border-white/10 backdrop-blur-md w-full max-w-full scrollbar-hide"
+            style={{
+              scrollSnapType: 'x mandatory',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}
           >
             {sections.map((section, idx) => {
               const selected = currentSection === section.id;
@@ -385,17 +391,23 @@ const FrameEconomicsWebsite: React.FC = () => {
                     }
                   }}
                   className={`
-                    flex items-center gap-2 px-4 py-3 rounded-xl whitespace-nowrap 
+                    flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl whitespace-nowrap flex-shrink-0
                     transition-all duration-300 focus:outline-none focus:ring-2 
-                    focus:ring-purple-400/60 font-medium
+                    focus:ring-purple-400/60 font-medium text-xs sm:text-sm md:text-base btn-touch
+                    scroll-snap-align: start;
                     ${selected 
-                      ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg transform scale-105" 
-                      : "text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:shadow-md"
+                      ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-md sm:shadow-lg transform scale-100 sm:scale-105" 
+                      : "text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:shadow-sm sm:hover:shadow-md"
                     }
                   `}
                 >
-                  {section.icon}
-                  {section.title}
+                  <span className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 flex-shrink-0">
+                    {section.icon}
+                  </span>
+                  <span className="hidden xs:inline sm:inline">{section.title}</span>
+                  <span className="xs:hidden text-xs font-semibold">
+                    {section.title.split(' ')[0]}
+                  </span>
                 </button>
               );
             })}

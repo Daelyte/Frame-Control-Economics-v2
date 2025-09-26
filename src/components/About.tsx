@@ -49,12 +49,12 @@ const About: React.FC<AboutProps> = ({ onNavigateToProjects }) => {
   ];
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in">
       {/* Hero Section */}
-      <div className="glass-effect rounded-3xl p-6 md:p-8 shadow-xl text-center">
-        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-          {/* Profile Image */}
-          <div className="w-24 h-24 md:w-28 md:h-28 shadow-2xl border-4 border-purple-500/30 rounded-full overflow-hidden flex-shrink-0">
+      <div className="glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl text-center">
+        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+          {/* Profile Image - Mobile Optimized */}
+          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 shadow-xl sm:shadow-2xl border-2 sm:border-4 border-purple-500/30 rounded-full overflow-hidden flex-shrink-0">
             <img 
               src="vash-profile.png" 
               alt="Daelyte Profile - Vash the Stampede inspired" 
@@ -67,49 +67,58 @@ const About: React.FC<AboutProps> = ({ onNavigateToProjects }) => {
             />
           </div>
           
-          {/* Main Info */}
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
+          {/* Main Info - Mobile Optimized */}
+          <div className="flex-1 text-center sm:text-left">
+            <h2 className="text-responsive-3xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">
               👋 Hi, I'm Daelyte
             </h2>
             
-            <p className="text-lg md:text-xl font-semibold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent mb-3">
-              Sales Professional • AI-Assisted Creator • Experience Architect
+            <p className="text-responsive-lg font-semibold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent mb-2 sm:mb-3">
+              <span className="hidden sm:inline">Sales Professional • AI-Assisted Creator • Experience Architect</span>
+              <span className="sm:hidden">Sales Pro • AI Creator • Experience Architect</span>
             </p>
             
-            <p className="text-base md:text-lg italic text-slate-600 dark:text-slate-400 mb-4">
-              "Whether it's closing deals in boardrooms or orchestrating warehouse raves—I make connections that matter"
+            <p className="text-responsive-base italic text-slate-600 dark:text-slate-400 mb-3 sm:mb-4 leading-relaxed">
+              <span className="hidden xs:inline">"Whether it's closing deals in boardrooms or orchestrating warehouse raves—I make connections that matter"</span>
+              <span className="xs:hidden">"From boardrooms to warehouses—I make connections that matter"</span>
             </p>
             
-            <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-              Building my career in tech sales with focus on client success and systems integration. 
-              I use AI as my development companion and bring unique experience from advertising, e-commerce, 
-              tech, and nightlife to everything I create.
+            <p className="text-responsive-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              <span className="hidden sm:inline">
+                Building my career in tech sales with focus on client success and systems integration. 
+                I use AI as my development companion and bring unique experience from advertising, e-commerce, 
+                tech, and nightlife to everything I create.
+              </span>
+              <span className="sm:hidden">
+                Building my tech sales career with AI-powered development. Bringing diverse experience from 
+                advertising, e-commerce, and events to create unique solutions.
+              </span>
             </p>
           </div>
         </div>
         
         
-        {/* Quick Links */}
-        <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-6">
+        {/* Quick Links - Mobile Optimized */}
+        <div className="flex flex-col xs:flex-row flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 mt-4 sm:mt-6">
           <a 
             href="https://github.com/Daelyte" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm font-medium"
+            className="group inline-flex items-center justify-center gap-2 btn-touch px-3 sm:px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-responsive-sm font-medium"
           >
-            <Github className="w-4 h-4" />
-            GitHub
+            <Github className="w-4 h-4 flex-shrink-0" />
+            <span>GitHub</span>
             <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
           
           {onNavigateToProjects ? (
             <button
               onClick={onNavigateToProjects}
-              className="group inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm font-medium"
+              className="group inline-flex items-center justify-center gap-2 btn-touch px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-responsive-sm font-medium"
             >
-              <Rocket className="w-4 h-4" />
-              View Projects & Roadmap
+              <Rocket className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden xs:inline">View Projects & Roadmap</span>
+              <span className="xs:hidden">Projects</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
             </button>
           ) : (
@@ -117,41 +126,44 @@ const About: React.FC<AboutProps> = ({ onNavigateToProjects }) => {
               href="https://icecoldfroste.com/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-sm font-medium"
+              className="group inline-flex items-center justify-center gap-2 btn-touch px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 shadow-md hover:shadow-lg text-responsive-sm font-medium"
             >
-              <Globe className="w-4 h-4" />
-              Latest Project
+              <Globe className="w-4 h-4 flex-shrink-0" />
+              <span className="hidden xs:inline">Latest Project</span>
+              <span className="xs:hidden">Latest</span>
               <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
             </a>
           )}
         </div>
       </div>
 
-      {/* Skills Section */}
-      <div className="glass-effect rounded-3xl p-6 md:p-8 shadow-xl section-card">
-        <div className="text-center mb-6">
-          <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-3">
-            <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-purple-600 dark:text-purple-400" />
-            Core Strengths
+      {/* Skills Section - Mobile Optimized */}
+      <div className="glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl section-card-mobile">
+        <div className="text-center mb-4 sm:mb-6">
+          <h3 className="text-responsive-2xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-3 flex items-center justify-center gap-2 sm:gap-3">
+            <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+            <span>Core Strengths</span>
           </h3>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
-            Sales expertise, AI-powered productivity, and experience design across diverse industries
+          <p className="text-responsive-base text-slate-600 dark:text-slate-400">
+            <span className="hidden sm:inline">Sales expertise, AI-powered productivity, and experience design across diverse industries</span>
+            <span className="sm:hidden">Sales, AI productivity, and experience design</span>
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {skills.map((skill, index) => (
-            <div key={skill.name} className="group space-y-2">
+            <div key={skill.name} className="group space-y-1.5 sm:space-y-2">
               <div className="flex justify-between items-center">
-                <span className="font-semibold text-slate-900 dark:text-white text-sm md:text-base">
-                  {skill.name}
+                <span className="font-semibold text-slate-900 dark:text-white text-responsive-sm">
+                  <span className="hidden sm:inline">{skill.name}</span>
+                  <span className="sm:hidden">{skill.name.split(' ')[0] + (skill.name.split(' ')[1] ? ' ' + skill.name.split(' ')[1] : '')}</span>
                 </span>
-                <span className="text-xs md:text-sm font-medium px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-600 dark:text-slate-400">
+                <span className="text-xs font-medium px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-slate-600 dark:text-slate-400 flex-shrink-0">
                   {skill.level}%
                 </span>
               </div>
               
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden shadow-inner">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 sm:h-2.5 overflow-hidden shadow-inner">
                 <div 
                   className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out shadow-sm group-hover:shadow-md`}
                   style={{ 
