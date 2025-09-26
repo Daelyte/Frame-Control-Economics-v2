@@ -214,10 +214,26 @@ body {
     animation: gradientShift 3s ease infinite;
   }
   
-  @keyframes gradientShift {
+@keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+  
+  @keyframes dragonBreathe {
+    0%, 100% { 
+      opacity: 0.3; 
+      transform: scale(1); 
+    }
+    50% { 
+      opacity: 0.5; 
+      transform: scale(1.1); 
+    }
+  }
+  
+  @keyframes dragonGlint {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
   
   /* Safe area handling for modern devices */
@@ -244,6 +260,115 @@ body {
   
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Dragon Logo Component - CSS Only Implementation */
+  .dragon-logo, .dragon-logo-hero {
+    --dragon-size: 48px;
+    --dragon-base: #39D7C9;
+    --dragon-glow: #78FFF3;
+    --dragon-shadow: rgba(57, 215, 201, 0.4);
+    
+    display: inline-block;
+    width: var(--dragon-size);
+    height: var(--dragon-size);
+    background-image: url('/dragon-mark.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    cursor: pointer;
+  }
+  
+  /* Hero version with enhanced effects */
+  .dragon-logo-hero {
+    --dragon-size: 64px;
+    filter: drop-shadow(0 0 20px var(--dragon-shadow));
+  }
+  
+  /* Breathing glow animation */
+  .dragon-logo::before,
+  .dragon-logo-hero::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(circle, var(--dragon-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: dragonBreathe 3.6s ease-in-out infinite;
+    z-index: -1;
+  }
+  
+  /* Rotating glint effect */
+  .dragon-logo::after,
+  .dragon-logo-hero::after {
+    content: '';
+    position: absolute;
+    inset: 10%;
+    background: conic-gradient(from 0deg, transparent 60%, var(--dragon-glow) 70%, transparent 80%);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: dragonGlint 5s linear infinite;
+    mask: radial-gradient(circle, black 30%, transparent 50%);
+    -webkit-mask: radial-gradient(circle, black 30%, transparent 50%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* Hover effects */
+  .dragon-logo:hover,
+  .dragon-logo-hero:hover {
+    transform: translateY(-4px) scale(1.1);
+    filter: drop-shadow(0 8px 25px var(--dragon-shadow)) brightness(1.1);
+  }
+  
+  .dragon-logo:hover::before,
+  .dragon-logo-hero:hover::before {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+  
+  /* Enhanced premium glass effect */
+  .glass-premium {
+    background: linear-gradient(135deg, 
+      rgba(255,255,255,0.1) 0%, 
+      rgba(255,255,255,0.05) 50%,
+      rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 
+      0 8px 32px rgba(31, 38, 135, 0.37),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .glass-premium.dark {
+    background: linear-gradient(135deg, 
+      rgba(255,255,255,0.15) 0%, 
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.03) 100%);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  
+  /* Glass premium hover state */
+  .glass-premium-hover {
+    background: linear-gradient(135deg, 
+      rgba(255,255,255,0.2) 0%, 
+      rgba(255,255,255,0.1) 50%,
+      rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(25px) saturate(200%);
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 
+      0 12px 40px rgba(31, 38, 135, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass-premium-hover.dark {
+    background: linear-gradient(135deg, 
+      rgba(255,255,255,0.25) 0%, 
+      rgba(255,255,255,0.12) 50%,
+      rgba(255,255,255,0.06) 100%);
+    border: 1px solid rgba(255,255,255,0.18);
   }
 }
 

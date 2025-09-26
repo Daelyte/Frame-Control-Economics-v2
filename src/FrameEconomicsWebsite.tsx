@@ -288,6 +288,51 @@ const FrameEconomicsWebsite: React.FC = () => {
   return (
     <div className="min-h-screen safe-area-padding desktop-enhanced bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative">
       <FloatingParticles />
+      
+      {/* Dragon Header - Sticky home button */}
+      <header className="sticky top-0 z-40 backdrop-blur-md bg-white/10 dark:bg-slate-900/10 border-b border-white/20 dark:border-white/10">
+        <div className="container mx-auto container-mobile px-4 py-3">
+          <div className="flex items-center justify-between">
+            {/* Dragon Logo Home Button */}
+            <button
+              onClick={() => setSectionAndHash("introduction")}
+              className="group flex items-center gap-3 px-3 py-2 rounded-xl glass-premium hover:glass-premium-hover transition-all duration-300 hover:scale-105 border border-white/10 dark:border-white/5"
+              aria-label="Return to home"
+            >
+              <div className="dragon-logo" style={{'--dragon-size': '32px'} as React.CSSProperties}></div>
+              <div className="hidden sm:block">
+                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
+                  Frame Economics
+                </div>
+                <div className="text-xs text-slate-600 dark:text-slate-400">
+                  🐉 Dragon Framework
+                </div>
+              </div>
+            </button>
+            
+            {/* Quick Actions */}
+            <div className="flex items-center gap-2">
+              {/* Home button for mobile */}
+              <button
+                onClick={() => setSectionAndHash("introduction")}
+                className="sm:hidden p-2 glass-premium rounded-lg hover:glass-premium-hover transition-all duration-200"
+                aria-label="Home"
+              >
+                <Home className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              </button>
+              
+              {/* Progress indicator in header */}
+              {completedRules.size > 0 && (
+                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 glass-premium rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                  <span>{completedRules.size}/{rules.length}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+      
       <div className="container mx-auto container-mobile ultrawide-container py-4 sm:py-8 tablet-optimized relative z-10">
         {/* Hero Section */}
         <section className="relative py-8 sm:py-12 md:py-16 lg:py-24 mb-6 sm:mb-8 md:mb-12 overflow-hidden">
@@ -304,24 +349,35 @@ const FrameEconomicsWebsite: React.FC = () => {
           
           <div className="container mx-auto container-mobile relative z-10">
             <div className="text-center max-w-5xl mx-auto">
-              {/* Strong tagline - mobile optimized */}
-              <h1 className="text-responsive-4xl font-bold mb-4 sm:mb-6 animate-slide-up">
-                <span className="bg-gradient-to-r from-slate-900 via-purple-900 to-blue-900 dark:from-white dark:via-purple-200 dark:to-blue-200 bg-clip-text text-transparent leading-tight block">
-                  Master the Hidden
-                </span>
-                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent block">
-                  Psychology of Influence
-                </span>
-                {/* Deployment test indicator */}
-                <div className="text-xs text-green-500 mt-2 opacity-75">
-                  🚀 Live v3.1 - Mobile Optimized
+              {/* Enhanced hero header with dragon branding */}
+              <div className="relative mb-8 sm:mb-12">
+                {/* Dragon logo integration */}
+                <div className="flex justify-center mb-6">
+                  <div className="dragon-logo-hero" style={{'--dragon-size': '64px'} as React.CSSProperties}></div>
                 </div>
-              </h1>
-              
-              {/* Compelling subtitle */}
-              <p className="text-responsive-xl text-slate-700 dark:text-slate-300 mb-6 sm:mb-8 leading-relaxed font-medium">
-                Through behavioral economics and frame control
-              </p>
+                
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 sm:mb-8 animate-slide-up leading-[0.95] tracking-tight">
+                  <span className="block bg-gradient-to-r from-slate-900 via-purple-900 to-slate-800 dark:from-white dark:via-purple-100 dark:to-slate-100 bg-clip-text text-transparent mb-2">
+                    Master the Hidden
+                  </span>
+                  <span className="block bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-cyan-400 bg-clip-text text-transparent gradient-animate">
+                    Psychology of Influence
+                  </span>
+                </h1>
+                
+                {/* Enhanced subtitle with better spacing */}
+                <p className="text-xl sm:text-2xl md:text-3xl text-slate-600 dark:text-slate-300 mb-8 sm:mb-10 leading-relaxed font-light max-w-4xl mx-auto">
+                  Through behavioral economics and frame control
+                </p>
+                
+                {/* Power statement */}
+                <div className="inline-flex items-center gap-3 px-6 py-3 glass-premium rounded-full border border-purple-200/30 dark:border-purple-700/30 mb-6">
+                  <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    🐉 Dragon-Powered Framework v4.0 - Live Now
+                  </span>
+                </div>
+              </div>
               
               {/* Value proposition - enhanced with premium components */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 max-w-5xl mx-auto">
