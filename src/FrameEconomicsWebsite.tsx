@@ -256,26 +256,95 @@ const FrameEconomicsWebsite: React.FC = () => {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <header className="text-center mb-8 md:mb-12 animate-slide-up">
-          <div className="inline-flex items-center gap-3 glass-effect rounded-2xl px-6 py-3 mb-6 shadow-lg">
-            <Brain className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-              Frame Economics
-            </h1>
-          </div>
-          <p className="text-xl text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Master the hidden psychology of influence through behavioral economics and frame control.
-          </p>
-          {completedRules.size > 0 && (
-            <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 glass-effect rounded-xl">
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                {completionPercentage}% Complete ({completedRules.size}/{rules.length} rules mastered)
-              </span>
+        {/* Hero Section */}
+        <section className="relative py-12 md:py-20 mb-8 overflow-hidden">
+          {/* Icy background pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/80 via-blue-50/40 to-purple-50/60 dark:from-slate-900/80 dark:via-blue-900/20 dark:to-purple-900/40"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.05),transparent_50%)]"></div>
+          
+          {/* Geometric ice-like shapes */}
+          <div className="absolute top-10 left-10 w-20 h-20 rotate-45 bg-gradient-to-br from-blue-200/20 to-purple-200/20 dark:from-blue-800/10 dark:to-purple-800/10 blur-sm"></div>
+          <div className="absolute top-32 right-16 w-32 h-32 rotate-12 bg-gradient-to-br from-purple-200/15 to-indigo-200/15 dark:from-purple-800/8 dark:to-indigo-800/8 blur-sm"></div>
+          <div className="absolute bottom-20 left-1/4 w-16 h-16 -rotate-12 bg-gradient-to-br from-cyan-200/20 to-blue-200/20 dark:from-cyan-800/10 dark:to-blue-800/10 blur-sm"></div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center max-w-5xl mx-auto">
+              {/* Strong tagline - above the fold */}
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
+                <span className="bg-gradient-to-r from-slate-900 via-purple-900 to-blue-900 dark:from-white dark:via-purple-200 dark:to-blue-200 bg-clip-text text-transparent leading-tight">
+                  Master the Hidden
+                </span>
+                <br />
+                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  Psychology of Influence
+                </span>
+              </h1>
+              
+              {/* Compelling subtitle */}
+              <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 mb-8 leading-relaxed font-medium">
+                Through behavioral economics and frame control
+              </p>
+              
+              {/* Value proposition - scannable */}
+              <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
+                <div className="text-center p-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">10 Proven Rules</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Behavioral economics principles</p>
+                </div>
+                <div className="text-center p-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                    <Target className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Practical Training</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Real-world scenarios & practice</p>
+                </div>
+                <div className="text-center p-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Unshakeable Frame</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Calm, consistent, value-anchored</p>
+                </div>
+              </div>
+              
+              {/* Clear call to action */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                <button
+                  onClick={() => setSectionAndHash("assessment")}
+                  className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  <span className="flex items-center gap-3">
+                    <BarChart3 className="w-5 h-5" />
+                    Start Your Assessment
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </button>
+                <button
+                  onClick={() => setSectionAndHash("rules")}
+                  className="px-8 py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300"
+                >
+                  <span className="flex items-center gap-3">
+                    <Target className="w-5 h-5" />
+                    Explore the Rules
+                  </span>
+                </button>
+              </div>
+              
+              {/* Progress indicator for returning users */}
+              {completedRules.size > 0 && (
+                <div className="inline-flex items-center gap-3 px-6 py-3 glass-effect rounded-xl backdrop-blur-sm">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                    {completionPercentage}% Complete • {completedRules.size}/{rules.length} rules mastered
+                  </span>
+                </div>
+              )}
             </div>
-          )}
-        </header>
+          </div>
+        </section>
 
         {/* Navigation */}
         <nav className="flex justify-center mb-8 md:mb-12 sticky top-2 z-20" aria-label="Primary">
@@ -330,118 +399,189 @@ const FrameEconomicsWebsite: React.FC = () => {
             className="max-w-4xl mx-auto animate-fade-in"
           >
             <div className="glass-effect rounded-3xl p-8 mb-8 shadow-xl">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8 text-center">
                 The Intersection of Psychology and Power
               </h2>
-              <div className="prose prose-slate dark:prose-invert max-w-none">
-                <p className="text-lg leading-relaxed">
-                  Understand the hidden economics of behavior and keep your center when others try to destabilize it.
+              
+              {/* Key concept - scannable */}
+              <div className="text-center mb-10">
+                <p className="text-xl leading-relaxed text-slate-700 dark:text-slate-300 mb-6">
+                  Understand the hidden economics of behavior.
                 </p>
-                <p>
-                  We respond to biases, anchors, losses, and context in predictable ways. 
+                <p className="text-xl leading-relaxed text-slate-700 dark:text-slate-300 mb-6">
+                  Keep your center when others try to destabilize it.
+                </p>
+                <p className="text-lg text-slate-600 dark:text-slate-400">
+                  We respond to biases, anchors, losses, and context in predictable ways.<br />
                   Frame control is holding steady in those storms.
                 </p>
-                <div className="bg-violet-100 dark:bg-purple-900/50 rounded-2xl p-6 my-8 border-l-4 border-purple-500">
-                  <h3 className="text-xl font-semibold text-purple-800 dark:text-purple-200 mb-3">
+              </div>
+              
+              {/* Core principle - prominent */}
+              <div className="bg-gradient-to-r from-violet-100 via-purple-50 to-indigo-100 dark:from-purple-900/50 dark:via-purple-900/30 dark:to-indigo-900/50 rounded-2xl p-8 my-10 border border-purple-200/50 dark:border-purple-700/50 shadow-lg">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                    <Target className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-purple-800 dark:text-purple-200 mb-4">
                     Core Principle
                   </h3>
-                  <p className="text-purple-900 dark:text-purple-100 mb-0">
+                  <p className="text-xl text-purple-900 dark:text-purple-100 font-medium">
                     Masters don't fight for control—they become the stable center others orbit.
                   </p>
                 </div>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                  <div className="bg-blue-50 dark:bg-blue-900/30 rounded-xl p-6">
-                    <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center gap-2">
-                      <Target className="w-5 h-5" />
-                      What You'll Learn
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-8 mt-12">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-2xl p-8 shadow-sm border border-blue-100 dark:border-blue-800/30">
+                  <div className="text-center mb-6">
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                      <Target className="w-7 h-7 text-white" />
+                    </div>
+                    <h4 className="text-xl font-bold text-blue-800 dark:text-blue-200 mb-2">
+                      What You'll Master
                     </h4>
-                    <ul className="space-y-2 text-blue-900 dark:text-blue-100">
-                      <li>• 10 behavioral economics principles</li>
-                      <li>• Frame control techniques</li>
-                      <li>• Practical counter-strategies</li>
-                      <li>• Real-world applications</li>
-                    </ul>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-900/30 rounded-xl p-6">
-                    <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3 flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5" />
-                      Interactive Learning
+                  <ul className="space-y-3 text-blue-900 dark:text-blue-100">
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>10 behavioral economics principles</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Frame control techniques</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Practical counter-strategies</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Real-world applications</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-2xl p-8 shadow-sm border border-green-100 dark:border-green-800/30">
+                  <div className="text-center mb-6">
+                    <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                      <CheckCircle className="w-7 h-7 text-white" />
+                    </div>
+                    <h4 className="text-xl font-bold text-green-800 dark:text-green-200 mb-2">
+                      Interactive Training
                     </h4>
-                    <ul className="space-y-2 text-green-900 dark:text-green-100">
-                      <li>• Scenario-based practice</li>
-                      <li>• Habit tracking system</li>
-                      <li>• Spaced repetition flashcards</li>
-                      <li>• Progress analytics</li>
-                    </ul>
                   </div>
-                  <div className="bg-purple-50 dark:bg-purple-900/30 rounded-xl p-6">
-                    <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-3 flex items-center gap-2">
-                      <Globe className="w-5 h-5" />
+                  <ul className="space-y-3 text-green-900 dark:text-green-100">
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Scenario-based practice</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Habit tracking system</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Spaced repetition flashcards</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Progress analytics</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/30 dark:to-violet-900/30 rounded-2xl p-8 shadow-sm border border-purple-100 dark:border-purple-800/30">
+                  <div className="text-center mb-6">
+                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-500 rounded-xl mx-auto mb-4 flex items-center justify-center">
+                      <Globe className="w-7 h-7 text-white" />
+                    </div>
+                    <h4 className="text-xl font-bold text-purple-800 dark:text-purple-200 mb-2">
                       Community Wisdom
                     </h4>
-                    <ul className="space-y-2 text-purple-900 dark:text-purple-100">
-                      <li>• Peer success stories</li>
-                      <li>• Expert insights</li>
-                      <li>• Practice statistics</li>
-                      <li>• Learning community</li>
-                    </ul>
                   </div>
+                  <ul className="space-y-3 text-purple-900 dark:text-purple-100">
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Peer success stories</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Expert insights</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Practice statistics</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span>Learning community</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
-            <div className="text-center space-y-4">
-              <div className="flex justify-center gap-4 flex-wrap">
+            <div className="text-center mt-12">
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+                Ready to Build Your Unshakeable Frame?
+              </h3>
+              
+              {/* Primary actions */}
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
                 <button
                   onClick={() => setSectionAndHash("assessment")}
-                  className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                  className="group px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  <BarChart3 className="w-5 h-5" />
-                  Take Assessment
+                  <span className="flex items-center gap-3">
+                    <BarChart3 className="w-5 h-5" />
+                    Start Assessment
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </button>
                 <button
                   onClick={() => setSectionAndHash("rules")}
-                  className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
+                  className="px-8 py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300"
                 >
-                  <Target className="w-5 h-5" />
-                  Browse Rules
+                  <span className="flex items-center gap-3">
+                    <Target className="w-5 h-5" />
+                    Explore the Rules
+                  </span>
                 </button>
               </div>
-              <div className="flex justify-center gap-2 flex-wrap">
-                <button
-                  onClick={() => setSectionAndHash("practice")}
-                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  Practice
-                </button>
-                <button
-                  onClick={() => setSectionAndHash("habits")}
-                  className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-                >
-                  <Calendar className="w-4 h-4" />
-                  Track Habits
-                </button>
-                <button
-                  onClick={() => setSectionAndHash("flashcards")}
-                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-                >
-                  <Layers className="w-4 h-4" />
-                  Study Cards
-                </button>
-                <button
-                  onClick={() => setSectionAndHash("community")}
-                  className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-                >
-                  <Globe className="w-4 h-4" />
-                  Community
-                </button>
-                <button
-                  onClick={() => setSectionAndHash("connect")}
-                  className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-                >
-                  <Users className="w-4 h-4" />
-                  Connect
-                </button>
+              
+              {/* Secondary quick access - more spaced */}
+              <div className="border-t border-slate-200 dark:border-slate-700 pt-8">
+                <p className="text-slate-600 dark:text-slate-400 mb-4 font-medium">Quick Access:</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto">
+                  <button
+                    onClick={() => setSectionAndHash("practice")}
+                    className="flex flex-col items-center gap-2 p-4 glass-effect hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all duration-200 group"
+                  >
+                    <CheckCircle className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Practice</span>
+                  </button>
+                  <button
+                    onClick={() => setSectionAndHash("habits")}
+                    className="flex flex-col items-center gap-2 p-4 glass-effect hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-xl transition-all duration-200 group"
+                  >
+                    <Calendar className="w-6 h-6 text-indigo-600 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Track</span>
+                  </button>
+                  <button
+                    onClick={() => setSectionAndHash("flashcards")}
+                    className="flex flex-col items-center gap-2 p-4 glass-effect hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-xl transition-all duration-200 group"
+                  >
+                    <Layers className="w-6 h-6 text-teal-600 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Study</span>
+                  </button>
+                  <button
+                    onClick={() => setSectionAndHash("community")}
+                    className="flex flex-col items-center gap-2 p-4 glass-effect hover:bg-green-50 dark:hover:bg-green-900/20 rounded-xl transition-all duration-200 group"
+                  >
+                    <Globe className="w-6 h-6 text-green-600 group-hover:scale-110 transition-transform" />
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Community</span>
+                  </button>
+                </div>
               </div>
             </div>
           </section>
