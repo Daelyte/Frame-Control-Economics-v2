@@ -1,4 +1,4 @@
-# Full production configuration - All features enabled
+# Frame Economics - Production Configuration
 [build]
   publish = "dist"
   command = "npm run build"
@@ -7,36 +7,29 @@
 [build.environment]
   NODE_VERSION = "18"
   NETLIFY_SKIP_PLUGIN_INSTALL = "true"
-  # Explicitly disable problematic plugins
   NETLIFY_DISABLE_PLUGIN_GHOST_MARKDOWN = "true"
   NETLIFY_DISABLE_PLUGIN_FETCH_FEEDS = "true"
 
-# Explicitly disable problematic plugins that may be configured in Netlify UI
-# This prevents the Ghost plugin error and other build failures
-
-# Ghost plugin explicitly disabled with dummy inputs to prevent errors
+# Ghost plugin explicitly disabled
 [[plugins]]
-package = "netlify-plugin-ghost-markdown"
-enabled = false
+  package = "netlify-plugin-ghost-markdown"
+  enabled = false
   [plugins.inputs]
-  ghostURL = "disabled"
-  ghostKey = "disabled"
+    ghostURL = "disabled"
+    ghostKey = "disabled"
 
-# Feeds plugin explicitly disabled to prevent missing input errors
+# Feeds plugin explicitly disabled
 [[plugins]]
-package = "netlify-plugin-fetch-feeds"
-enabled = false
+  package = "netlify-plugin-fetch-feeds"
+  enabled = false
   [plugins.inputs]
-  dataDir = "disabled"
-  feeds = []
-
-# Previous plugins removed to fix build failures
-# If you need plugins in the future, configure them properly here with real credentials
+    dataDir = "disabled"
+    feeds = []
 
 [build.processing]
   skip_processing = false
 
-# Enhanced security headers for production
+# Security headers for production
 [[headers]]
   for = "/*"
   [headers.values]
