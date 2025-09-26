@@ -1,0 +1,29 @@
+ANIMATED OG BANNER VIDEOS NEEDED:
+
+Please save the generated animated videos from the Python script:
+
+1. og_animated_seamless.mp4 
+   - The MP4 version for broad compatibility
+   - Should be ~6 seconds, looping seamlessly
+   - Optimized at 4000k bitrate
+
+2. og_animated_seamless.webm
+   - The WebM version for better compression
+   - Should be ~6 seconds, looping seamlessly  
+   - Optimized at 2500k bitrate
+
+FEATURES OF THE ANIMATED BANNER:
+- Gentle parallax zoom/pan effect
+- Teal glow pulse on the knight chess piece area
+- Animated tech-grid overlay
+- Soft vignette and subtle grain
+- Moving light sweep across the design
+- Seamless 6-second loop
+
+The AnimatedOGBanner component will automatically:
+- Load the WebM version first (better compression)
+- Fallback to MP4 for compatibility
+- Use the static OG image as poster/fallback
+- Handle loading states and errors gracefully
+
+Place both video files in the /public directory of the project.

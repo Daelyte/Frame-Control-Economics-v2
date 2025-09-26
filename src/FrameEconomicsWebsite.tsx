@@ -15,6 +15,7 @@ import Connect from "./components/Connect";
 import CommunityTest from "./components/CommunityTest";
 import ProjectsRoadmap from "./components/ProjectsRoadmap";
 import AdvancedTheoryCarousel from "./components/AdvancedTheoryCarousel";
+import AnimatedCSSBanner from "./components/AnimatedCSSBanner";
 
 interface Rule {
   id: number;
@@ -420,9 +421,47 @@ const FrameEconomicsWebsite: React.FC = () => {
           <section 
             id="section-introduction" 
             aria-labelledby="tab-introduction" 
-            className="max-w-4xl mx-auto animate-fade-in"
+            className="max-w-6xl mx-auto animate-fade-in"
           >
-            <div className="glass-effect rounded-3xl p-8 mb-8 shadow-xl">
+            {/* Animated Hero Banner */}
+            <div className="relative mb-6 sm:mb-8 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-purple-200/50 dark:border-purple-700/50 mx-2 sm:mx-0">
+              <div className="aspect-[1200/630] max-h-[50vh] sm:max-h-[70vh]">
+                <AnimatedCSSBanner className="w-full h-full" />
+              </div>
+              
+              {/* Overlay content - Mobile optimized */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-4 sm:p-6 md:p-8">
+                <div className="text-center w-full">
+                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 drop-shadow-lg">
+                    Frame Economics
+                  </h1>
+                  <p className="text-base sm:text-lg md:text-xl text-teal-100 mb-4 sm:mb-6 drop-shadow-md max-w-3xl mx-auto px-2">
+                    Master Behavioral Psychology & Influence
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                    <button
+                      onClick={() => setSectionAndHash('rules')}
+                      className="btn-touch inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                    >
+                      <Target className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="hidden xs:inline">Explore the Rules</span>
+                      <span className="xs:hidden">Rules</span>
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                    </button>
+                    <button
+                      onClick={() => setSectionAndHash('assessment')}
+                      className="btn-touch inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/20 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/30 font-semibold rounded-lg sm:rounded-xl transition-all duration-300 text-sm sm:text-base"
+                    >
+                      <Brain className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="hidden xs:inline">Take Assessment</span>
+                      <span className="xs:hidden">Assessment</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="glass-effect rounded-3xl p-8 mb-8 shadow-xl max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8 text-center">
                 The Intersection of Psychology and Power
               </h2>
