@@ -176,63 +176,63 @@ const ProjectsRoadmap: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 p-4 md:p-6 lg:p-8 animate-fade-in">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 px-2 sm:px-4 md:p-6 lg:p-8 py-4 md:py-6 animate-fade-in">
+      <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">
         {/* Hero Section */}
-        <div className="text-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl border border-purple-200/50 dark:border-purple-700/50">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Rocket className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-            <h1 className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white">
+        <div className="text-center bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl border border-purple-200/50 dark:border-purple-700/50">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-4">
+            <Rocket className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400" />
+            <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-slate-900 dark:text-white text-center">
               Projects & Roadmap
             </h1>
           </div>
           
-          <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 mb-4 sm:mb-6 max-w-3xl mx-auto px-2">
             Building the future of sales technology, AI-human collaboration, and psychology-driven experiences
           </p>
           
-          <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto">
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 max-w-sm sm:max-w-lg mx-auto">
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">3</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Active Projects</div>
+              <div className="text-lg sm:text-2xl font-bold text-purple-600 dark:text-purple-400">3</div>
+              <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Active</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">5</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Planned</div>
+              <div className="text-lg sm:text-2xl font-bold text-blue-600 dark:text-blue-400">5</div>
+              <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Planned</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 dark:text-green-400">∞</div>
-              <div className="text-sm text-slate-600 dark:text-slate-400">Future</div>
+              <div className="text-lg sm:text-2xl font-bold text-green-600 dark:text-green-400">∞</div>
+              <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">Future</div>
             </div>
           </div>
         </div>
 
         {/* Current Projects */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-              <CheckCircle className="w-6 h-6 text-white" />
+        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl">
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Current Projects</h2>
-              <p className="text-slate-600 dark:text-slate-400">Active development and ongoing initiatives</p>
+            <div className="min-w-0">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Current Projects</h2>
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">Active development and ongoing initiatives</p>
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {currentProjects.map((project) => (
-              <div key={project.title} className="bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
-                <div className="mb-4">
-                  <div className="flex flex-col md:flex-row md:items-center gap-3 mb-3">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
+              <div key={project.title} className="bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
+                <div className="mb-3 sm:mb-4">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white break-words">
                       {project.title}
                     </h3>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                      <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(project.status)}`}>
                         {project.status}
                       </span>
                       {getPriorityIcon(project.priority)}
-                      <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-medium">
+                      <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-full text-xs sm:text-sm font-medium">
                         {project.category}
                       </span>
                     </div>

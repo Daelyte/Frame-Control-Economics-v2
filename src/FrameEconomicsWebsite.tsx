@@ -3,7 +3,7 @@ import {
   BookOpen, Brain, Users, TrendingUp, ChevronDown, ChevronRight,
   CheckCircle, ArrowRight, Target, Shield, Clock, Zap,
   Download, AlertTriangle, Lightbulb, BarChart3, Calendar,
-  Layers, Globe
+  Layers, Globe, Briefcase, GraduationCap, Home
 } from "lucide-react";
 import Assessment from "./components/Assessment";
 import About from "./components/About";
@@ -1109,6 +1109,149 @@ const FrameEconomicsWebsite: React.FC = () => {
                       If you need space, just say 'I need space' and I'll respect that. 
                       But withdrawal without communication isn't fair to either of us."
                     </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="glass-effect rounded-3xl p-8 shadow-xl">
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+                  <Briefcase className="w-7 h-7 text-orange-600 dark:text-orange-400" />
+                  Sales & Client Management
+                </h3>
+                <div className="space-y-6">
+                  <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
+                    <h4 className="font-bold mb-3 text-slate-900 dark:text-white">Scenario</h4>
+                    <p className="mb-4 text-slate-700 dark:text-slate-300">
+                      Enterprise client threatens to cancel $2M contract over minor delivery delay. 
+                      Uses emotional escalation and ultimatum tactics.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-red-50 dark:bg-red-900/30 rounded-lg p-4">
+                        <h5 className="font-semibold text-red-700 dark:text-red-300 mb-2">Client Pressure Tactics</h5>
+                        <ul className="space-y-1 text-red-900 dark:text-red-100 text-sm">
+                          <li>• "This is unacceptable" → Emotional amplification</li>
+                          <li>• "We need to evaluate our partnership" → Loss threat</li>
+                          <li>• "Other vendors wouldn't do this" → Social comparison</li>
+                        </ul>
+                      </div>
+                      <div className="bg-green-50 dark:bg-green-900/30 rounded-lg p-4">
+                        <h5 className="font-semibold text-green-700 dark:text-green-300 mb-2">Frame Control Response</h5>
+                        <ul className="space-y-1 text-green-900 dark:text-green-100 text-sm">
+                          <li>• Acknowledge concern without accepting blame</li>
+                          <li>• Reframe around mutual success</li>
+                          <li>• Present solution-focused options</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-6">
+                    <h4 className="font-bold mb-3 text-indigo-800 dark:text-indigo-200">Tactical Response</h4>
+                    <p className="text-indigo-900 dark:text-indigo-100 mb-3">
+                      "I understand this delay is frustrating and impacts your timeline. Our 18-month partnership 
+                      has consistently delivered value - this is the first delay, and here's exactly how we'll prevent it going forward."
+                    </p>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3">
+                      <h5 className="font-semibold text-slate-900 dark:text-white mb-1">Key Elements</h5>
+                      <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                        <li>• Validation without capitulation</li>
+                        <li>• Historical context anchor</li>
+                        <li>• Future-focused solution</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="glass-effect rounded-3xl p-8 shadow-xl">
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+                  <GraduationCap className="w-7 h-7 text-teal-600 dark:text-teal-400" />
+                  Academic & Professional Settings
+                </h3>
+                <div className="space-y-6">
+                  <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
+                    <h4 className="font-bold mb-3 text-slate-900 dark:text-white">Scenario</h4>
+                    <p className="mb-4 text-slate-700 dark:text-slate-300">
+                      During a thesis defense, committee member asks aggressive questioning designed to 
+                      undermine confidence rather than assess knowledge.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-4">
+                        <h5 className="font-semibold text-orange-700 dark:text-orange-300 mb-2">Attack Pattern</h5>
+                        <ul className="space-y-1 text-orange-900 dark:text-orange-100 text-sm">
+                          <li>• Rapid-fire questions without pause</li>
+                          <li>• "Have you considered [obscure theory]?"</li>
+                          <li>• Dismissive body language and tone</li>
+                        </ul>
+                      </div>
+                      <div className="bg-teal-50 dark:bg-teal-900/30 rounded-lg p-4">
+                        <h5 className="font-semibold text-teal-700 dark:text-teal-300 mb-2">Scholarly Frame Control</h5>
+                        <ul className="space-y-1 text-teal-900 dark:text-teal-100 text-sm">
+                          <li>• "That's a fascinating area for future research"</li>
+                          <li>• Acknowledge expertise while maintaining focus</li>
+                          <li>• Return to core thesis contributions</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-emerald-50 dark:bg-emerald-900/30 rounded-xl p-6">
+                    <h4 className="font-bold mb-3 text-emerald-800 dark:text-emerald-200">Mental Model</h4>
+                    <p className="text-emerald-900 dark:text-emerald-100">
+                      Academic interrogation often tests composure more than knowledge. Stay curious, 
+                      acknowledge limits honestly, and maintain confidence in your prepared material. 
+                      "I haven't explored that angle deeply - it could be valuable follow-up research."
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="glass-effect rounded-3xl p-8 shadow-xl">
+                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
+                  <Home className="w-7 h-7 text-pink-600 dark:text-pink-400" />
+                  Family & Social Dynamics
+                </h3>
+                <div className="space-y-6">
+                  <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6">
+                    <h4 className="font-bold mb-3 text-slate-900 dark:text-white">Scenario</h4>
+                    <p className="mb-4 text-slate-700 dark:text-slate-300">
+                      Family gathering where relative makes passive-aggressive comments about life choices, 
+                      attempting to trigger defensive responses in front of other family members.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-red-50 dark:bg-red-900/30 rounded-lg p-4">
+                        <h5 className="font-semibold text-red-700 dark:text-red-300 mb-2">Manipulation Tactics</h5>
+                        <ul className="space-y-1 text-red-900 dark:text-red-100 text-sm">
+                          <li>• "Still doing that job?" → Status undermining</li>
+                          <li>• Public setting for maximum pressure</li>
+                          <li>• Disguised as "concern" or "curiosity"</li>
+                        </ul>
+                      </div>
+                      <div className="bg-pink-50 dark:bg-pink-900/30 rounded-lg p-4">
+                        <h5 className="font-semibold text-pink-700 dark:text-pink-300 mb-2">Social Frame Mastery</h5>
+                        <ul className="space-y-1 text-pink-900 dark:text-pink-100 text-sm">
+                          <li>• Warm redirection: "I'm grateful for that work"</li>
+                          <li>• Include the group: "How's your project going?"</li>
+                          <li>• Maintain emotional generosity</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-violet-50 dark:bg-violet-900/30 rounded-xl p-6">
+                    <h4 className="font-bold mb-3 text-violet-800 dark:text-violet-200">Advanced Technique: Aikido Response</h4>
+                    <p className="text-violet-900 dark:text-violet-100 mb-3">
+                      Instead of defending, redirect the energy: "You always ask the most thoughtful questions. 
+                      I've been thinking about career growth too - what's your experience been with [their expertise]?"
+                    </p>
+                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3">
+                      <h5 className="font-semibold text-slate-900 dark:text-white mb-1">Why It Works</h5>
+                      <ul className="text-xs text-slate-700 dark:text-slate-300 space-y-1">
+                        <li>• Compliment disarms aggression</li>
+                        <li>• Question redirects focus to them</li>
+                        <li>• Shows confidence through curiosity</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
