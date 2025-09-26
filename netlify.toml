@@ -1,43 +1,14 @@
-# Frame Economics - Bulletproof Netlify Configuration
-# This overrides ALL UI settings and prevents plugin errors
+# Netlify Vite Framework Configuration
+# Following official Netlify Vite guide: https://docs.netlify.com/frameworks/vite/
 
 [build]
+  command = "npm run build"
   publish = "dist"
-  command = "npm ci && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
-  # Explicitly prevent plugin installation
-  NETLIFY_SKIP_PLUGIN_INSTALL = "true"
 
-# Production context - NO PLUGINS for maximum stability
-[context.production]
-  publish = "dist"
-  command = "npm ci && npm run build"
-  # Empty plugins array = no plugins will run
-  plugins = []
-
-# Deploy preview context - also no plugins
-[context.deploy-preview]
-  publish = "dist"
-  command = "npm ci && npm run build"
-  plugins = []
-
-# Branch deploy context - no plugins
-[context.branch-deploy]
-  publish = "dist"
-  command = "npm ci && npm run build"
-  plugins = []
-
-# Essential redirects only
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-# Basic security headers (optional - can be removed if causing issues)
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
