@@ -1,68 +1,12 @@
+# Minimal Netlify configuration - Fixed deployment issues
 [build]
   publish = "dist"
   command = "npm run build"
-  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "18"
-  NETLIFY_SKIP_PLUGIN_INSTALL = "true"
 
-# Enable prerendering for SEO (crawlers get real HTML)
-[build.processing]
-  skip_processing = false
-
-[build.processing.prerender]
-  enabled = true
-
-# Temporarily disable plugins for deployment
-# [[plugins]]
-#   package = "@netlify/plugin-emails"
-# [[plugins]]
-#   package = "netlify-plugin-a11y"
-# [[plugins]]
-#   package = "@21yunbox/netlify-plugin-21yunbox-deploy-to-china-cdn"
-# [[plugins]]
-#   package = "@netlify/plugin-lighthouse"
-# [[plugins]]
-#   package = "netlify-plugin-ghost-markdown"
-# [[plugins]]
-#   package = "netlify-plugin-fetch-feeds"
-# [[plugins]]
-#   package = "netlify-plugin-minify-html"
-# [[plugins]]
-#   package = "netlify-plugin-pagewatch"
-
-# Enhanced security headers per audit recommendations
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
-
-# API endpoints with CORS headers
-[[headers]]
-  for = "/.netlify/functions/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Headers = "Content-Type"
-    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
-
-# Redirects for API endpoints (optional cleaner URLs)
-[[redirects]]
-  from = "/api/analytics"
-  to = "/.netlify/functions/analytics"
-  status = 200
-
-[[redirects]]
-  from = "/api/feedback"
-  to = "/.netlify/functions/feedback"
-  status = 200
-
-# SPA fallback - must be last
+# SPA fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
