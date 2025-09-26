@@ -22,7 +22,7 @@
     "pre-deploy": "npm run validate && npm run build",
     "safe-push": "npm run validate && git push",
     "quick-check": "npm run validate",
-    "deploy-ready": "npm run validate",
+    "deploy-ready": "node scripts/deploy.js",
     "emergency-deploy": "npm run fix-and-deploy"
   },
   "dependencies": {
