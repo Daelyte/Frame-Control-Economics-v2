@@ -275,15 +275,39 @@ body {
     padding: 12px;
   }
   
-  /* Better scrollable areas */
-  .overflow-x-auto {
+  /* Better scrollable areas - hide scrollbars except for navigation */
+  .overflow-x-auto:not(.show-scrollbar) {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
   
-  .overflow-x-auto::-webkit-scrollbar {
+  .overflow-x-auto:not(.show-scrollbar)::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Show scrollbar for navigation */
+  .overflow-x-auto.show-scrollbar {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  
+  .overflow-x-auto.show-scrollbar::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .overflow-x-auto.show-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+  }
+  
+  .overflow-x-auto.show-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(147, 51, 234, 0.6);
+    border-radius: 3px;
+  }
+  
+  .overflow-x-auto.show-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(147, 51, 234, 0.8);
   }
   
   /* Optimize animations for mobile */

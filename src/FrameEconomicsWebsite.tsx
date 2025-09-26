@@ -390,12 +390,10 @@ const FrameEconomicsWebsite: React.FC = () => {
           <div 
             role="tablist" 
             aria-orientation="horizontal"
-            className="flex glass-effect-mobile rounded-xl sm:rounded-2xl p-1.5 sm:p-2 overflow-x-auto shadow-lg sm:shadow-xl border border-white/20 dark:border-white/10 backdrop-blur-md w-full max-w-full scrollbar-hide"
+            className="flex glass-effect-mobile rounded-xl sm:rounded-2xl p-1.5 sm:p-2 overflow-x-auto show-scrollbar shadow-lg sm:shadow-xl border border-white/20 dark:border-white/10 backdrop-blur-md w-full max-w-full"
             style={{
               scrollSnapType: 'x mandatory',
-              WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none'
+              WebkitOverflowScrolling: 'touch'
             }}
           >
             {sections.map((section, idx) => {
