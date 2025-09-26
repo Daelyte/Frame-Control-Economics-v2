@@ -86,7 +86,8 @@ jspm_packages/
 
 # Gatsby files
 .cache/
-public
+# Note: For Gatsby projects, uncomment the next line
+# public
 
 # Storybook build outputs
 .out
