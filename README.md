@@ -30,7 +30,7 @@ Frame Control Economics v2 is a complete rewrite and modernization of the origin
 
 ## 🚀 Live Demo
 
-Visit the live demo: **[https://frame-control-.netlify.app](https://frame-control-.netlify.app)**
+Visit the live demo: **[https://frame-control.netlify.app](https://frame-control.netlify.app)**
 
 ## 📱 Demo Sections
 

@@ -102,7 +102,7 @@ console.log('3. 🔗 One-click deploy:');
 console.log('   • https://app.netlify.com/start/deploy?repository=https://github.com/Daelyte/Frame-Control-Economics-v2');
 console.log('');
 console.log('🌐 Live Demo:');
-console.log('   • https://frame-control-.netlify.app');
+console.log('   • https://frame-control.netlify.app');
 
 console.log('\n✨ Deployment ready! Your advanced motion design system is prepared for the web.');
 console.log('🎭 Features: OKLCH colors, Container queries, Framer Motion, Parallax effects');
