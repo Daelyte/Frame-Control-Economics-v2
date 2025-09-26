@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vite build",
     "build-with-check": "tsc -b && vite build",
@@ -14,12 +15,15 @@
     "security:test": "node scripts/test-security.js",
     "validate:deploy": "node scripts/validate-deploy.js",
     "validate:quick": "node scripts/quick-validate.js",
+    "validate": "node scripts/validate.cjs",
     "quick-fix": "node scripts/quick-fix.js",
+    "fix-and-deploy": "node scripts/fix-and-deploy.cjs",
     "update-og": "node scripts/update-og.js",
-    "pre-deploy": "npm run validate:deploy && npm run build",
-    "safe-push": "npm run validate:deploy && git push",
-    "quick-check": "npm run validate:quick",
-    "deploy-ready": "npm run quick-fix && npm run validate:quick"
+    "pre-deploy": "npm run validate && npm run build",
+    "safe-push": "npm run validate && git push",
+    "quick-check": "npm run validate",
+    "deploy-ready": "npm run validate",
+    "emergency-deploy": "npm run fix-and-deploy"
   },
   "dependencies": {
     "@arcjet/node": "^1.0.0-beta.12",
