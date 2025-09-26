@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dragon Test - Static Fallback</title>
+    <style>
+        body { 
+            background: #111; 
+            color: white; 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px;
+        }
+        
+        /* STATIC DRAGON - NO ANIMATIONS */
+        .dragon-static {
+            position: fixed;
+            top: 30%;
+            left: 25%;
+            width: 200px;
+            height: 100px;
+            border: 4px solid #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .dragon-eye-static {
+            position: absolute;
+            top: 40%;
+            right: 30%;
+            width: 10px;
+            height: 10px;
+            background: #00ff00;
+            border-radius: 50%;
+        }
+        
+        .rain-static {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                15deg,
+                transparent 0px,
+                transparent 20px,
+                rgba(0, 255, 0, 0.1) 20px,
+                rgba(0, 255, 0, 0.1) 22px
+            );
+            z-index: -2;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .big-text {
+            font-size: 24px;
+            color: #00ff00;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .test-item {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 4px solid #00ff00;
+            background: rgba(0, 255, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- STATIC DRAGON (NO ANIMATIONS) -->
+    <div class="rain-static"></div>
+    <div class="dragon-static">
+        <div class="dragon-eye-static"></div>
+    </div>
+    
+    <div class="content">
+        <h1>🐉 ULTRA-MINIMAL DRAGON TEST</h1>
+        <div class="big-text">✅ THIS TEXT IS DEFINITELY VISIBLE</div>
+        
+        <div class="test-item">
+            <strong>STATIC DRAGON:</strong> Look for a green oval shape behind this text
+        </div>
+        
+        <div class="test-item">
+            <strong>RAIN LINES:</strong> Diagonal green lines across the screen
+        </div>
+        
+        <div class="test-item">
+            <strong>DRAGON EYE:</strong> Small green dot on the dragon shape
+        </div>
+        
+        <div class="test-item">
+            <strong>NO ANIMATIONS:</strong> Everything is static - no moving parts
+        </div>
+        
+        <h2>🔧 Troubleshooting</h2>
+        <p>If you see this text but NO green elements:</p>
+        <ul style="text-align: left;">
+            <li>Your browser has CSS disabled completely</li>
+            <li>You're using a text-only browser</li>
+            <li>There's a security policy blocking styles</li>
+            <li>You're viewing this in a terminal or plain text editor</li>
+        </ul>
+        
+        <h3>🌟 Success Test</h3>
+        <p><strong>If you see ANY green color on this page, the dragon system works!</strong></p>
+        <p>This proves your browser supports CSS and visual elements.</p>
+    </div>
+    
+    <script>
+        // Super simple test
+        console.log('🐉 Minimal dragon test loaded');
+        alert('🐉 Dragon Test Loaded!\n\nLook for:\n✅ Green oval dragon shape\n✅ Green diagonal rain lines\n✅ Green borders and text');
+    </script>
+</body>
+</html>

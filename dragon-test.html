@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Test - Guaranteed Visible</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* DRAGON BACKDROP - ALWAYS VISIBLE */
+        .dragon-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Aurora background */
+        .aurora {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(60% 60% at 50% 40%, 
+                rgba(64, 224, 208, 0.15) 0%, 
+                rgba(0, 255, 127, 0.08) 50%, 
+                transparent 100%);
+            animation: aurora-pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes aurora-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        /* Dragon shape */
+        .dragon {
+            position: absolute;
+            top: 20%;
+            left: 15%;
+            width: 400px;
+            height: 200px;
+            border: 2px solid #40e0d0;
+            border-radius: 50% 40% 50% 60%;
+            background: rgba(64, 224, 208, 0.05);
+            animation: dragon-float 6s ease-in-out infinite;
+        }
+        
+        @keyframes dragon-float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        /* Dragon eye */
+        .dragon-eye {
+            position: absolute;
+            top: 30%;
+            right: 25%;
+            width: 12px;
+            height: 12px;
+            background: #40e0d0;
+            border-radius: 50%;
+            animation: eye-blink 3s infinite;
+        }
+        
+        @keyframes eye-blink {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0.2; }
+        }
+        
+        /* Rain effect */
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    15deg,
+                    transparent 0px,
+                    transparent 30px,
+                    rgba(64, 224, 208, 0.1) 30px,
+                    rgba(64, 224, 208, 0.1) 32px
+                );
+            animation: rain-fall 2s linear infinite;
+        }
+        
+        @keyframes rain-fall {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 100px; }
+        }
+        
+        /* Lightning flash */
+        .lightning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0);
+            animation: lightning-flash 15s infinite;
+        }
+        
+        @keyframes lightning-flash {
+            0%, 10%, 100% { background: rgba(255, 255, 255, 0); }
+            5% { background: rgba(255, 255, 255, 0.1); }
+            6% { background: rgba(255, 255, 255, 0); }
+            7% { background: rgba(255, 255, 255, 0.15); }
+            8% { background: rgba(255, 255, 255, 0); }
+        }
+        
+        /* Content area */
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .test-box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #40e0d0;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .visible-indicator {
+            background: #40e0d0;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Media queries for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .dragon {
+                width: 300px;
+                height: 150px;
+                left: 10%;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- DRAGON BACKDROP -->
+    <div class="dragon-backdrop">
+        <div class="aurora"></div>
+        <div class="rain"></div>
+        <div class="dragon">
+            <div class="dragon-eye"></div>
+        </div>
+        <div class="lightning"></div>
+    </div>
+    
+    <!-- CONTENT -->
+    <div class="content">
+        <h1>🐉 Dragon Visibility Test</h1>
+        <div class="visible-indicator">✅ THIS TEXT IS VISIBLE</div>
+        
+        <div class="test-box">
+            <h2>What You Should See:</h2>
+            <ul style="text-align: left; margin: 20px 0;">
+                <li>✅ Faint teal/turquoise aurora background (gently pulsing)</li>
+                <li>✅ Large oval dragon shape with teal border (floating motion)</li>
+                <li>✅ Small blinking eye on the dragon</li>
+                <li>✅ Diagonal rain lines moving across screen</li>
+                <li>✅ Occasional lightning flashes</li>
+            </ul>
+            
+            <p><strong>If you see NONE of these effects, something is blocking CSS animations or the browser has strict security settings.</strong></p>
+        </div>
+        
+        <div class="test-box">
+            <h3>🔧 Debug Info</h3>
+            <p>Page loaded: <span id="timestamp"></span></p>
+            <p>Browser: <span id="browser"></span></p>
+            <p>Animations enabled: <span id="animations"></span></p>
+            <button onclick="toggleDebugMode()" style="background: #40e0d0; color: black; padding: 10px 20px; border: none; border-radius: 5px; margin: 10px;">Toggle Dragon Debug</button>
+        </div>
+    </div>
+
+    <script>
+        // Debug info
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        document.getElementById('browser').textContent = navigator.userAgent.split(' ')[0];
+        
+        // Check if animations are enabled
+        const testElement = document.createElement('div');
+        testElement.style.animation = 'test 1s';
+        const hasAnimations = getComputedStyle(testElement).animationName !== 'none';
+        document.getElementById('animations').textContent = hasAnimations ? 'YES' : 'NO (reduced motion)';
+        
+        // Debug mode toggle
+        function toggleDebugMode() {
+            const dragon = document.querySelector('.dragon');
+            const backdrop = document.querySelector('.dragon-backdrop');
+            
+            if (dragon.style.border === '5px solid red') {
+                // Reset to normal
+                dragon.style.border = '2px solid #40e0d0';
+                dragon.style.background = 'rgba(64, 224, 208, 0.05)';
+                backdrop.style.background = '';
+            } else {
+                // Debug mode - make everything super visible
+                dragon.style.border = '5px solid red';
+                dragon.style.background = 'rgba(255, 0, 0, 0.2)';
+                backdrop.style.background = 'rgba(255, 255, 0, 0.1)';
+            }
+        }
+        
+        console.log('🐉 Dragon test page loaded successfully!');
+        console.log('If you see this message but no dragon effects, check your browser settings.');
+    </script>
+</body>
+</html>

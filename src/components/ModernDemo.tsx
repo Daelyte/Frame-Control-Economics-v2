@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
-import StormLite from './ambient/StormLite';
-import DragonMWD from './ambient/DragonMWD';
+import ProductionDragon from './ambient/ProductionDragon';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -91,8 +90,7 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <main className="relative isolate z-0" style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
-      <StormLite intensity={1} lightning />
-      <DragonMWD hue={170} opacity={0.14} />
+      <ProductionDragon hue={170} opacity={0.14} intensity={1.2} debug={process.env.NODE_ENV === 'development'} />
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">
@@ -157,7 +155,7 @@ export const ModernDemo: React.FC = () => {
       </header>
 
       {/* Demo Content */}
-      <main>
+      <div>
         {currentView === 'hero' && (
           <ModernHero
             onStartAssessment={handleStartAssessment}
@@ -250,7 +248,7 @@ export const ModernDemo: React.FC = () => {
         {currentView === 'motion' && (
           <MotionDemo />
         )}
-      </main>
+      </div>
 
       {/* Demo Footer */}
       <footer className="section" style={{ borderTop: '1px solid color-mix(in oklab, var(--neutral-200) 30%, transparent)' }}>

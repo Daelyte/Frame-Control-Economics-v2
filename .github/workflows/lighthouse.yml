@@ -1,0 +1,110 @@
+name: Lighthouse CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build application
+        run: npm run build
+        
+      - name: Start development server
+        run: |
+          npm run dev &
+          npx wait-on http://localhost:5173 --timeout 30000
+        
+      - name: Run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.12.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          
+      - name: Upload Lighthouse results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+          
+  # Performance regression detection
+  performance-budget:
+    runs-on: ubuntu-latest
+    needs: lighthouse
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Download Lighthouse results
+        uses: actions/download-artifact@v3
+        with:
+          name: lighthouse-results
+          path: .lighthouseci/
+          
+      - name: Performance Budget Check
+        run: |
+          echo "🚀 Performance Budget Validation"
+          
+          # Parse Lighthouse results and check against budgets
+          RESULTS_FILE=".lighthouseci/lhr-*.json"
+          
+          # Extract key metrics using jq
+          if command -v jq &> /dev/null; then
+            LCP=$(jq -r '.audits["largest-contentful-paint"].numericValue' $RESULTS_FILE)
+            FCP=$(jq -r '.audits["first-contentful-paint"].numericValue' $RESULTS_FILE)
+            CLS=$(jq -r '.audits["cumulative-layout-shift"].numericValue' $RESULTS_FILE)
+            PERF_SCORE=$(jq -r '.categories.performance.score * 100' $RESULTS_FILE)
+            
+            echo "📊 Performance Metrics:"
+            echo "LCP: ${LCP}ms (target: ≤1800ms)"
+            echo "FCP: ${FCP}ms (target: ≤1200ms)"
+            echo "CLS: ${CLS} (target: ≤0.1)"
+            echo "Performance Score: ${PERF_SCORE}/100"
+            
+            # Check if metrics meet targets
+            FAILURES=0
+            
+            if (( $(echo "$LCP > 1800" | bc -l) )); then
+              echo "❌ LCP exceeds target: ${LCP}ms > 1800ms"
+              FAILURES=$((FAILURES + 1))
+            fi
+            
+            if (( $(echo "$FCP > 1200" | bc -l) )); then
+              echo "❌ FCP exceeds target: ${FCP}ms > 1200ms"
+              FAILURES=$((FAILURES + 1))
+            fi
+            
+            if (( $(echo "$CLS > 0.1" | bc -l) )); then
+              echo "❌ CLS exceeds target: ${CLS} > 0.1"
+              FAILURES=$((FAILURES + 1))
+            fi
+            
+            if (( $(echo "$PERF_SCORE < 90" | bc -l) )); then
+              echo "❌ Performance score below target: ${PERF_SCORE} < 90"
+              FAILURES=$((FAILURES + 1))
+            fi
+            
+            if [ $FAILURES -gt 0 ]; then
+              echo "💥 Performance budget validation failed with $FAILURES issue(s)"
+              exit 1
+            else
+              echo "✅ All performance targets met!"
+            fi
+          else
+            echo "⚠️ jq not available, skipping detailed analysis"
+            echo "📁 Results saved in .lighthouseci/"
+          fi
