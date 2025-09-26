@@ -1,6 +1,19 @@
 # Netlify Configuration - Frame Economics
 
-# Redirect www to non-www (HTTPS only)
+# Redirect HTTP to HTTPS (both www and non-www)
+[[redirects]]
+  from = "http://icecoldfroste.com/*"
+  to = "https://icecoldfroste.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.icecoldfroste.com/*"
+  to = "https://icecoldfroste.com/:splat"
+  status = 301
+  force = true
+
+# Redirect HTTPS www to non-www
 [[redirects]]
   from = "https://www.icecoldfroste.com/*"
   to = "https://icecoldfroste.com/:splat"
