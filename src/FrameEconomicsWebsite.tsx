@@ -12,6 +12,8 @@ import HabitTracker from "./components/HabitTracker";
 import Flashcards from "./components/Flashcards";
 import InteractiveCommunity from "./components/InteractiveCommunity";
 import Connect from "./components/Connect";
+import CommunityTest from "./components/CommunityTest";
+import ProjectsRoadmap from "./components/ProjectsRoadmap";
 
 interface Rule {
   id: number;
@@ -26,7 +28,7 @@ interface Rule {
   practicalExample: string;
 }
 
-type SectionId = "introduction" | "about" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community" | "connect";
+type SectionId = "introduction" | "about" | "projects" | "assessment" | "rules" | "science" | "advanced" | "casestudies" | "practice" | "habits" | "flashcards" | "community" | "connect" | "test";
 
 const STORAGE_KEY = "frame_econ_completed_rules_v2";
 const PROGRESS_KEY = "frame_econ_progress_v1";
@@ -35,6 +37,7 @@ const HASH_TO_SECTION: Record<string, SectionId> = {
   "": "introduction",
   "#introduction": "introduction", 
   "#about": "about",
+  "#projects": "projects",
   "#rules": "rules", 
   "#science": "science",
   "#advanced": "advanced", 
@@ -44,6 +47,7 @@ const HASH_TO_SECTION: Record<string, SectionId> = {
   "#flashcards": "flashcards",
   "#community": "community",
   "#connect": "connect",
+  "#test": "test",
 };
 
 const FrameEconomicsWebsite: React.FC = () => {
@@ -220,6 +224,7 @@ const FrameEconomicsWebsite: React.FC = () => {
   const sections: { id: SectionId; title: string; icon: React.ReactNode }[] = useMemo(() => [
     { id: "introduction", title: "Introduction", icon: <BookOpen className="w-5 h-5" /> },
     { id: "about", title: "About", icon: <Users className="w-5 h-5" /> },
+    { id: "projects", title: "Projects", icon: <TrendingUp className="w-5 h-5" /> },
     { id: "assessment", title: "Assessment", icon: <BarChart3 className="w-5 h-5" /> },
     { id: "rules", title: "The 10 Rules", icon: <Target className="w-5 h-5" /> },
     { id: "practice", title: "Practice", icon: <CheckCircle className="w-5 h-5" /> },
@@ -230,6 +235,7 @@ const FrameEconomicsWebsite: React.FC = () => {
     { id: "casestudies", title: "Case Studies", icon: <Users className="w-5 h-5" /> },
     { id: "community", title: "Community", icon: <Globe className="w-5 h-5" /> },
     { id: "connect", title: "Connect", icon: <Users className="w-5 h-5" /> },
+    { id: "test", title: "🧪 Test", icon: <Zap className="w-5 h-5" /> },
   ], []);
 
   const toggleRule = useCallback((id: number) => {
@@ -260,15 +266,17 @@ const FrameEconomicsWebsite: React.FC = () => {
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
-        <section className="relative py-12 md:py-20 mb-8 overflow-hidden">
-          {/* Icy background pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/80 via-blue-50/40 to-purple-50/60 dark:from-slate-900/80 dark:via-blue-900/20 dark:to-purple-900/40"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.05),transparent_50%)]"></div>
+        <section className="relative py-16 md:py-24 mb-12 overflow-hidden">
+          {/* Enhanced background pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/90 via-blue-50/60 to-purple-50/70 dark:from-slate-900/90 dark:via-blue-900/30 dark:to-purple-900/50"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(120,119,198,0.15),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top_left,rgba(120,119,198,0.08),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.12),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.06),transparent_50%)]"></div>
           
-          {/* Geometric ice-like shapes */}
-          <div className="absolute top-10 left-10 w-20 h-20 rotate-45 bg-gradient-to-br from-blue-200/20 to-purple-200/20 dark:from-blue-800/10 dark:to-purple-800/10 blur-sm"></div>
-          <div className="absolute top-32 right-16 w-32 h-32 rotate-12 bg-gradient-to-br from-purple-200/15 to-indigo-200/15 dark:from-purple-800/8 dark:to-indigo-800/8 blur-sm"></div>
-          <div className="absolute bottom-20 left-1/4 w-16 h-16 -rotate-12 bg-gradient-to-br from-cyan-200/20 to-blue-200/20 dark:from-cyan-800/10 dark:to-blue-800/10 blur-sm"></div>
+          {/* Enhanced floating elements */}
+          <div className="absolute top-12 left-12 w-24 h-24 rotate-45 bg-gradient-to-br from-blue-200/25 to-purple-200/25 dark:from-blue-800/15 dark:to-purple-800/15 blur-sm animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-36 h-36 rotate-12 bg-gradient-to-br from-purple-200/20 to-indigo-200/20 dark:from-purple-800/12 dark:to-indigo-800/12 blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-24 left-1/3 w-20 h-20 -rotate-12 bg-gradient-to-br from-cyan-200/25 to-blue-200/25 dark:from-cyan-800/15 dark:to-blue-800/15 blur-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-20 right-1/4 w-14 h-14 rotate-45 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 dark:from-emerald-800/10 dark:to-teal-800/10 blur-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
           
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-5xl mx-auto">
@@ -288,28 +296,28 @@ const FrameEconomicsWebsite: React.FC = () => {
                 Through behavioral economics and frame control
               </p>
               
-              {/* Value proposition - scannable */}
-              <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
-                <div className="text-center p-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                    <Brain className="w-6 h-6 text-white" />
+              {/* Value proposition - enhanced */}
+              <div className="grid md:grid-cols-3 gap-8 mb-12 max-w-5xl mx-auto">
+                <div className="group text-center p-6 glass-effect rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Brain className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">10 Proven Rules</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Behavioral economics principles</p>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">10 Proven Rules</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Science-backed behavioral economics principles that reveal the hidden psychology of influence</p>
                 </div>
-                <div className="text-center p-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                    <Target className="w-6 h-6 text-white" />
+                <div className="group text-center p-6 glass-effect rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Target className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Practical Training</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Real-world scenarios & practice</p>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Interactive Training</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Practice real-world scenarios with instant feedback and personalized learning paths</p>
                 </div>
-                <div className="text-center p-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg mx-auto mb-3 flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-white" />
+                <div className="group text-center p-6 glass-effect rounded-2xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Unshakeable Frame</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400">Calm, consistent, value-anchored</p>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3">Unshakeable Frame</h3>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">Build authentic confidence rooted in your values, not reactive to others' manipulation</p>
                 </div>
               </div>
               
@@ -350,11 +358,11 @@ const FrameEconomicsWebsite: React.FC = () => {
         </section>
 
         {/* Navigation */}
-        <nav className="flex justify-center mb-8 md:mb-12 sticky top-2 z-20" aria-label="Primary">
+        <nav className="flex justify-center mb-12 md:mb-16 sticky top-4 z-30" aria-label="Primary">
           <div 
             role="tablist" 
             aria-orientation="horizontal"
-            className="flex glass-effect rounded-2xl p-2 overflow-x-auto shadow-lg"
+            className="flex glass-effect rounded-2xl p-2 overflow-x-auto shadow-xl border border-white/20 dark:border-white/10 backdrop-blur-md"
           >
             {sections.map((section, idx) => {
               const selected = currentSection === section.id;
@@ -378,11 +386,11 @@ const FrameEconomicsWebsite: React.FC = () => {
                   }}
                   className={`
                     flex items-center gap-2 px-4 py-3 rounded-xl whitespace-nowrap 
-                    transition-all duration-200 focus:outline-none focus:ring-2 
-                    focus:ring-purple-400/60
+                    transition-all duration-300 focus:outline-none focus:ring-2 
+                    focus:ring-purple-400/60 font-medium
                     ${selected 
-                      ? "bg-purple-600 text-white shadow-lg transform scale-105" 
-                      : "text-slate-700 dark:text-slate-300 hover:text-white hover:bg-white/10"
+                      ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg transform scale-105" 
+                      : "text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:shadow-md"
                     }
                   `}
                 >
@@ -596,7 +604,17 @@ const FrameEconomicsWebsite: React.FC = () => {
             aria-labelledby="tab-about" 
             className="max-w-4xl mx-auto animate-fade-in"
           >
-            <About />
+            <About onNavigateToProjects={() => setSectionAndHash("projects")} />
+          </section>
+        )}
+
+        {currentSection === "projects" && (
+          <section 
+            id="section-projects" 
+            aria-labelledby="tab-projects" 
+            className="max-w-6xl mx-auto animate-fade-in"
+          >
+            <ProjectsRoadmap />
           </section>
         )}
 
@@ -1255,6 +1273,16 @@ const FrameEconomicsWebsite: React.FC = () => {
             className="animate-fade-in"
           >
             <Connect />
+          </section>
+        )}
+
+        {currentSection === "test" && (
+          <section 
+            id="section-test" 
+            aria-labelledby="tab-test" 
+            className="animate-fade-in"
+          >
+            <CommunityTest />
           </section>
         )}
 

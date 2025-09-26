@@ -5,25 +5,6 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  NETLIFY_SKIP_PLUGIN_INSTALL = "true"
-
-# Temporarily disable plugins for deployment
-# [[plugins]]
-#   package = "@netlify/plugin-emails"
-# [[plugins]]
-#   package = "netlify-plugin-a11y"
-# [[plugins]]
-#   package = "@21yunbox/netlify-plugin-21yunbox-deploy-to-china-cdn"
-# [[plugins]]
-#   package = "@netlify/plugin-lighthouse"
-# [[plugins]]
-#   package = "netlify-plugin-ghost-markdown"
-# [[plugins]]
-#   package = "netlify-plugin-fetch-feeds"
-# [[plugins]]
-#   package = "netlify-plugin-minify-html"
-# [[plugins]]
-#   package = "netlify-plugin-pagewatch"
 
 # Security headers for enhanced protection
 [[headers]]

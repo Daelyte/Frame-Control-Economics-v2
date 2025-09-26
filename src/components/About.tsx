@@ -8,10 +8,16 @@ import {
   TrendingUp,
   Bot,
   Terminal,
-  Sparkles
+  Sparkles,
+  Rocket,
+  ArrowRight
 } from 'lucide-react';
 
-const About: React.FC = () => {
+interface AboutProps {
+  onNavigateToProjects?: () => void;
+}
+
+const About: React.FC<AboutProps> = ({ onNavigateToProjects }) => {
   const skills = [
     { name: 'Sales Strategy & Client Relations', level: 95, color: 'from-blue-500 to-cyan-500' },
     { name: 'Tech Solutions Positioning', level: 90, color: 'from-purple-500 to-indigo-500' },
@@ -50,9 +56,14 @@ const About: React.FC = () => {
           {/* Profile Image */}
           <div className="w-24 h-24 md:w-28 md:h-28 shadow-2xl border-4 border-purple-500/30 rounded-full overflow-hidden flex-shrink-0">
             <img 
-              src="/vash-profile.png" 
+              src="vash-profile.png" 
               alt="Daelyte Profile - Vash the Stampede inspired" 
-              className="profile-image w-full h-full"
+              className="profile-image w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                console.log('Image failed to load:', target.src);
+                target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjOTMzM0VBIiByeD0iNTAiLz4KPHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeD0iMjAiIHk9IjIwIj4KPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAxYy0yLjY3IDAtOCAxLjM0LTggNHYzaDE2di0zYzAtMi42Ni01LjMzLTQtOC00eiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cjwvc3ZnPgo='; // Fallback avatar
+              }}
             />
           </div>
           
@@ -215,20 +226,55 @@ const About: React.FC = () => {
         </div>
       </div>
 
-      {/* Featured Projects */}
+      {/* Current Projects Overview */}
       <div className="glass-effect rounded-3xl p-6 md:p-8 shadow-xl section-card">
         <div className="text-center mb-6">
           <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-3">
-            <Globe className="w-6 h-6 md:w-8 md:h-8 text-emerald-600 dark:text-emerald-400" />
-            Current Focus Areas
+            <Rocket className="w-6 h-6 md:w-8 md:h-8 text-emerald-600 dark:text-emerald-400" />
+            Current Projects & Vision
           </h3>
-          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400">
-            Building career momentum in tech sales while creating meaningful projects with AI assistance
+          <p className="text-base md:text-lg text-slate-600 dark:text-slate-400 mb-6">
+            Building the future of sales technology, AI-human collaboration, and psychology-driven experiences
           </p>
+          
+          {/* Projects CTA */}
+          <div className="bg-gradient-to-br from-purple-50/80 to-blue-50/80 dark:from-purple-900/30 dark:to-blue-900/30 rounded-2xl p-6 border border-purple-200/50 dark:border-purple-700/50 mb-6">
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">3</div>
+                <div className="text-xs text-slate-600 dark:text-slate-400">Active Projects</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">5</div>
+                <div className="text-xs text-slate-600 dark:text-slate-400">2025 Initiatives</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600 dark:text-green-400">∞</div>
+                <div className="text-xs text-slate-600 dark:text-slate-400">Future Vision</div>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              {onNavigateToProjects && (
+                <button
+                  onClick={onNavigateToProjects}
+                  className="group inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  View Full Projects & Roadmap
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                </button>
+              )}
+              <p className="text-sm text-slate-600 dark:text-slate-400 mt-3">
+                Detailed breakdown of current work, 2025 roadmap, and long-term vision
+              </p>
+            </div>
+          </div>
         </div>
         
+        {/* Quick Project Highlights */}
         <div className="grid gap-4">
-          {projects.map((project, index) => (
+          {projects.slice(0, 2).map((project, index) => (
             <div 
               key={project.title}
               className="group bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 hover:shadow-lg hover:border-purple-300 dark:hover:border-purple-600 transition-all duration-300"
@@ -241,7 +287,12 @@ const About: React.FC = () => {
                     </h4>
                     {index === 0 && (
                       <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 rounded-full text-xs font-medium">
-                        Featured
+                        Live
+                      </span>
+                    )}
+                    {index === 1 && (
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">
+                        Active
                       </span>
                     )}
                   </div>
@@ -249,7 +300,7 @@ const About: React.FC = () => {
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
+                    {project.tech.slice(0, 4).map((tech) => (
                       <span 
                         key={tech}
                         className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-md text-xs font-medium"
@@ -257,6 +308,11 @@ const About: React.FC = () => {
                         {tech}
                       </span>
                     ))}
+                    {project.tech.length > 4 && (
+                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-900/50 text-gray-800 dark:text-gray-200 rounded-md text-xs font-medium">
+                        +{project.tech.length - 4} more
+                      </span>
+                    )}
                   </div>
                 </div>
                 
@@ -267,7 +323,7 @@ const About: React.FC = () => {
                     rel="noopener noreferrer"
                     className="group flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 whitespace-nowrap text-sm font-medium"
                   >
-                    View Project
+                    View Live
                     <ExternalLink className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </a>
                 )}

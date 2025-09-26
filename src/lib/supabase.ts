@@ -1,8 +1,8 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 // Environment variables will be set in Netlify
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || import.meta.env.SUPABASE_KEY || process.env.SUPABASE_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || '';
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables');
@@ -16,42 +16,49 @@ export interface Profile {
   email: string;
   full_name: string;
   avatar_url?: string;
-  provider: 'github' | 'google';
-  username?: string;
+  username: string;
   bio?: string;
-  rules_completed: number;
+  is_banned?: boolean;
+  reputation_score?: number;
   created_at: string;
   updated_at: string;
 }
 
+// Alias for compatibility - maps to 'users' table in database
+export type User = Profile;
+
 export interface Story {
   id: string;
-  user_id: string;
+  author_id: string;
   title: string;
   content: string;
-  rule_id?: number;
-  category: 'success_story' | 'challenge' | 'insight' | 'question';
-  tags: string[];
+  category: 'success' | 'challenge' | 'insight' | 'question';
   likes_count: number;
   comments_count: number;
+  is_flagged: boolean;
+  is_approved: boolean;
+  flagged_reason?: string;
   created_at: string;
   updated_at: string;
   // Joined fields
-  profiles?: Profile;
+  users?: Profile;
   user_liked?: boolean;
 }
 
 export interface Comment {
   id: string;
   story_id: string;
-  user_id: string;
+  author_id: string;
   content: string;
-  parent_id?: string; // For threaded comments
+  parent_id?: string;
+  depth: number;
   likes_count: number;
+  is_flagged: boolean;
+  is_approved: boolean;
   created_at: string;
   updated_at: string;
   // Joined fields
-  profiles?: Profile;
+  users?: Profile;
   user_liked?: boolean;
   replies?: Comment[];
 }
@@ -102,7 +109,7 @@ export const signOut = async () => {
 // Profile helpers
 export const getProfile = async (userId: string) => {
   const { data, error } = await supabase
-    .from('profiles')
+    .from('users')
     .select('*')
     .eq('id', userId)
     .single();
@@ -111,7 +118,7 @@ export const getProfile = async (userId: string) => {
 
 export const updateProfile = async (userId: string, updates: Partial<Profile>) => {
   const { data, error } = await supabase
-    .from('profiles')
+    .from('users')
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', userId)
     .select()
