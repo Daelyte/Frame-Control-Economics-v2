@@ -182,110 +182,158 @@ const ProjectsRoadmap: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Hero Section */}
-      <div className="text-center glass-effect rounded-3xl p-8 shadow-xl bg-gradient-to-br from-purple-50/50 to-blue-50/50 dark:from-purple-900/20 dark:to-blue-900/20 border border-purple-200/50 dark:border-purple-700/50">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Rocket className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
-            Projects & Roadmap
+    <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in">
+      {/* Hero Section - Mobile Optimized */}
+      <div className="text-center glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl bg-gradient-to-br from-purple-50/50 to-blue-50/50 dark:from-purple-900/20 dark:to-blue-900/20 border border-purple-200/50 dark:border-purple-700/50">
+        <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <Rocket className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+          <h1 className="text-responsive-3xl font-bold text-slate-900 dark:text-white text-center">
+            <span className="hidden xs:inline">Projects & Roadmap</span>
+            <span className="xs:hidden">Projects</span>
           </h1>
         </div>
         
-        <p className="text-xl text-slate-700 dark:text-slate-300 mb-6 max-w-3xl mx-auto leading-relaxed">
-          Building the future of sales technology, AI-human collaboration, and psychology-driven experiences
+        <p className="text-responsive-lg text-slate-700 dark:text-slate-300 mb-4 sm:mb-6 max-w-3xl mx-auto leading-relaxed">
+          <span className="hidden sm:inline">
+            Building the future of sales technology, AI-human collaboration, and psychology-driven experiences
+          </span>
+          <span className="sm:hidden">
+            Building sales tech, AI collaboration, and psychology-driven experiences
+          </span>
         </p>
         
-        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 max-w-lg sm:max-w-4xl mx-auto">
           <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">3</div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">Active Projects</div>
+            <div className="text-lg sm:text-2xl font-bold text-purple-600 dark:text-purple-400">3</div>
+            <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              <span className="hidden xs:inline">Active Projects</span>
+              <span className="xs:hidden">Active</span>
+            </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">5</div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">Planned Initiatives</div>
+            <div className="text-lg sm:text-2xl font-bold text-blue-600 dark:text-blue-400">5</div>
+            <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              <span className="hidden xs:inline">Planned Initiatives</span>
+              <span className="xs:hidden">Planned</span>
+            </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">∞</div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">Future Possibilities</div>
+            <div className="text-lg sm:text-2xl font-bold text-green-600 dark:text-green-400">∞</div>
+            <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              <span className="hidden xs:inline">Future Possibilities</span>
+              <span className="xs:hidden">Future</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Current Projects */}
-      <div className="glass-effect rounded-3xl p-8 shadow-xl">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-            <CheckCircle className="w-6 h-6 text-white" />
+      {/* Current Projects - Mobile Optimized */}
+      <div className="glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl">
+        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 md:mb-8">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Current Projects</h2>
-            <p className="text-slate-600 dark:text-slate-400">Active development and ongoing initiatives</p>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-responsive-2xl font-bold text-slate-900 dark:text-white">
+              <span className="hidden xs:inline">Current Projects</span>
+              <span className="xs:hidden">Current</span>
+            </h2>
+            <p className="text-responsive-sm text-slate-600 dark:text-slate-400">
+              <span className="hidden sm:inline">Active development and ongoing initiatives</span>
+              <span className="sm:hidden">Active development</span>
+            </p>
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {currentProjects.map((project) => (
-            <div key={project.title} className="bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-300">
-              <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
+            <div key={project.title} className="bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700 section-card-mobile">
+              <div className="flex flex-col gap-4 sm:gap-6">
                 <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-4">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{project.title}</h3>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
-                      {project.status}
-                    </span>
-                    {getPriorityIcon(project.priority)}
-                    <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-full text-xs font-medium">
-                      {project.category}
-                    </span>
+                  {/* Mobile-optimized header */}
+                  <div className="flex flex-col xs:flex-row xs:items-start gap-2 xs:gap-3 mb-3 sm:mb-4">
+                    <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white flex-1 min-w-0">
+                      <span className="hidden sm:inline">{project.title}</span>
+                      <span className="sm:hidden">{project.title.split(' ').slice(0, 2).join(' ')}</span>
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                      <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
+                        <span className="hidden xs:inline">{project.status}</span>
+                        <span className="xs:hidden">{project.status.split(' ')[0]}</span>
+                      </span>
+                      {getPriorityIcon(project.priority)}
+                      <span className="px-1.5 sm:px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-full text-xs font-medium">
+                        <span className="hidden sm:inline">{project.category}</span>
+                        <span className="sm:hidden">{project.category.split(' ')[0]}</span>
+                      </span>
+                    </div>
                   </div>
                   
-                  <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
-                    {project.description}
+                  <p className="text-responsive-sm text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 leading-relaxed">
+                    <span className="hidden sm:inline">{project.description}</span>
+                    <span className="sm:hidden">{project.description.substring(0, 120)}...</span>
                   </p>
                   
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Key Features:</h4>
-                    <ul className="grid md:grid-cols-2 gap-1 text-sm text-slate-600 dark:text-slate-400">
-                      {project.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <CheckCircle className="w-3 h-3 text-green-500 mt-1 flex-shrink-0" />
-                          {feature}
+                  {/* Mobile-optimized features */}
+                  <div className="mb-3 sm:mb-4">
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2 text-responsive-sm">Key Features:</h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                      {project.features.slice(0, 4).map((feature, idx) => (
+                        <li key={idx} className="flex items-start gap-1.5 sm:gap-2">
+                          <CheckCircle className="w-3 h-3 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="leading-tight">
+                            <span className="hidden sm:inline">{feature}</span>
+                            <span className="sm:hidden">{feature.substring(0, 40)}...</span>
+                          </span>
                         </li>
                       ))}
+                      {project.features.length > 4 && (
+                        <li className="flex items-center gap-1.5 sm:gap-2 text-purple-600 dark:text-purple-400">
+                          <span className="text-xs">+{project.features.length - 4} more</span>
+                        </li>
+                      )}
                     </ul>
                   </div>
                   
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech) => (
-                      <span key={tech} className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-md text-xs font-medium">
+                  {/* Mobile-optimized tech stack */}
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
+                    {project.tech.slice(0, 5).map((tech) => (
+                      <span key={tech} className="px-1.5 sm:px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-md text-xs font-medium">
                         {tech}
                       </span>
                     ))}
+                    {project.tech.length > 5 && (
+                      <span className="px-1.5 sm:px-2 py-1 bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-200 rounded-md text-xs font-medium">
+                        +{project.tech.length - 5}
+                      </span>
+                    )}
                   </div>
                   
-                  <div className="grid md:grid-cols-3 gap-4 mb-4 text-sm">
+                  {/* Mobile-optimized metrics */}
+                  <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
                     {Object.entries(project.metrics).map(([key, value]) => (
-                      <div key={key} className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-200 dark:border-slate-600">
-                        <div className="font-semibold text-slate-900 dark:text-white capitalize">{key}</div>
-                        <div className="text-slate-600 dark:text-slate-400">{value}</div>
+                      <div key={key} className="bg-white dark:bg-slate-800 rounded-lg p-2 sm:p-3 border border-slate-200 dark:border-slate-600">
+                        <div className="font-semibold text-slate-900 dark:text-white capitalize text-xs sm:text-sm">{key}</div>
+                        <div className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-tight">{value}</div>
                       </div>
                     ))}
                   </div>
                 </div>
                 
+                {/* Mobile-optimized links */}
                 {project.links && (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col xs:flex-row gap-2 mt-3 sm:mt-0">
                     {project.links.map((link) => (
                       <a
                         key={link.name}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 whitespace-nowrap text-sm font-medium"
+                        className="group flex items-center justify-center gap-2 btn-touch px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 text-responsive-sm font-medium"
                       >
                         {link.icon}
-                        {link.name}
+                        <span className="hidden xs:inline">{link.name}</span>
+                        <span className="xs:hidden">{link.name.split(' ')[0]}</span>
                         <ExternalLink className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                       </a>
                     ))}
@@ -297,64 +345,84 @@ const ProjectsRoadmap: React.FC = () => {
         </div>
       </div>
 
-      {/* Upcoming Projects Roadmap */}
-      <div className="glass-effect rounded-3xl p-8 shadow-xl">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
-            <Calendar className="w-6 h-6 text-white" />
+      {/* Upcoming Projects Roadmap - Mobile Optimized */}
+      <div className="glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl">
+        <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 md:mb-8">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">2025 Roadmap</h2>
-            <p className="text-slate-600 dark:text-slate-400">Planned initiatives and future development</p>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-responsive-2xl font-bold text-slate-900 dark:text-white">
+              <span className="hidden xs:inline">2025 Roadmap</span>
+              <span className="xs:hidden">Roadmap</span>
+            </h2>
+            <p className="text-responsive-sm text-slate-600 dark:text-slate-400">
+              <span className="hidden sm:inline">Planned initiatives and future development</span>
+              <span className="sm:hidden">Planned initiatives</span>
+            </p>
           </div>
         </div>
 
-        <div className="grid gap-6">
+        <div className="space-y-4 sm:space-y-6">
           {upcomingProjects.map((project, index) => (
             <div key={project.title} className="relative">
-              {/* Timeline connector */}
+              {/* Timeline connector - hidden on small screens */}
               {index < upcomingProjects.length - 1 && (
-                <div className="absolute left-6 top-16 w-0.5 h-16 bg-gradient-to-b from-blue-400 to-purple-400"></div>
+                <div className="hidden sm:block absolute left-4 sm:left-6 top-12 sm:top-16 w-0.5 h-12 sm:h-16 bg-gradient-to-b from-blue-400 to-purple-400"></div>
               )}
               
-              <div className="flex gap-6">
+              <div className="flex gap-3 sm:gap-6">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                    <ArrowRight className="w-6 h-6 text-white" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center">
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                   </div>
                 </div>
                 
-                <div className="flex-1 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
-                  <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
+                <div className="flex-1 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700 section-card-mobile">
+                  <div className="flex flex-col gap-2 sm:gap-4 mb-3 sm:mb-4">
                     <div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{project.title}</h3>
-                      <div className="flex items-center gap-3">
-                        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">
+                      <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2">
+                        <span className="hidden sm:inline">{project.title}</span>
+                        <span className="sm:hidden">{project.title.split(' ').slice(0, 3).join(' ')}</span>
+                      </h3>
+                      <div className="flex flex-wrap items-center gap-1.5 sm:gap-3">
+                        <span className="px-2 sm:px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-xs sm:text-sm font-medium">
                           {project.timeline}
                         </span>
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-200 rounded-full text-xs font-medium">
-                          {project.category}
+                        <span className="px-1.5 sm:px-2 py-1 bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-200 rounded-full text-xs font-medium">
+                          <span className="hidden sm:inline">{project.category}</span>
+                          <span className="sm:hidden">{project.category.split(' ')[0]}</span>
                         </span>
+                        <div className={`text-xs sm:text-sm font-semibold ${getImpactColor(project.impact)}`}>
+                          <span className="hidden xs:inline">{project.impact} Impact</span>
+                          <span className="xs:hidden">{project.impact}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className={`text-sm font-semibold ${getImpactColor(project.impact)}`}>
-                      {project.impact} Impact
                     </div>
                   </div>
                   
-                  <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
-                    {project.description}
+                  <p className="text-responsive-sm text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 leading-relaxed">
+                    <span className="hidden sm:inline">{project.description}</span>
+                    <span className="sm:hidden">{project.description.substring(0, 100)}...</span>
                   </p>
                   
                   <div>
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Planned Features:</h4>
-                    <div className="grid md:grid-cols-2 gap-1">
-                      {project.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                          {feature}
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2 text-responsive-sm">Planned Features:</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                      {project.features.slice(0, 4).map((feature, idx) => (
+                        <div key={idx} className="flex items-start gap-1.5 sm:gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full mt-1 flex-shrink-0"></div>
+                          <span className="leading-tight">
+                            <span className="hidden sm:inline">{feature}</span>
+                            <span className="sm:hidden">{feature.substring(0, 35)}...</span>
+                          </span>
                         </div>
                       ))}
+                      {project.features.length > 4 && (
+                        <div className="flex items-center gap-1.5 sm:gap-2 text-purple-600 dark:text-purple-400">
+                          <span className="text-xs">+{project.features.length - 4} more</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -364,28 +432,44 @@ const ProjectsRoadmap: React.FC = () => {
         </div>
       </div>
 
-      {/* Vision & Philosophy */}
-      <div className="glass-effect rounded-3xl p-8 shadow-xl bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200/50 dark:border-indigo-700/50">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Star className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Long-term Vision</h2>
+      {/* Vision & Philosophy - Mobile Optimized */}
+      <div className="glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200/50 dark:border-indigo-700/50">
+        <div className="text-center mb-4 sm:mb-6 md:mb-8">
+          <div className="flex flex-col xs:flex-row items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <Star className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
+            <h2 className="text-responsive-2xl font-bold text-slate-900 dark:text-white">
+              <span className="hidden xs:inline">Long-term Vision</span>
+              <span className="xs:hidden">Vision</span>
+            </h2>
           </div>
-          <p className="text-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Building bridges between technology, psychology, and human potential through innovative experiences and AI-human collaboration
+          <p className="text-responsive-lg text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <span className="hidden sm:inline">
+              Building bridges between technology, psychology, and human potential through innovative experiences and AI-human collaboration
+            </span>
+            <span className="sm:hidden">
+              Building bridges between technology, psychology, and human potential through AI-human collaboration
+            </span>
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {visionItems.map((item) => (
-            <div key={item.title} className="bg-white/60 dark:bg-slate-800/60 rounded-2xl p-6 border border-indigo-200/50 dark:border-indigo-700/50 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                  {item.icon}
+            <div key={item.title} className="bg-white/60 dark:bg-slate-800/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-indigo-200/50 dark:border-indigo-700/50 backdrop-blur-sm section-card-mobile">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white">
+                    {item.icon}
+                  </span>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">{item.title}</h3>
-                  <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{item.description}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-1 sm:mb-2">
+                    <span className="hidden sm:inline">{item.title}</span>
+                    <span className="sm:hidden">{item.title.split(' ').slice(0, 2).join(' ')}</span>
+                  </h3>
+                  <p className="text-responsive-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <span className="hidden sm:inline">{item.description}</span>
+                    <span className="sm:hidden">{item.description.substring(0, 120)}...</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -393,27 +477,36 @@ const ProjectsRoadmap: React.FC = () => {
         </div>
       </div>
 
-      {/* Call to Action */}
-      <div className="text-center glass-effect rounded-3xl p-8 shadow-xl bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200/50 dark:border-purple-700/50">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Want to Follow the Journey?</h3>
-          <Sparkles className="w-6 h-6 text-purple-600 dark:text-purple-400 animate-bounce" />
+      {/* Call to Action - Mobile Optimized */}
+      <div className="text-center glass-effect-mobile rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-lg sm:shadow-xl bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200/50 dark:border-purple-700/50">
+        <div className="flex flex-col xs:flex-row items-center justify-center gap-2 mb-3 sm:mb-4">
+          <h3 className="text-responsive-xl font-bold text-slate-900 dark:text-white">
+            <span className="hidden xs:inline">Want to Follow the Journey?</span>
+            <span className="xs:hidden">Follow the Journey?</span>
+          </h3>
+          <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400 animate-bounce flex-shrink-0" />
         </div>
         
-        <p className="text-lg text-slate-700 dark:text-slate-300 mb-6 max-w-2xl mx-auto">
-          These projects represent my commitment to bridging technical innovation with human psychology. 
-          Follow along as we build the future of sales technology and AI-human collaboration.
+        <p className="text-responsive-base text-slate-700 dark:text-slate-300 mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed">
+          <span className="hidden sm:inline">
+            These projects represent my commitment to bridging technical innovation with human psychology. 
+            Follow along as we build the future of sales technology and AI-human collaboration.
+          </span>
+          <span className="sm:hidden">
+            Follow along as we build the future of sales technology and AI-human collaboration.
+          </span>
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center">
           <a 
             href="https://github.com/Daelyte"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            className="group inline-flex items-center justify-center gap-2 sm:gap-3 btn-touch px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
-            <Github className="w-4 h-4" />
-            Follow on GitHub
+            <Github className="w-4 h-4 flex-shrink-0" />
+            <span className="hidden xs:inline">Follow on GitHub</span>
+            <span className="xs:hidden">GitHub</span>
             <ExternalLink className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </a>
           
@@ -421,10 +514,11 @@ const ProjectsRoadmap: React.FC = () => {
             href="https://icecoldfroste.com/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-6 py-3 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300"
+            className="group inline-flex items-center justify-center gap-2 sm:gap-3 btn-touch px-4 sm:px-6 py-3 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-lg sm:rounded-xl transition-all duration-300"
           >
-            <Globe className="w-4 h-4" />
-            Try Frame Economics
+            <Globe className="w-4 h-4 flex-shrink-0" />
+            <span className="hidden xs:inline">Try Frame Economics</span>
+            <span className="xs:hidden">Try It</span>
             <ExternalLink className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>

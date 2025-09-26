@@ -14,6 +14,7 @@ import InteractiveCommunity from "./components/InteractiveCommunity";
 import Connect from "./components/Connect";
 import CommunityTest from "./components/CommunityTest";
 import ProjectsRoadmap from "./components/ProjectsRoadmap";
+import AdvancedTheoryCarousel from "./components/AdvancedTheoryCarousel";
 
 interface Rule {
   id: number;
@@ -965,130 +966,7 @@ const FrameEconomicsWebsite: React.FC = () => {
         )}
 
         {currentSection === "advanced" && (
-          <section 
-            id="section-advanced" 
-            aria-labelledby="tab-advanced" 
-            className="max-w-5xl mx-auto animate-fade-in"
-          >
-            <div className="mb-8 text-center">
-              <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                Advanced Theoretical Framework
-              </h2>
-              <p className="text-lg text-slate-700 dark:text-slate-300">
-                Deep dive into game theory and cognitive load management.
-              </p>
-            </div>
-            
-            <div className="grid lg:grid-cols-2 gap-8 mb-8">
-              <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
-                  <Target className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-                  Game Theory Applications
-                </h3>
-                <div className="space-y-6">
-                  <div className="rounded-xl p-6 bg-violet-50 dark:bg-purple-900/40">
-                    <h4 className="font-bold mb-3 text-violet-800 dark:text-violet-200">
-                      Nash Equilibrium in Social Dynamics
-                    </h4>
-                    <p className="mb-4 text-violet-900 dark:text-violet-100">
-                      Equilibrium occurs when neither party can improve their outcome by changing strategy unilaterally. 
-                      The person with the steadier frame often reaches equilibrium first.
-                    </p>
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2 text-slate-900 dark:text-white">Example:</h5>
-                      <p className="text-sm text-slate-700 dark:text-slate-300">
-                        In a heated argument, if one person remains calm while the other escalates, 
-                        the calm person's frame becomes the stable equilibrium that others eventually adopt.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="rounded-xl p-6 bg-blue-50 dark:bg-blue-900/40">
-                    <h4 className="font-bold mb-3 text-blue-800 dark:text-blue-200">
-                      Zero-Sum vs. Positive-Sum Frames
-                    </h4>
-                    <p className="text-blue-900 dark:text-blue-100">
-                      Reframing competitions from zero-sum (winner takes all) to positive-sum 
-                      (mutual benefit) often defuses tension and creates better outcomes for everyone.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="glass-effect rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
-                  <Brain className="w-7 h-7 text-green-600 dark:text-green-400" />
-                  Cognitive Load Theory
-                </h3>
-                <div className="space-y-6">
-                  <div className="rounded-xl p-6 bg-green-50 dark:bg-green-900/40">
-                    <h4 className="font-bold mb-3 text-green-800 dark:text-green-200">
-                      Working Memory Limitations
-                    </h4>
-                    <p className="mb-4 text-green-900 dark:text-green-100">
-                      Working memory can only hold ~7±2 items simultaneously. Cognitive overload 
-                      is a common attack vector in frame battles.
-                    </p>
-                    <div className="bg-white/50 dark:bg-black/20 rounded-lg p-4">
-                      <h5 className="font-semibold mb-2 text-slate-900 dark:text-white">Defense Strategy:</h5>
-                      <p className="text-sm text-slate-700 dark:text-slate-300">
-                        When overwhelmed by complexity, simplify the situation into a binary choice: 
-                        "This either works for both of us, or it doesn't."
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="rounded-xl p-6 bg-amber-50 dark:bg-amber-900/40">
-                    <h4 className="font-bold mb-3 text-amber-800 dark:text-amber-200">
-                      Attention as a Finite Resource
-                    </h4>
-                    <p className="text-amber-900 dark:text-amber-100">
-                      Directing attention strategically is key to frame control. 
-                      What gets attention gets importance.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="glass-effect rounded-3xl p-8 shadow-xl">
-              <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3 text-slate-900 dark:text-white">
-                <TrendingUp className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-                Advanced Frame Dynamics
-              </h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="rounded-xl p-6 bg-purple-50 dark:bg-purple-900/40">
-                  <h4 className="font-bold mb-3 text-purple-800 dark:text-purple-200">
-                    Meta-Frames
-                  </h4>
-                  <p className="text-purple-900 dark:text-purple-100">
-                    Frames about frames. Acknowledging the frame battle itself: 
-                    "I notice we're both trying to control how this conversation goes."
-                  </p>
-                </div>
-                
-                <div className="rounded-xl p-6 bg-indigo-50 dark:bg-indigo-900/40">
-                  <h4 className="font-bold mb-3 text-indigo-800 dark:text-indigo-200">
-                    Frame Stacking
-                  </h4>
-                  <p className="text-indigo-900 dark:text-indigo-100">
-                    Layering multiple complementary frames to create robust positioning. 
-                    Professional + Personal + Ethical frames working together.
-                  </p>
-                </div>
-                
-                <div className="rounded-xl p-6 bg-pink-50 dark:bg-pink-900/40">
-                  <h4 className="font-bold mb-3 text-pink-800 dark:text-pink-200">
-                    Frame Aikido
-                  </h4>
-                  <p className="text-pink-900 dark:text-pink-100">
-                    Using the opponent's frame energy to redirect rather than resist. 
-                    "You're right to be concerned about X, which is why Y makes sense."
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+          <AdvancedTheoryCarousel />
         )}
 
         {currentSection === "casestudies" && (
