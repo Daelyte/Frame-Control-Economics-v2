@@ -8,7 +8,14 @@
   NODE_VERSION = "18"
   NETLIFY_SKIP_PLUGIN_INSTALL = "true"
 
-# Explicitly disable all plugins to prevent ghost plugin errors
+# Minimal Ghost plugin config to prevent build errors
+# TODO: Remove this plugin from Netlify UI or provide real Ghost credentials
+[[plugins]]
+  package = "netlify-plugin-ghost-markdown"
+  [plugins.inputs]
+    ghostURL = "https://placeholder.ghost.io"
+    ghostKey = "placeholder_key_remove_plugin_from_netlify_ui"
+
 [build.processing]
   skip_processing = false
 
