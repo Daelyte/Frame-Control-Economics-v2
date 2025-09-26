@@ -183,4 +183,37 @@ When working on this codebase:
 4. **State Management**: Use React hooks with localStorage for persistence
 5. **Testing**: Use `npm run preview` to test production builds before deployment
 
+## 🚀 MANDATORY DEPLOYMENT WORKFLOW
+
+**RULE**: For ANY code changes, features, or updates, ALWAYS follow this exact 4-phase process:
+
+### Phase 1: Test Environment
+1. ✅ Test changes locally with `npm run dev`
+2. ✅ Verify production build with `npm run build`
+3. ✅ Check TypeScript compilation is clean
+4. ✅ Validate responsive design and functionality
+
+### Phase 2: Version Control (Git)
+1. ✅ Review changes with `git status` and `git diff`
+2. ✅ Stage and commit with descriptive messages
+3. ✅ Push to main branch
+
+### Phase 3: Netlify Deployment Audit
+1. ✅ Verify static assets are in git (especially `public/` directory)
+2. ✅ Monitor Netlify dashboard for build progress
+3. ✅ Confirm deployment completes successfully
+4. ✅ Test live site functionality
+
+### Phase 4: Documentation & Audit Trail
+1. ✅ Update `DEPLOYMENT_LOG.md` with detailed deployment record
+2. ✅ Document any issues encountered and resolutions
+3. ✅ Update project documentation if features added
+4. ✅ Create audit trail for future reference
+
+**Success Criteria**: Deployment is only complete when all phases pass and live site is verified working.
+
+**Reference**: See `DEPLOYMENT_WORKFLOW.md` for detailed process documentation.
+
+---
+
 The application emphasizes educational content delivery through interactive UI patterns, making complex behavioral psychology accessible through practical examples and clear frameworks.
