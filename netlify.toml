@@ -1,5 +1,12 @@
 # Netlify Configuration - Frame Economics
 
+# Redirect www to non-www (HTTPS only)
+[[redirects]]
+  from = "https://www.icecoldfroste.com/*"
+  to = "https://icecoldfroste.com/:splat"
+  status = 301
+  force = true
+
 [build]
   command = "npm run build"
   publish = "dist"
@@ -20,17 +27,6 @@
   status = 200
 
 # SPA fallback - must be last
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  node_bundler = "nft"
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
