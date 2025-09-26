@@ -194,12 +194,12 @@ export default {
     'rain-heavy-fast', 'rain-medium-fast', 'rain-light-fast',
     // Container query responsive classes
     'sm:opacity-50', 'md:opacity-75', 'lg:opacity-100',
-    // Froste Dragon System safelist
-    'inset-0','-z-10','opacity-[0.12]','opacity-[0.10]','opacity-[0.08]',
-    'mix-blend-screen','-inset-[2%]','[filter:blur(70px)]',
+    // Bulletproof Dragon System safelist - prevents JIT purging
+    'inset-0','-z-10','-inset-[2%]','[filter:blur(70px)]','mix-blend-screen',
+    'opacity-[0.12]','opacity-[0.10]','opacity-[0.08]',
     'animate-[aurora_14s_ease-in-out_infinite]',
     'animate-[rainA_3.6s_linear_infinite]','animate-[rainB_4.6s_linear_infinite]','animate-[rainC_5.2s_linear_infinite]',
     'animate-[rainA_2.8s_linear_infinite]','animate-[rainB_3.6s_linear_infinite]','animate-[rainC_4.2s_linear_infinite]',
-    'animate-[flash_22s_ease-in-out_infinite]', 'animate-[boltFlash_22s_ease-in-out_infinite]',
+    'animate-[flash_22s_ease-in-out_infinite]',
   ],
 }
