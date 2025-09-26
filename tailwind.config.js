@@ -201,5 +201,10 @@ export default {
     'animate-[rainA_3.6s_linear_infinite]','animate-[rainB_4.6s_linear_infinite]','animate-[rainC_5.2s_linear_infinite]',
     'animate-[rainA_2.8s_linear_infinite]','animate-[rainB_3.6s_linear_infinite]','animate-[rainC_4.2s_linear_infinite]',
     'animate-[flash_22s_ease-in-out_infinite]',
+    // Additional classes for DragonMWD and StormLite
+    'bg-[repeating-linear-gradient(12deg,transparent_0_38px,color-mix(in_oklab,black_25%,transparent)_38px_40px)]',
+    'bg-[repeating-linear-gradient(12deg,transparent_0_46px,color-mix(in_oklab,black_22%,transparent)_46px_48px)]',
+    'bg-[repeating-linear-gradient(12deg,transparent_0_52px,color-mix(in_oklab,black_18%,transparent)_52px_54px)]',
+    'motion-reduce:animate-none',
   ],
 }

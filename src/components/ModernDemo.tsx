@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
-import SimplestDragon from './ambient/SimplestDragon';
+import StormLite from './ambient/StormLite';
+import DragonMWD from './ambient/DragonMWD';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -89,9 +90,9 @@ export const ModernDemo: React.FC = () => {
   const completionProgress = Math.round((completedRules.size / sampleRules.length) * 100);
 
   return (
-    <div style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
-      {/* SIMPLEST DRAGON - BASIC CSS ONLY */}
-      <SimplestDragon />
+    <main className="relative isolate z-0" style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
+      <StormLite intensity={1} lightning />
+      <DragonMWD hue={170} opacity={0.14} />
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">
@@ -287,7 +288,7 @@ export const ModernDemo: React.FC = () => {
           </div>
         </div>
       </footer>
-    </div>
+    </main>
   );
 };
 
