@@ -8,9 +8,8 @@
   overflow: hidden;
   background:
     radial-gradient(140% 140% at 10% 10%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.5) 100%),
-    radial-gradient(100% 120% at 20% 10%, #0f2a33 0%, #07181b 45%, #041013 100%),
-    url("/dragon-og-new.png") center/112% 112% no-repeat;
-  background-size: cover, cover, 112% 112%;
+    radial-gradient(100% 120% at 20% 10%, #0f2a33 0%, #07181b 45%, #041013 100%);
+  background-size: cover, cover;
   animation: kenburns 14s ease-in-out infinite alternate;
   isolation: isolate;
 }
@@ -23,33 +22,23 @@
   bottom: 0; 
   left: 0;
   background:
-    repeating-linear-gradient(to right, rgba(57,215,201,0.06) 0 1px, transparent 1px 44px),
-    repeating-linear-gradient(to bottom, rgba(57,215,201,0.05) 0 1px, transparent 1px 44px);
+    /* Primary grid - jagged/rough */
+    repeating-linear-gradient(to right, rgba(57,215,201,0.15) 0 1px, transparent 1px 2px, rgba(57,215,201,0.08) 2px 3px, transparent 3px 20px),
+    repeating-linear-gradient(to bottom, rgba(57,215,201,0.15) 0 1px, transparent 1px 2px, rgba(57,215,201,0.08) 2px 3px, transparent 3px 20px),
+    /* Secondary grid - micro with teeth */
+    repeating-linear-gradient(to right, rgba(57,215,201,0.08) 0 1px, transparent 1px 1.5px, rgba(57,215,201,0.04) 1.5px 2px, transparent 2px 8px),
+    repeating-linear-gradient(to bottom, rgba(57,215,201,0.08) 0 1px, transparent 1px 1.5px, rgba(57,215,201,0.04) 1.5px 2px, transparent 2px 8px),
+    /* Tertiary grid - major lines with spikes */
+    repeating-linear-gradient(to right, rgba(57,215,201,0.12) 0 2px, rgba(57,215,201,0.06) 2px 4px, transparent 4px 100px),
+    repeating-linear-gradient(to bottom, rgba(57,215,201,0.12) 0 2px, rgba(57,215,201,0.06) 2px 4px, transparent 4px 100px),
+    /* Diamond/pointed pattern overlay */
+    repeating-conic-gradient(from 45deg at 50px 50px, transparent 0deg, rgba(57,215,201,0.04) 90deg, transparent 180deg, rgba(57,215,201,0.04) 270deg, transparent 360deg);
   mix-blend-mode: screen;
-  opacity: 0.65;
-  animation: gridmove 12s linear infinite;
+  opacity: 0.8;
+  animation: gridmove 8s linear infinite, gridmove2 12s linear infinite reverse, roughShift 6s ease-in-out infinite;
   pointer-events: none;
 }
 
-.animated-hero::after {
-  content: "";
-  position: absolute;
-  left: 74%;
-  top: 52%;
-  width: 44vmin;
-  height: 44vmin;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle at 50% 50%, 
-    rgba(57,215,201,0.32), 
-    rgba(57,215,201,0.07) 60%, 
-    transparent 72%
-  );
-  filter: blur(24px);
-  mix-blend-mode: screen;
-  animation: pulse 3.6s ease-in-out infinite;
-  pointer-events: none;
-}
 
 .animated-sweep {
   position: absolute;
@@ -86,14 +75,44 @@
   pointer-events: none;
 }
 
+/* Technical circuit pattern overlay */
+.animated-hero .animated-grain::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    /* Circuit traces - horizontal */
+    repeating-linear-gradient(to right, transparent 0, transparent 15px, rgba(57,215,201,0.08) 15px, rgba(57,215,201,0.08) 17px, transparent 17px, transparent 45px),
+    /* Circuit traces - vertical */
+    repeating-linear-gradient(to bottom, transparent 0, transparent 25px, rgba(57,215,201,0.06) 25px, rgba(57,215,201,0.06) 27px, transparent 27px, transparent 60px),
+    /* Circuit nodes */
+    radial-gradient(circle at 30px 40px, rgba(57,215,201,0.15) 1px, transparent 2px),
+    radial-gradient(circle at 80px 90px, rgba(57,215,201,0.12) 1px, transparent 2px),
+    radial-gradient(circle at 140px 60px, rgba(57,215,201,0.15) 1px, transparent 2px);
+  background-size: 90px 90px, 90px 90px, 90px 90px, 90px 90px, 90px 90px;
+  opacity: 0.6;
+  animation: circuitFlow 15s linear infinite;
+}
+
 @keyframes kenburns {
   0% { background-position: 52% 48%; background-size: 110%; }
   100% { background-position: 48% 52%; background-size: 116%; }
 }
 
 @keyframes gridmove {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 44px 44px, 44px 44px; }
+  0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 20px 20px, 20px 20px, 8px 8px, 8px 8px, 100px 100px, 100px 100px; }
+}
+
+@keyframes gridmove2 {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(0, -2px); }
+  75% { transform: translate(1px, 0); }
+  100% { transform: translate(0, 0); }
 }
 
 @keyframes pulse {
@@ -109,6 +128,22 @@
 @keyframes grainShift {
   0% { background-position: 0 0; }
   100% { background-position: 160px -160px; }
+}
+
+@keyframes circuitFlow {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+  25% { background-position: 22px 0, 0 15px, 10px 10px, 20px 20px, 30px 15px; }
+  50% { background-position: 45px 0, 0 30px, 20px 20px, 40px 40px, 60px 30px; }
+  75% { background-position: 67px 0, 0 45px, 30px 30px, 60px 60px, 90px 45px; }
+  100% { background-position: 90px 0, 0 60px, 40px 40px, 80px 80px, 120px 60px; }
+}
+
+@keyframes roughShift {
+  0% { filter: contrast(1) brightness(1) hue-rotate(0deg); }
+  25% { filter: contrast(1.1) brightness(0.95) hue-rotate(2deg); }
+  50% { filter: contrast(0.95) brightness(1.05) hue-rotate(-1deg); }
+  75% { filter: contrast(1.05) brightness(0.98) hue-rotate(1deg); }
+  100% { filter: contrast(1) brightness(1) hue-rotate(0deg); }
 }
 
 @media (max-width: 768px) {

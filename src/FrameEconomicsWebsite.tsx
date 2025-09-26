@@ -3,7 +3,7 @@ import {
   BookOpen, Brain, Users, TrendingUp, ChevronDown, ChevronRight,
   CheckCircle, ArrowRight, Target, Shield, Clock, Zap,
   Download, AlertTriangle, Lightbulb, BarChart3, Calendar,
-  Layers, Globe, Briefcase, GraduationCap, Home
+  Layers, Globe, Briefcase, GraduationCap, Home, X, Menu
 } from "lucide-react";
 import { 
   FloatingParticles, 
@@ -22,8 +22,11 @@ import InteractiveCommunity from "./components/InteractiveCommunity";
 import Connect from "./components/Connect";
 import CommunityTest from "./components/CommunityTest";
 import ProjectsRoadmap from "./components/ProjectsRoadmap";
-import AdvancedTheoryCarousel from "./components/AdvancedTheoryCarousel";
-import AnimatedCSSBanner from "./components/AnimatedCSSBanner";
+import NeuralPatterns from "./components/NeuralPatterns";
+import ThemeToggle from "./components/ThemeToggle";
+import { EnhancedSectionBackground, EnhancedCard, EnhancedButton, FloatingText } from "./components/EnhancedAnimations";
+import { InteractiveBanner } from "./components/EnhancedBanner";
+import CSSBanner from "./components/CSSBanner";
 
 interface Rule {
   id: number;
@@ -42,12 +45,14 @@ type SectionId = "introduction" | "about" | "projects" | "assessment" | "rules" 
 
 const STORAGE_KEY = "frame_econ_completed_rules_v2";
 const PROGRESS_KEY = "frame_econ_progress_v1";
+const BANNER_KEY = "frame_econ_banner_dismissed";
 
 const HASH_TO_SECTION: Record<string, SectionId> = {
   "": "introduction",
   "#introduction": "introduction", 
   "#about": "about",
   "#projects": "projects",
+  "#assessment": "assessment",
   "#rules": "rules", 
   "#science": "science",
   "#advanced": "advanced", 
@@ -65,6 +70,8 @@ const FrameEconomicsWebsite: React.FC = () => {
   const [completedRules, setCompletedRules] = useState<Set<number>>(new Set());
   const [currentSection, setCurrentSection] = useState<SectionId>("introduction");
   const [isLoading, setIsLoading] = useState(true);
+  const [showBanner, setShowBanner] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 
   // Load saved data
@@ -72,6 +79,7 @@ const FrameEconomicsWebsite: React.FC = () => {
     try {
       const rulesData = localStorage.getItem(STORAGE_KEY);
       const progressData = localStorage.getItem(PROGRESS_KEY);
+      const bannerData = localStorage.getItem(BANNER_KEY);
       
       if (rulesData) {
         const parsed = JSON.parse(rulesData);
@@ -82,6 +90,10 @@ const FrameEconomicsWebsite: React.FC = () => {
         const { section, expandedRule } = JSON.parse(progressData);
         if (section) setCurrentSection(section);
         if (expandedRule) setActiveRule(expandedRule);
+      }
+      
+      if (bannerData) {
+        setShowBanner(bannerData !== 'true');
       }
     } catch (error) {
       console.warn('Failed to load saved progress:', error);
@@ -121,12 +133,25 @@ const FrameEconomicsWebsite: React.FC = () => {
   }, [currentSection]);
 
   const setSectionAndHash = useCallback((id: SectionId) => {
+    console.log(`setSectionAndHash called with: ${id}`);
+    console.log(`Current section before: ${currentSection}`);
     setCurrentSection(id);
+    console.log(`Setting section to: ${id}`);
+    // Auto-dismiss banner when navigating away from introduction
+    if (id !== 'introduction' && showBanner) {
+      setShowBanner(false);
+      try {
+        localStorage.setItem(BANNER_KEY, 'true');
+      } catch (error) {
+        console.warn('Failed to save banner dismiss state:', error);
+      }
+    }
     const hash = Object.entries(HASH_TO_SECTION).find(([, v]) => v === id)?.[0] ?? "";
+    console.log(`Setting hash to: ${hash}`);
     if (hash && window.location.hash !== hash) {
       history.pushState(null, "", hash);
     }
-  }, []);
+  }, [showBanner, currentSection]);
 
   const rules: Rule[] = useMemo(() => [
     {
@@ -260,6 +285,23 @@ const FrameEconomicsWebsite: React.FC = () => {
     window.print();
   }, []);
 
+  const dismissBanner = useCallback(() => {
+    setShowBanner(false);
+    try {
+      localStorage.setItem(BANNER_KEY, 'true');
+    } catch (error) {
+      console.warn('Failed to save banner dismiss state:', error);
+    }
+  }, []);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   const completionPercentage = useMemo(() => {
     return Math.round((completedRules.size / rules.length) * 100);
   }, [completedRules.size, rules.length]);
@@ -289,157 +331,141 @@ const FrameEconomicsWebsite: React.FC = () => {
     <div className="min-h-screen safe-area-padding desktop-enhanced bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative">
       <FloatingParticles />
       
-      {/* Dragon Header - Sticky home button */}
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-white/10 dark:bg-slate-900/10 border-b border-white/20 dark:border-white/10">
-        <div className="container mx-auto container-mobile px-4 py-3">
+      {/* Enhanced professional top navigation */}
+      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/90 dark:bg-slate-900/90 border-b border-slate-200/30 dark:border-slate-700/30 shadow-lg shadow-black/5" role="navigation" aria-label="Main navigation">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            {/* Dragon Logo Home Button */}
-            <button
-              onClick={() => setSectionAndHash("introduction")}
-              className="group flex items-center gap-3 px-3 py-2 rounded-xl glass-premium hover:glass-premium-hover transition-all duration-300 hover:scale-105 border border-white/10 dark:border-white/5"
-              aria-label="Return to home"
+            {/* Enhanced Logo/Brand - Clickable Home */}
+            <button 
+              onClick={() => {
+                console.log('Logo clicked - redirecting to live site');
+                window.location.href = 'https://icecoldfroste.com/';
+              }}
+              className="flex items-center gap-2 sm:gap-3 group hover:opacity-80 transition-all duration-300"
+              aria-label="Go to home page"
             >
-              <div className="dragon-logo" style={{'--dragon-size': '32px'} as React.CSSProperties}></div>
-              <div className="hidden sm:block">
-                <div className="text-sm font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
-                  Frame Economics
-                </div>
-                <div className="text-xs text-slate-600 dark:text-slate-400">
-                  🐉 Dragon Framework
-                </div>
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+                <span className="text-white font-bold text-xs sm:text-sm animate-glow">FE</span>
               </div>
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-slate-900 via-purple-900 to-blue-900 dark:from-white dark:via-purple-200 dark:to-blue-200 bg-clip-text text-transparent">
+                <span className="hidden xs:inline">Frame Economics</span>
+                <span className="xs:hidden">Frame Econ</span>
+              </span>
             </button>
             
-            {/* Quick Actions */}
-            <div className="flex items-center gap-2">
-              {/* Home button for mobile */}
-              <button
-                onClick={() => setSectionAndHash("introduction")}
-                className="sm:hidden p-2 glass-premium rounded-lg hover:glass-premium-hover transition-all duration-200"
-                aria-label="Home"
+            {/* Enhanced Desktop nav links */}
+            <div className="hidden md:flex items-center gap-1 lg:gap-2">
+              <button 
+                onClick={() => {
+                  console.log('Home button clicked - redirecting to live site');
+                  window.location.href = 'https://icecoldfroste.com/';
+                }} 
+                className="relative px-3 py-2 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 group"
               >
-                <Home className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                Home
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </button>
-              
-              {/* Progress indicator in header */}
-              {completedRules.size > 0 && (
-                <div className="hidden md:flex items-center gap-2 px-3 py-1.5 glass-premium rounded-lg text-xs font-medium text-slate-700 dark:text-slate-300">
-                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                  <span>{completedRules.size}/{rules.length}</span>
-                </div>
-              )}
+              <button onClick={() => setSectionAndHash("about")} className="relative px-3 py-2 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 group">
+                About
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </button>
+              <button onClick={() => setSectionAndHash("rules")} className="relative px-3 py-2 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 group">
+                Rules
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </button>
+              <button onClick={() => setSectionAndHash("community")} className="relative px-3 py-2 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 group">
+                Community
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </button>
+              <button onClick={() => setSectionAndHash("connect")} className="relative px-3 py-2 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 group">
+                Connect
+                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-purple-600 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </button>
+              {/* Quick action button for desktop users */}
+              <button 
+                onClick={() => setSectionAndHash("assessment")} 
+                className="ml-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-sm"
+              >
+                Start Assessment
+              </button>
+            </div>
+            
+            {/* Mobile menu button and theme toggle */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggleMobileMenu}
+                className="md:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                aria-label="Toggle mobile menu"
+                aria-expanded={isMobileMenuOpen}
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
             </div>
           </div>
         </div>
-      </header>
-      
-      <div className="container mx-auto container-mobile ultrawide-container py-4 sm:py-8 tablet-optimized relative z-10">
-        {/* Hero Section */}
-        <section className="relative py-8 sm:py-12 md:py-16 lg:py-24 mb-6 sm:mb-8 md:mb-12 overflow-hidden">
-          {/* Enhanced background pattern */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/90 via-blue-50/60 to-purple-50/70 dark:from-slate-900/90 dark:via-blue-900/30 dark:to-purple-900/50"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(120,119,198,0.15),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top_left,rgba(120,119,198,0.08),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.12),transparent_50%)] dark:bg-[radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.06),transparent_50%)]"></div>
-          
-          {/* Enhanced floating elements - reduced on mobile */}
-          <div className="hidden sm:block absolute top-12 left-12 w-16 h-16 sm:w-24 sm:h-24 rotate-45 bg-gradient-to-br from-blue-200/25 to-purple-200/25 dark:from-blue-800/15 dark:to-purple-800/15 blur-sm animate-pulse"></div>
-          <div className="hidden md:block absolute top-40 right-20 w-24 h-24 sm:w-36 sm:h-36 rotate-12 bg-gradient-to-br from-purple-200/20 to-indigo-200/20 dark:from-purple-800/12 dark:to-indigo-800/12 blur-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="hidden sm:block absolute bottom-24 left-1/3 w-12 h-12 sm:w-20 sm:h-20 -rotate-12 bg-gradient-to-br from-cyan-200/25 to-blue-200/25 dark:from-cyan-800/15 dark:to-blue-800/15 blur-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="hidden md:block absolute top-20 right-1/4 w-10 h-10 sm:w-14 sm:h-14 rotate-45 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 dark:from-emerald-800/10 dark:to-teal-800/10 blur-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-          
-          <div className="container mx-auto container-mobile relative z-10">
-            <div className="text-center max-w-5xl mx-auto">
-              {/* Enhanced hero header with dragon branding */}
-              <div className="relative mb-8 sm:mb-12">
-                {/* Dragon logo integration */}
-                <div className="flex justify-center mb-6">
-                  <div className="dragon-logo-hero" style={{'--dragon-size': '64px'} as React.CSSProperties}></div>
-                </div>
-                
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 sm:mb-8 animate-slide-up leading-[0.95] tracking-tight">
-                  <span className="block bg-gradient-to-r from-slate-900 via-purple-900 to-slate-800 dark:from-white dark:via-purple-100 dark:to-slate-100 bg-clip-text text-transparent mb-2">
-                    Master the Hidden
-                  </span>
-                  <span className="block bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-cyan-400 bg-clip-text text-transparent gradient-animate">
-                    Psychology of Influence
-                  </span>
-                </h1>
-                
-                {/* Enhanced subtitle with better spacing */}
-                <p className="text-xl sm:text-2xl md:text-3xl text-slate-600 dark:text-slate-300 mb-8 sm:mb-10 leading-relaxed font-light max-w-4xl mx-auto">
-                  Through behavioral economics and frame control
-                </p>
-                
-                {/* Power statement */}
-                <div className="inline-flex items-center gap-3 px-6 py-3 glass-premium rounded-full border border-purple-200/30 dark:border-purple-700/30 mb-6">
-                  <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                    🐉 Dragon-Powered Framework v4.0 - Live Now
-                  </span>
-                </div>
-              </div>
-              
-              {/* Value proposition - enhanced with premium components */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 max-w-5xl mx-auto">
-                <FeatureCard 
-                  icon={<Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
-                  title="10 Proven Rules"
-                  description="Science-backed behavioral economics principles that reveal the hidden psychology of influence"
-                  color="from-purple-500 to-blue-500"
-                  delay={0}
-                />
-                <FeatureCard 
-                  icon={<Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
-                  title="Interactive Training"
-                  description="Practice real-world scenarios with instant feedback and personalized learning paths"
-                  color="from-blue-500 to-indigo-500"
-                  delay={100}
-                />
-                <FeatureCard 
-                  icon={<Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
-                  title="Unshakeable Frame"
-                  description="Build authentic confidence rooted in your values, not reactive to others' manipulation"
-                  color="from-indigo-500 to-purple-500"
-                  delay={200}
-                />
-              </div>
-              
-              {/* Clear call to action - mobile optimized */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-6 sm:mb-8">
-                <button
-                  onClick={() => setSectionAndHash("assessment")}
-                  className="group w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 gradient-animate"
+        
+        {/* Enhanced Mobile menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-slate-200/20 dark:border-slate-700/20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-lg animate-slide-up">
+            <div className="container mx-auto px-4 py-6">
+              <div className="flex flex-col space-y-3">
+                <button 
+                  onClick={() => {
+                    console.log('Mobile Home button clicked - redirecting to live site');
+                    window.location.href = 'https://icecoldfroste.com/';
+                  }}
+                  className="group flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 py-3 px-4 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 border-b border-slate-200/20 dark:border-slate-700/20"
                 >
-                  <span className="flex items-center justify-center gap-2 sm:gap-3">
-                    <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="text-sm sm:text-base">Start Your Assessment</span>
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                  </span>
+                  <div className="w-2 h-2 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  Home
                 </button>
-                <button
-                  onClick={() => setSectionAndHash("rules")}
-                  className="w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300 hover-lift"
+                <button 
+                  onClick={() => {setSectionAndHash("about"); closeMobileMenu();}}
+                  className="group flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 py-3 px-4 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 border-b border-slate-200/20 dark:border-slate-700/20"
                 >
-                  <span className="flex items-center justify-center gap-2 sm:gap-3">
-                    <Target className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="text-sm sm:text-base">Explore the Rules</span>
-                  </span>
+                  <div className="w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  About
                 </button>
-              </div>
-              
-              {/* Progress indicator for returning users - mobile optimized */}
-              {completedRules.size > 0 && (
-                <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 glass-effect-mobile rounded-lg sm:rounded-xl backdrop-blur-sm">
-                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
-                  <span className="font-medium text-slate-700 dark:text-slate-300 text-responsive-sm text-center">
-                    <span className="hidden xs:inline">{completionPercentage}% Complete • {completedRules.size}/{rules.length} rules mastered</span>
-                    <span className="xs:hidden">{completedRules.size}/{rules.length} Complete</span>
-                  </span>
+                <button 
+                  onClick={() => {setSectionAndHash("rules"); closeMobileMenu();}}
+                  className="group flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 py-3 px-4 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 border-b border-slate-200/20 dark:border-slate-700/20"
+                >
+                  <div className="w-2 h-2 bg-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  Rules
+                </button>
+                <button 
+                  onClick={() => {setSectionAndHash("community"); closeMobileMenu();}}
+                  className="group flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 py-3 px-4 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 border-b border-slate-200/20 dark:border-slate-700/20"
+                >
+                  <div className="w-2 h-2 bg-teal-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  Community
+                </button>
+                <button 
+                  onClick={() => {setSectionAndHash("connect"); closeMobileMenu();}}
+                  className="group flex items-center gap-3 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium transition-all duration-300 py-3 px-4 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20"
+                >
+                  <div className="w-2 h-2 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  Connect
+                </button>
+                {/* Mobile CTA */}
+                <div className="pt-4 mt-2 border-t border-slate-200/20 dark:border-slate-700/20">
+                  <button 
+                    onClick={() => {
+                      setSectionAndHash("assessment"); 
+                      closeMobileMenu();
+                    }}
+                    className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]"
+                  >
+                    Start Assessment
+                  </button>
                 </div>
-              )}
+              </div>
             </div>
           </div>
-        </section>
+        )}
+      </nav>
+      
+      <div className="container mx-auto container-mobile ultrawide-container py-4 sm:py-8 tablet-optimized relative z-10">
 
         {/* Navigation - Mobile Optimized */}
         <nav className="flex justify-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 sticky top-16 sm:top-4 z-30 container-mobile" aria-label="Primary">
@@ -473,7 +499,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                     }
                   }}
                   className={`
-                    flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl whitespace-nowrap flex-shrink-0
+                    nav-tab-enhanced flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-lg sm:rounded-xl whitespace-nowrap flex-shrink-0
                     transition-all duration-300 focus:outline-none focus:ring-2 
                     focus:ring-purple-400/60 font-medium text-xs sm:text-sm md:text-base btn-touch
                     scroll-snap-align: start;
@@ -504,47 +530,140 @@ const FrameEconomicsWebsite: React.FC = () => {
           <section 
             id="section-introduction" 
             aria-labelledby="tab-introduction" 
-            className="max-w-6xl mx-auto animate-fade-in"
+            className="max-w-6xl mx-auto animate-fade-in relative"
           >
-            {/* Animated Hero Banner */}
-            <div className="relative mb-6 sm:mb-8 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-purple-200/50 dark:border-purple-700/50 mx-2 sm:mx-0">
-              <div className="aspect-[1200/630] max-h-[50vh] sm:max-h-[70vh]">
-                <AnimatedCSSBanner className="w-full h-full" />
+            {/* Enhanced animated background */}
+            <EnhancedSectionBackground variant="intro" intensity="normal" />
+            {/* Hero Section - Modern Sleek Redesign - ONLY ON INTRODUCTION */}
+            <div className="relative py-6 sm:py-8 md:py-12 mb-8 overflow-hidden">
+              {/* Futuristic grid background */}
+              <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 via-slate-800/90 to-slate-900/95 dark:from-slate-950/98 dark:via-slate-900/95 dark:to-slate-950/98"></div>
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '60px 60px'
+                }}></div>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.08),transparent_70%)]"></div>
               </div>
               
-              {/* Overlay content - Mobile optimized */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-4 sm:p-6 md:p-8">
-                <div className="text-center w-full">
-                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 drop-shadow-lg">
-                    Frame Economics
-                  </h1>
-                  <p className="text-base sm:text-lg md:text-xl text-teal-100 mb-4 sm:mb-6 drop-shadow-md max-w-3xl mx-auto px-2">
-                    Master Behavioral Psychology & Influence
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                    <button
-                      onClick={() => setSectionAndHash('rules')}
-                      className="btn-touch inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
-                    >
-                      <Target className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="hidden xs:inline">Explore the Rules</span>
-                      <span className="xs:hidden">Rules</span>
-                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
-                    </button>
-                    <button
-                      onClick={() => setSectionAndHash('assessment')}
-                      className="btn-touch inline-flex items-center justify-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-white/20 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/30 font-semibold rounded-lg sm:rounded-xl transition-all duration-300 text-sm sm:text-base"
-                    >
-                      <Brain className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span className="hidden xs:inline">Take Assessment</span>
-                      <span className="xs:hidden">Assessment</span>
-                    </button>
+              {/* Floating geometric elements */}
+              <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl rotate-45 animate-pulse blur-sm"></div>
+              <div className="absolute bottom-20 right-16 w-16 h-16 bg-gradient-to-r from-purple-500/10 to-indigo-500/10 rounded-full animate-pulse blur-sm" style={{ animationDelay: '1s' }}></div>
+              
+              <div className="container mx-auto container-mobile relative z-10">
+                <div className="text-center max-w-4xl mx-auto">
+                  {/* Condensed modern header */}
+                  <div className="relative mb-6">
+                    {/* Compact dragon branding */}
+                    <div className="flex justify-center items-center gap-4 mb-4">
+                      <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">🐉</span>
+                      </div>
+                      <div className="text-xs font-mono text-indigo-400 bg-indigo-950/50 px-2 py-1 rounded border border-indigo-500/30">
+                        v4.0 • NEURAL
+                      </div>
+                    </div>
+                    
+                    {/* Ultra-modern condensed title with floating animation */}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 leading-[0.9] tracking-tighter">
+                      <FloatingText delay={0.2}>
+                        <span className="block bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent mb-1">
+                          FRAME
+                        </span>
+                      </FloatingText>
+                      <FloatingText delay={0.5}>
+                        <span className="block bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                          ECONOMICS
+                        </span>
+                      </FloatingText>
+                    </h1>
+                    
+                    {/* Sleek subtitle */}
+                    <p className="text-sm sm:text-base text-indigo-300/80 font-light mb-6 max-w-2xl mx-auto">
+                      Neural Behavioral Psychology • Frame Control • Influence Mastery
+                    </p>
                   </div>
+                  
+                  {/* Main Value Proposition Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 max-w-5xl mx-auto">
+                    <FeatureCard 
+                      icon={<Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                      title="10 Proven Rules"
+                      description="Science-backed behavioral economics principles that reveal the hidden psychology of influence"
+                      color="from-purple-500 to-blue-500"
+                      delay={0}
+                    />
+                    <FeatureCard 
+                      icon={<Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                      title="Interactive Training"
+                      description="Practice real-world scenarios with instant feedback and personalized learning paths"
+                      color="from-blue-500 to-indigo-500"
+                      delay={100}
+                    />
+                    <FeatureCard 
+                      icon={<Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                      title="Unshakeable Frame"
+                      description="Build authentic confidence rooted in your values, not reactive to others' manipulation"
+                      color="from-indigo-500 to-purple-500"
+                      delay={200}
+                    />
+                  </div>
+                  
+                  {/* Business Kicker */}
+                  <p className="text-sm text-cyan-300/80 font-light mb-6 tracking-wide">
+                    Calm beats chaos • Clarity beats pressure • Consent beats manipulation
+                  </p>
+                  
+                  {/* Enhanced action buttons */}
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4">
+                    <EnhancedButton
+                      onClick={() => setSectionAndHash("assessment")}
+                      variant="primary"
+                      size="md"
+                      className="w-full sm:w-auto text-sm"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        <BarChart3 className="w-4 h-4" />
+                        <span>NEURAL ASSESSMENT</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </EnhancedButton>
+                    <EnhancedButton
+                      onClick={() => setSectionAndHash("rules")}
+                      variant="secondary"
+                      size="md"
+                      className="w-full sm:w-auto text-sm border border-slate-600"
+                    >
+                      <span className="flex items-center justify-center gap-2">
+                        <Target className="w-4 h-4" />
+                        <span>EXPLORE RULES</span>
+                      </span>
+                    </EnhancedButton>
+                  </div>
+                  
+                  {/* Progress indicator for returning users - mobile optimized */}
+                  {completedRules.size > 0 && (
+                    <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 glass-effect-mobile rounded-lg sm:rounded-xl backdrop-blur-sm">
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                      <span className="font-medium text-slate-700 dark:text-slate-300 text-responsive-sm text-center">
+                        <span className="hidden xs:inline">{completionPercentage}% Complete • {completedRules.size}/{rules.length} rules mastered</span>
+                        <span className="xs:hidden">{completedRules.size}/{rules.length} Complete</span>
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
             
-            <div className="glass-effect rounded-3xl p-8 mb-8 shadow-xl max-w-4xl mx-auto">
+            {/* Beautiful Dragon Banner - matching your design */}
+            <div className="relative mb-6 sm:mb-8 mx-2 sm:mx-0">
+              <CSSBanner variant="dark" />
+            </div>
+            
+            <EnhancedCard className="glass-effect rounded-3xl p-8 mb-8 shadow-xl max-w-4xl mx-auto relative" glow={true}>
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8 text-center">
                 The Intersection of Psychology and Power
               </h2>
@@ -666,7 +785,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            
             <div className="text-center mt-12">
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
                 Ready to Build Your Unshakeable Frame?
@@ -730,6 +849,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </div>
               </div>
             </div>
+            </EnhancedCard>
           </section>
         )}
 
@@ -757,8 +877,9 @@ const FrameEconomicsWebsite: React.FC = () => {
           <section 
             id="section-assessment" 
             aria-labelledby="tab-assessment" 
-            className="animate-fade-in"
+            className="animate-fade-in relative"
           >
+            <EnhancedSectionBackground variant="assessment" intensity="normal" />
             <Assessment />
           </section>
         )}
@@ -767,8 +888,9 @@ const FrameEconomicsWebsite: React.FC = () => {
           <section 
             id="section-rules" 
             aria-labelledby="tab-rules" 
-            className="max-w-4xl mx-auto animate-fade-in"
+            className="max-w-4xl mx-auto animate-fade-in relative"
           >
+            <EnhancedSectionBackground variant="rules" intensity="subtle" />
             <div className="mb-8 text-center">
               <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
                 The 10 Rules of Frame Economics
@@ -1092,7 +1214,7 @@ const FrameEconomicsWebsite: React.FC = () => {
         )}
 
         {currentSection === "advanced" && (
-          <AdvancedTheoryCarousel />
+          <NeuralPatterns />
         )}
 
         {currentSection === "casestudies" && (
@@ -1419,8 +1541,9 @@ const FrameEconomicsWebsite: React.FC = () => {
           <section 
             id="section-community" 
             aria-labelledby="tab-community" 
-            className="animate-fade-in"
+            className="animate-fade-in relative"
           >
+            <EnhancedSectionBackground variant="community" intensity="normal" />
             <InteractiveCommunity />
           </section>
         )}

@@ -414,35 +414,37 @@ const AdvancedTheoryCarousel: React.FC = () => {
   }, []);
 
   return (
-    <section id="section-advanced" aria-labelledby="tab-advanced" className="max-w-7xl mx-auto animate-fade-in px-4 sm:px-6">
-      <div className="mb-6 sm:mb-8 md:mb-12 text-center">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
-          Advanced Theoretical Framework
+    <section id="section-advanced" aria-labelledby="tab-advanced" className="max-w-6xl mx-auto animate-fade-in px-4">
+      <div className="mb-6 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+          Advanced Theory
         </h2>
-        <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-2xl mx-auto">
-          Master the science behind influence. Powerful mental models built for action.
+        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+          Master the neuroscience and behavioral economics behind influence
         </p>
       </div>
 
-      {/* Enhanced Carousel Container */}
-      <div className="relative bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl">
-        {/* Carousel Header with Controls */}
+      {/* Modern Carousel Container */}
+      <div className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-2xl p-6 shadow-2xl border border-slate-800">
+        {/* Modern Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="ml-4 text-sm font-medium text-slate-600 dark:text-slate-400">
-              {activeIndex + 1} of {slides.length}
-            </span>
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+            </div>
+            <div className="text-xs font-mono text-indigo-400 bg-indigo-950/50 px-2 py-1 rounded border border-indigo-500/30">
+              {activeIndex + 1}/{slides.length} NEURAL
+            </div>
           </div>
           <button
             onClick={toggleAutoPlay}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 transition-colors text-xs"
             aria-label={isAutoPlay ? 'Pause slideshow' : 'Play slideshow'}
           >
-            {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-            <span className="hidden sm:inline">{isAutoPlay ? 'Pause' : 'Play'}</span>
+            {isAutoPlay ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+            <span className="hidden sm:inline">{isAutoPlay ? 'PAUSE' : 'PLAY'}</span>
           </button>
         </div>
 
@@ -462,35 +464,75 @@ const AdvancedTheoryCarousel: React.FC = () => {
             {slides.map((slide, idx) => (
               <article
                 key={slide.id}
-                className="w-full flex-shrink-0 p-1"
+                className="w-full flex-shrink-0 px-2"
                 aria-roledescription="slide"
                 aria-label={`${idx + 1} of ${slides.length}`}
               >
-                <div className={`h-full p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br ${slide.color} text-white shadow-xl relative overflow-hidden`}>
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute -top-4 -right-4 w-32 h-32 rounded-full bg-white/20"></div>
-                    <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-white/10"></div>
-                  </div>
+                <div className={`h-[400px] p-6 rounded-xl bg-gradient-to-br ${slide.color} text-white shadow-lg relative overflow-hidden`}>
+                  {/* Subtle background pattern */}
+                  <div className="absolute inset-0 opacity-5" style={{
+                    backgroundImage: `radial-gradient(circle at 20px 20px, white 2px, transparent 2px)`,
+                    backgroundSize: '40px 40px'
+                  }}></div>
                   
-                  {/* Slide Content */}
-                  <div className="relative z-10">
-                    <header className="flex items-start gap-4 mb-6">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30">
-                        <span className="w-6 h-6 sm:w-7 sm:h-7 text-white">{slide.icon}</span>
+                  {/* Clean slide content */}
+                  <div className="relative z-10 h-full flex flex-col">
+                    {/* Compact header */}
+                    <header className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                        <span className="w-5 h-5 text-white">{slide.icon}</span>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight mb-2">
+                        <h3 className="text-lg font-bold leading-tight mb-1">
                           {slide.title}
                         </h3>
-                        <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                        <p className="text-xs text-white/80">
                           {slide.subtitle}
                         </p>
                       </div>
                     </header>
                     
-                    <div className="bg-white/15 rounded-2xl p-4 sm:p-6 backdrop-blur-md border border-white/20">
-                      {slide.content}
+                    {/* Simplified content area */}
+                    <div className="flex-1 bg-white/10 rounded-lg p-4 backdrop-blur-sm border border-white/20 overflow-y-auto">
+                      <div className="text-sm text-white/95 leading-relaxed">
+                        {/* Display only the first key concept for readability */}
+                        {idx === 0 && (
+                          <div>
+                            <h4 className="font-semibold mb-2 text-white">Nash Equilibrium in Social Dynamics</h4>
+                            <p className="mb-3">The steadier frame becomes the stable equilibrium others adopt. In heated arguments, remaining calm turns your frame into the default.</p>
+                            <div className="bg-white/20 rounded p-3 border border-white/20">
+                              <p className="text-xs font-medium">💡 Key Insight: Equilibrium occurs when neither party can improve by changing strategy alone.</p>
+                            </div>
+                          </div>
+                        )}
+                        {idx === 1 && (
+                          <div>
+                            <h4 className="font-semibold mb-2 text-white">Working Memory Limits</h4>
+                            <p className="mb-3">Working memory holds ~7±2 items. Cognitive overload is a common attack vector in frame battles.</p>
+                            <div className="bg-white/20 rounded p-3 border border-white/20">
+                              <p className="text-xs font-medium">🛡️ Defense: When overwhelmed, simplify to binary choice: "This works for both of us, or it doesn't."</p>
+                            </div>
+                          </div>
+                        )}
+                        {idx === 2 && (
+                          <div>
+                            <h4 className="font-semibold mb-2 text-white">Meta-Frames</h4>
+                            <p className="mb-3">Frames about frames: "I notice we're both trying to control how this goes." Call out the layer above.</p>
+                            <div className="bg-white/20 rounded p-3 border border-white/20">
+                              <p className="text-xs font-medium">🎯 Technique: Redirect opponent's energy: "You're right to be concerned about X, which is why Y makes sense."</p>
+                            </div>
+                          </div>
+                        )}
+                        {idx >= 3 && (
+                          <div>
+                            <h4 className="font-semibold mb-2 text-white">Advanced Concept</h4>
+                            <p className="mb-3">This slide contains advanced behavioral psychology concepts that build on the foundation of the 10 Rules.</p>
+                            <div className="bg-white/20 rounded p-3 border border-white/20">
+                              <p className="text-xs font-medium">🧠 Master the science behind influence with practical applications.</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -499,68 +541,67 @@ const AdvancedTheoryCarousel: React.FC = () => {
           </div>
         </div>
 
-        {/* Enhanced Navigation */}
-        <div className="flex items-center justify-between mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-          <button
-            onClick={prev}
-            className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-all duration-200 hover:scale-105 active:scale-95"
-            aria-label="Previous slide"
-            disabled={activeIndex === 0 && !isAutoPlay}
-          >
-            <ChevronLeft className="w-5 h-5" />
-            <span className="font-medium">Previous</span>
-          </button>
-          
-          {/* Dot Navigation */}
-          <div className="flex items-center gap-2">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => goToSlide(idx)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  idx === activeIndex 
-                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 scale-125' 
-                    : 'bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500'
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
+        {/* Modern Navigation */}
+        <div className="flex items-center justify-center mt-4 pt-4 border-t border-slate-800">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={prev}
+              className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            
+            {/* Minimal dot navigation */}
+            <div className="flex items-center gap-2 px-3">
+              {slides.slice(0, 6).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => goToSlide(idx)}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                    idx === activeIndex 
+                      ? 'bg-indigo-400 scale-125' 
+                      : 'bg-slate-600 hover:bg-slate-500'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+              {slides.length > 6 && (
+                <span className="text-xs text-slate-500 px-2">+{slides.length - 6}</span>
+              )}
+            </div>
+            
+            <button
+              onClick={next}
+              className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
-          
-          <button
-            onClick={next}
-            className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-all duration-200 hover:scale-105 active:scale-95"
-            aria-label="Next slide"
-            disabled={activeIndex === slides.length - 1 && !isAutoPlay}
-          >
-            <span className="font-medium">Next</span>
-            <ChevronRight className="w-5 h-5" />
-          </button>
         </div>
       </div>
 
-      {/* Extra content grid under carousel */}
-      <div className="mt-6 sm:mt-8 grid md:grid-cols-2 gap-3 sm:gap-6">
-        <div className="glass-effect-mobile rounded-2xl p-4 sm:p-6">
-          <h3 className="text-responsive-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-amber-500" /> Practical Heuristics
+      {/* Quick reference cards */}
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4">
+          <h3 className="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+            <Lightbulb className="w-4 h-4 text-amber-400" /> Quick Tactics
           </h3>
-          <ul className="space-y-2 text-slate-700 dark:text-slate-300 text-responsive-sm">
-            <li>• Name the frame, then name your standard</li>
-            <li>• Slow your breath, slow the room</li>
-            <li>• Move to higher time horizons when pressured</li>
-            <li>• Ask binary questions when overwhelmed</li>
+          <ul className="space-y-1 text-xs text-slate-400">
+            <li>• Name the frame, set your standard</li>
+            <li>• Slow breath = slow room</li>
+            <li>• Binary choice when overwhelmed</li>
           </ul>
         </div>
-        <div className="glass-effect-mobile rounded-2xl p-4 sm:p-6">
-          <h3 className="text-responsive-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-purple-500" /> Pattern Library
+        <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4">
+          <h3 className="text-sm font-bold text-slate-200 mb-3 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-purple-400" /> Pattern Breaks
           </h3>
-          <ul className="space-y-2 text-slate-700 dark:text-slate-300 text-responsive-sm">
-            <li>• Deadline rush → Present bias reframed as diligence</li>
-            <li>• Public challenge → Playful redirection + invite</li>
-            <li>• Moving goalposts → Re-anchor to agreed standards</li>
-            <li>• Silence game → Return to mission, don’t chase</li>
+          <ul className="space-y-1 text-xs text-slate-400">
+            <li>• Deadline rush → "Let's be thorough"</li>
+            <li>• Public challenge → Playful redirect</li>
+            <li>• Silence game → Return to mission</li>
           </ul>
         </div>
       </div>
