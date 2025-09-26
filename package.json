@@ -28,22 +28,26 @@
   "dependencies": {
     "@arcjet/node": "^1.0.0-beta.12",
     "@netlify/functions": "^4.2.6",
-    "@react-three/drei": "^9.109.0",
-    "@react-three/fiber": "^8.16.0",
+    "@react-three/drei": "10.7.6",
+    "@react-three/fiber": "9.3.0",
     "@supabase/supabase-js": "^2.57.4",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.22",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.449.0",
     "pg": "^8.16.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "three": "^0.156.0"
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "three": "0.180.0"
+  },
+  "overrides": {
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "19.1.14",
+    "@types/react-dom": "19.1.9",
     "@types/three": "^0.156.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",

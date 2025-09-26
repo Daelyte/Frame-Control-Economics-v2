@@ -3,6 +3,7 @@ import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
 import DragonBoot from './dragon/DragonBoot';
+import DragonNuclear from './ambient/DragonNuclear';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -90,6 +91,9 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <main className="relative isolate z-0" style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
+      {/* Nuclear Dragon - Guaranteed visible fallback */}
+      <DragonNuclear opacity={0.14} hue={170} />
+      {/* Main Dragon System - Advanced effects */}
       <DragonBoot enabled={true} debug={process.env.NODE_ENV === 'development'} />
       {/* Demo Header */}
       <header className="section-container">
