@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2a33;stop-opacity:1" />
+      <stop offset="45%" style="stop-color:#07181b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#041013;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#39D7C9;stop-opacity:0.3" />
+      <stop offset="70%" style="stop-color:#39D7C9;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#39D7C9;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="900" cy="200" r="300" fill="url(#glow)" opacity="0.6"/>
+  <text x="600" y="280" text-anchor="middle" fill="#39D7C9" font-family="Arial, sans-serif" font-size="72" font-weight="bold">Frame Economics</text>
+  <text x="600" y="360" text-anchor="middle" fill="#9ee7de" font-family="Arial, sans-serif" font-size="28" font-weight="normal">Behavioral Economics Applied</text>
+  <text x="600" y="420" text-anchor="middle" fill="#7fe7db" font-family="Arial, sans-serif" font-size="20" font-weight="normal">Understanding Decision-Making Through Cognitive Frameworks</text>
+</svg>
