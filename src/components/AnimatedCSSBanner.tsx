@@ -20,7 +20,9 @@ const AnimatedCSSBanner: React.FC<AnimatedCSSBannerProps> = ({ className = '' })
           overflow: hidden;
           background:
             radial-gradient(140% 140% at 10% 10%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.5) 100%),
+            radial-gradient(100% 120% at 20% 10%, #0f2a33 0%, #07181b 45%, #041013 100%),
             url("/og-image.jpg") center/112% 112% no-repeat;
+          background-size: cover, cover, 112% 112%;
           animation: kenburns 14s ease-in-out infinite alternate;
           isolation: isolate;
         }
@@ -128,6 +130,29 @@ const AnimatedCSSBanner: React.FC<AnimatedCSSBannerProps> = ({ className = '' })
       <div className="animated-hero">
         <div className="animated-sweep" aria-hidden="true"></div>
         <div className="animated-grain" aria-hidden="true"></div>
+        
+        {/* Content overlay - shows when OG image is not available */}
+        <div className="absolute inset-0 flex items-center justify-between p-6 md:p-12">
+          <div className="text-left max-w-2xl">
+            <h1 className="text-4xl md:text-6xl font-bold text-[#b8fff6] leading-none mb-3 drop-shadow-lg">
+              FRAME<br/>ECONOMICS
+            </h1>
+            <p className="text-lg md:text-2xl text-[#9ee7de] mb-4">
+              Master Behavioral Psychology & Influence
+            </p>
+            <p className="text-base md:text-lg text-[#cdeeed] opacity-90">
+              Rules • Science • Case Studies
+            </p>
+            <div className="mt-6 px-4 py-2 border border-[#39D7C9] rounded-full text-[#7fe7db] text-sm">
+              icecoldfroste.com
+            </div>
+          </div>
+          
+          {/* Chess knight symbol */}
+          <div className="text-right text-[#39D7C9] opacity-30 hidden sm:block">
+            <div className="text-6xl md:text-9xl">♞</div>
+          </div>
+        </div>
       </div>
 
       {/* Accessibility description */}
