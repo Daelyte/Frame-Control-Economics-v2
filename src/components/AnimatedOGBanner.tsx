@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 interface AnimatedOGBannerProps {
   className?: string;
@@ -9,37 +9,14 @@ const AnimatedOGBanner: React.FC<AnimatedOGBannerProps> = ({
   className = '', 
   priority = false 
 }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleLoadedData = () => {
-      setIsLoaded(true);
-      // Ensure video plays (some browsers need explicit play call)
-      video.play().catch(() => {
-        // Autoplay might be blocked, that's fine - user can still see static frame
-      });
-    };
-
-    const handleError = () => {
-      setHasError(true);
-    };
-
-    video.addEventListener('loadeddata', handleLoadedData);
-    video.addEventListener('error', handleError);
-
-    return () => {
-      video.removeEventListener('loadeddata', handleLoadedData);
-      video.removeEventListener('error', handleError);
-    };
-  }, []);
+  const handleError = () => {
+    setHasError(true);
+  };
 
   if (hasError) {
-    // Fallback to static OG image
+    // Fallback to old image if dragon image fails
     return (
       <img
         src="/og-image.jpg"
@@ -52,43 +29,28 @@ const AnimatedOGBanner: React.FC<AnimatedOGBannerProps> = ({
 
   return (
     <div className={`relative w-full h-full ${className}`}>
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        disablePictureInPicture
-        className={`w-full h-full object-cover transition-opacity duration-300 ${
-          isLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        poster="/og-image.jpg"
-        aria-label="Frame Economics animated banner"
-      >
-        <source src="/og_animated_seamless.webm" type="video/webm" />
-        <source src="/og_animated_seamless.mp4" type="video/mp4" />
+      {/* Dragon-themed animated hero */}
+      <div className="animated-hero w-full h-full">
+        {/* Animated sweep effect */}
+        <div className="animated-sweep" aria-hidden="true"></div>
         
-        {/* Fallback for browsers that don't support video */}
+        {/* Animated grain texture */}
+        <div className="animated-grain" aria-hidden="true"></div>
+        
+        {/* Dragon OG Image */}
         <img
-          src="/og-image.jpg"
-          alt="Frame Economics - Master Behavioral Psychology & Influence"
-          className="w-full h-full object-cover"
+          src="/dragon-og.png"
+          alt="Frame Economics - Master Behavioral Psychology & Influence with Dragon Theme"
+          className="absolute inset-0 w-full h-full object-cover opacity-90"
+          style={{ mixBlendMode: 'multiply' }}
+          loading={priority ? "eager" : "lazy"}
+          onError={handleError}
         />
-      </video>
-      
-      {/* Loading placeholder */}
-      {!isLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-blue-900 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-            <p className="text-teal-200 text-sm">Loading...</p>
-          </div>
-        </div>
-      )}
+      </div>
       
       {/* Accessibility overlay for screen readers */}
       <div className="sr-only">
-        Animated banner showcasing Frame Economics branding with knight chess piece symbolizing strategic thinking and behavioral psychology mastery.
+        Animated dragon-themed banner showcasing Frame Economics branding with mystical dragon symbolizing power, wisdom, and behavioral psychology mastery.
       </div>
     </div>
   );

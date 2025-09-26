@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dragon OG – Animated Hero</title>
+<link rel="preload" as="image" href="dragon-og.png">
+<style>
+  :root {
+    --teal: #39D7C9;
+    --teal-2: #78FFF3;
+    --ink: #031214;
+    --noir-1: #071a1e;
+    --noir-2: #0a252b;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: #041014; color: #eafffc; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; }
+  .hero {
+    position: relative;
+    width: 1200px; height: 630px; margin: clamp(12px, 4vh, 32px) auto;
+    border-radius: 22px; overflow: hidden; isolation: isolate;
+    background:
+      radial-gradient(120% 120% at 18% 12%, rgba(0,0,0,0) 0%, rgba(0,0,0,.25) 50%, rgba(0,0,0,.55) 100%),
+      url('dragon-og.png') center/112% 112% no-repeat;
+    box-shadow: 0 30px 70px rgba(0,0,0,.55), 0 8px 20px rgba(0,0,0,.35) inset;
+    animation: kenburns 16s ease-in-out infinite alternate;
+  }
+  /* Moving grid */
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(to right, rgba(57,215,201,0.06) 0 1px, transparent 1px 44px),
+      repeating-linear-gradient(to bottom, rgba(57,215,201,0.05) 0 1px, transparent 1px 44px);
+    mix-blend-mode: screen; opacity: .65; animation: gridmove 12s linear infinite;
+  }
+  /* Dragon breath glow (right mid) */
+  .hero::after {
+    content: "";
+    position: absolute; left: 74%; top: 52%; width: 44vmin; height: 44vmin; transform: translate(-50%,-50%);
+    background: radial-gradient(circle at 46% 52%, rgba(120,255,243,0.28), rgba(57,215,201,0.09) 58%, transparent 72%);
+    filter: blur(24px); mix-blend-mode: screen; animation: breathe 3.8s ease-in-out infinite;
+  }
+  /* Embers */
+  .embers {
+    position: absolute; inset: 0; pointer-events:none; mix-blend-mode: screen; opacity:.35;
+    background:
+      radial-gradient(6px 6px at 20% 30%, rgba(120,255,243,.35), transparent 35%),
+      radial-gradient(5px 5px at 65% 40%, rgba(57,215,201,.28), transparent 35%),
+      radial-gradient(4px 4px at 80% 58%, rgba(120,255,243,.3), transparent 35%),
+      radial-gradient(3px 3px at 50% 72%, rgba(120,255,243,.25), transparent 35%);
+    animation: drift 10s linear infinite;
+  }
+  /* Light sweep */
+  .sweep { position:absolute; inset:-12%; background:
+      linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0.03) 60%, transparent 100%);
+      transform: translateX(-65%); mix-blend-mode: screen; animation: sweep 8s ease-in-out infinite; }
+  /* Copy */
+  .content { position:absolute; inset:0; display:grid; grid-template-columns: 1fr 1fr; align-items:center; padding:48px 60px; }
+  .title { font-size:76px; line-height:.9; margin:0 0 10px 0; color:#b8fff6; text-shadow: 0 2px 14px rgba(57,215,201,.25); }
+  .subtitle { font-size:26px; color:#9ee7de; margin:8px 0 18px 0; }
+  .bullets { color:#cdeeed; font-size:18px; opacity:.9; }
+  .bullets span::after { content:" • "; opacity:.6; } .bullets span:last-child::after { content:""; }
+  .cta { display:inline-flex; align-items:center; gap:10px; margin-top:22px; padding:14px 20px; border-radius:14px; color:#012523;
+    background: linear-gradient(180deg, #5effeb 0%, #39d7c9 100%);
+    box-shadow: 0 8px 20px rgba(57,215,201,0.35), inset 0 1px 0 rgba(255,255,255,.4); border: 1px solid rgba(0,0,0,.12);
+    font-weight:700; letter-spacing:.2px; text-decoration:none; transition: transform .2s ease, box-shadow .2s ease; }
+  .cta:hover { transform: translateY(-1px); box-shadow: 0 12px 30px rgba(57,215,201,0.45), inset 0 1px 0 rgba(255,255,255,.5); }
+  .watermark { position:absolute; bottom:18px; left:26px; padding:8px 12px; border-radius:999px; border:1px solid rgba(57,215,201,0.35);
+    color:#7fe7db; background: rgba(2,30,29,.25); backdrop-filter: blur(4px); font-size:14px; letter-spacing:.2px; }
+
+  /* KEYFRAMES */
+  @keyframes kenburns { 0% { background-position: 52% 48%; background-size:110% } 100% { background-position:48% 52%; background-size:116% } }
+  @keyframes gridmove { 0% { background-position:0 0, 0 0 } 100% { background-position: 44px 44px, 44px 44px } }
+  @keyframes breathe { 0%,100% { transform: translate(-50%,-50%) scale(.95); opacity:.85 } 50% { transform: translate(-50%,-50%) scale(1.07); opacity:1 } }
+  @keyframes drift { 0% { background-position:0 0, 0 0, 0 0, 0 0 } 100% { background-position: 60px -30px, -70px -15px, 40px 30px, -50px 40px } }
+  @keyframes sweep { 0% { transform: translateX(-65%) } 100% { transform: translateX(65%) } }
+
+  /* Respect motion prefs */
+  @media (prefers-reduced-motion: reduce) {
+    .hero, .hero::before, .hero::after, .sweep, .embers { animation: none !important; }
+  }
+
+  /* Responsive */
+  @media (max-width: 1300px) { .hero { width: 92vw; height: calc(92vw * 0.525); } }
+</style>
+</head>
+<body>
+  <section class="hero">
+    <div class="sweep" aria-hidden="true"></div>
+    <div class="embers" aria-hidden="true"></div>
+    <div class="content">
+      <div class="copy">
+        <h1 class="title">FRAME<br>ECONOMICS</h1>
+        <p class="subtitle">Master Behavioral Psychology &amp; Influence — ethically.</p>
+        <div class="bullets"><span>Rules</span><span>Science</span><span>Case Studies</span></div>
+        <a class="cta" href="#">Read the first chapter</a>
+      </div>
+    </div>
+    <div class="watermark">icecoldfroste.com</div>
+  </section>
+</body>
+</html>
