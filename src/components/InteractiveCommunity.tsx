@@ -86,7 +86,7 @@ const InteractiveCommunity: React.FC = () => {
 
   const getCategoryColor = (category: Story['category']) => {
     switch (category) {
-      case 'success_story': return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300';
+      case 'success_story' as any: return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300';
       case 'challenge': return 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300';
       case 'insight': return 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300';
       case 'question': return 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300';
@@ -250,19 +250,19 @@ const InteractiveCommunity: React.FC = () => {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-white font-semibold">
-                        {story.profiles?.avatar_url ? (
+                        {(story as any).users?.avatar_url ? (
                           <img 
-                            src={story.profiles.avatar_url} 
-                            alt={story.profiles.full_name} 
+                            src={(story as any).users.avatar_url} 
+                            alt={(story as any).users.full_name} 
                             className="w-12 h-12 rounded-full object-cover" 
                           />
                         ) : (
-                          story.profiles?.full_name?.charAt(0).toUpperCase() || '?'
+                          (story as any).users?.full_name?.charAt(0).toUpperCase() || '?'
                         )}
                       </div>
                       <div>
                         <div className="font-semibold text-slate-900 dark:text-white">
-                          {story.profiles?.full_name || 'Anonymous'}
+                          {(story as any).users?.full_name || 'Anonymous'}
                         </div>
                         <div className="text-sm text-slate-600 dark:text-slate-400">
                           {formatTimeAgo(story.created_at)}
@@ -274,12 +274,12 @@ const InteractiveCommunity: React.FC = () => {
                       <span className={`px-2 py-1 rounded-lg text-xs font-medium ${getCategoryColor(story.category)}`}>
                         {story.category.replace('_', ' ')}
                       </span>
-                      {story.rule_id && (
+                      {(story as any).rule_id && (
                         <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-lg text-xs">
-                          Rule {story.rule_id}
+                          Rule {(story as any).rule_id}
                         </span>
                       )}
-                      {user?.id === story.user_id && (
+                      {user?.id === (story as any).user_id && (
                         <button
                           onClick={() => handleDeleteStory(story.id)}
                           className="text-red-600 hover:text-red-700 p-1"
@@ -299,9 +299,9 @@ const InteractiveCommunity: React.FC = () => {
                   </p>
 
                   {/* Tags */}
-                  {story.tags && story.tags.length > 0 && (
+                  {(story as any).tags && (story as any).tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {story.tags.map((tag, index) => (
+                      {(story as any).tags.map((tag: string, index: number) => (
                         <span key={index} className="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded text-xs">
                           <Tag className="w-3 h-3" />
                           {tag}

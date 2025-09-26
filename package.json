@@ -11,7 +11,15 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "functions:dev": "netlify dev",
     "functions:build": "netlify build",
-    "security:test": "node scripts/test-security.js"
+    "security:test": "node scripts/test-security.js",
+    "validate:deploy": "node scripts/validate-deploy.js",
+    "validate:quick": "node scripts/quick-validate.js",
+    "quick-fix": "node scripts/quick-fix.js",
+    "update-og": "node scripts/update-og.js",
+    "pre-deploy": "npm run validate:deploy && npm run build",
+    "safe-push": "npm run validate:deploy && git push",
+    "quick-check": "npm run validate:quick",
+    "deploy-ready": "npm run quick-fix && npm run validate:quick"
   },
   "dependencies": {
     "@arcjet/node": "^1.0.0-beta.12",

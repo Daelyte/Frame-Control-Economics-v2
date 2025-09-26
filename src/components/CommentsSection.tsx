@@ -46,19 +46,19 @@ const CommentItem: React.FC<CommentItemProps> = ({
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-white font-semibold text-sm">
-              {comment.profiles?.avatar_url ? (
+              {(comment as any).profiles?.avatar_url ? (
                 <img 
-                  src={comment.profiles.avatar_url} 
-                  alt={comment.profiles.full_name} 
+                  src={(comment as any).profiles.avatar_url} 
+                  alt={(comment as any).profiles.full_name} 
                   className="w-8 h-8 rounded-full object-cover" 
                 />
               ) : (
-                comment.profiles?.full_name?.charAt(0).toUpperCase() || '?'
+                (comment as any).profiles?.full_name?.charAt(0).toUpperCase() || '?'
               )}
             </div>
             <div>
               <div className="font-semibold text-slate-900 dark:text-white text-sm">
-                {comment.profiles?.full_name || 'Anonymous'}
+                {(comment as any).profiles?.full_name || 'Anonymous'}
               </div>
               <div className="text-xs text-slate-600 dark:text-slate-400">
                 {formatTimeAgo(comment.created_at)}
@@ -66,7 +66,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
             </div>
           </div>
           
-          {currentUserId === comment.user_id && (
+          {currentUserId === (comment as any).user_id && (
             <button
               onClick={() => onDelete(comment.id)}
               className="text-red-600 hover:text-red-700 p-1"

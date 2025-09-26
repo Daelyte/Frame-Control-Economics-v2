@@ -323,29 +323,29 @@ const FrameEconomicsWebsite: React.FC = () => {
                 Through behavioral economics and frame control
               </p>
               
-              {/* Value proposition - mobile optimized */}
+              {/* Value proposition - enhanced with premium components */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 max-w-5xl mx-auto">
-                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl hover-lift card-interactive">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                  </div>
-                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">10 Proven Rules</h3>
-                  <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Science-backed behavioral economics principles that reveal the hidden psychology of influence</p>
-                </div>
-                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl hover-lift card-interactive">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                  </div>
-                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">Interactive Training</h3>
-                  <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Practice real-world scenarios with instant feedback and personalized learning paths</p>
-                </div>
-                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl sm:col-span-2 md:col-span-1 hover-lift card-interactive">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                  </div>
-                  <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">Unshakeable Frame</h3>
-                  <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Build authentic confidence rooted in your values, not reactive to others' manipulation</p>
-                </div>
+                <FeatureCard 
+                  icon={<Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                  title="10 Proven Rules"
+                  description="Science-backed behavioral economics principles that reveal the hidden psychology of influence"
+                  color="from-purple-500 to-blue-500"
+                  delay={0}
+                />
+                <FeatureCard 
+                  icon={<Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                  title="Interactive Training"
+                  description="Practice real-world scenarios with instant feedback and personalized learning paths"
+                  color="from-blue-500 to-indigo-500"
+                  delay={100}
+                />
+                <FeatureCard 
+                  icon={<Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />}
+                  title="Unshakeable Frame"
+                  description="Build authentic confidence rooted in your values, not reactive to others' manipulation"
+                  color="from-indigo-500 to-purple-500"
+                  delay={200}
+                />
               </div>
               
               {/* Clear call to action - mobile optimized */}
@@ -442,6 +442,9 @@ const FrameEconomicsWebsite: React.FC = () => {
           </div>
         </nav>
 
+        {/* Premium Section Divider */}
+        <SectionDivider className="my-8" />
+        
         {/* Sections */}
         {currentSection === "introduction" && (
           <section 
@@ -719,16 +722,20 @@ const FrameEconomicsWebsite: React.FC = () => {
               <p className="text-lg text-slate-700 dark:text-purple-200 mb-4">
                 Each rule pairs a behavioral principle with a tactical response.
               </p>
-              <div className="flex items-center justify-center gap-4 flex-wrap">
-                <div className="inline-flex items-center gap-2 glass-effect px-4 py-2 rounded-xl">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-medium">Progress: {completedRules.size}/10 mastered</span>
-                </div>
-                <div className="w-48 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div 
-                    className="bg-purple-600 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${completionPercentage}%` }}
-                  ></div>
+              <div className="flex items-center justify-center gap-6 flex-wrap">
+                <ProgressRing 
+                  progress={completionPercentage}
+                  size={100}
+                  color="#8b5cf6"
+                  className="animate-fade-in"
+                />
+                <div className="text-center">
+                  <div className="inline-flex items-center gap-2 glass-premium px-4 py-3 rounded-xl shadow-lg">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="font-semibold text-slate-900 dark:text-white">
+                      <GradientText>{completedRules.size}/10 Rules Mastered</GradientText>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

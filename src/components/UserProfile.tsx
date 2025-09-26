@@ -95,9 +95,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                {getProviderIcon(profile.provider)}
+                {getProviderIcon((profile as any).provider)}
                 <span className="text-sm text-slate-600 dark:text-slate-400 capitalize">
-                  {profile.provider} account
+                  {(profile as any).provider} account
                 </span>
               </div>
               <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -169,12 +169,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ isOpen, onClose }) => {
           {/* Stats */}
           <div className="grid grid-cols-2 gap-4 p-4 bg-white/30 dark:bg-black/20 rounded-lg">
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{profile.rules_completed}</div>
+              <div className="text-2xl font-bold text-purple-600">{(profile as any).rules_completed}</div>
               <div className="text-sm text-slate-600 dark:text-slate-400">Rules Mastered</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">
-                {Math.round((profile.rules_completed / 10) * 100)}%
+                {Math.round(((profile as any).rules_completed / 10) * 100)}%
               </div>
               <div className="text-sm text-slate-600 dark:text-slate-400">Progress</div>
             </div>

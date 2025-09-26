@@ -89,7 +89,7 @@ export function setupScrollTracking(): void {
   window.addEventListener('scroll', handleScroll, { passive: true });
 
   // Return cleanup function
-  return () => {
+  () => {
     window.removeEventListener('scroll', handleScroll);
   };
 }

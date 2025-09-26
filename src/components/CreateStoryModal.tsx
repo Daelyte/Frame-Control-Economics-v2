@@ -89,7 +89,7 @@ const CreateStoryModal: React.FC<CreateStoryModalProps> = ({ isOpen, onClose }) 
       setFormData({
         title: '',
         content: '',
-        category: 'success_story',
+        category: 'success_story' as any,
         rule_id: undefined,
         tags: []
       });

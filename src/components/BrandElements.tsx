@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Brain, Target, Shield, Zap, Sparkles, Layers } from 'lucide-react';
+import { Brain, Sparkles } from 'lucide-react';
 
 /**
  * Floating Brand Particles - Premium background animation

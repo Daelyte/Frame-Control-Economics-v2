@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
-import { Brain, Target, TrendingUp, BookOpen, Zap, Layers, Lightbulb, ArrowRight, ChevronLeft, ChevronRight, Sparkles, Clock, Play, Pause } from "lucide-react";
+import { Brain, Target, TrendingUp, BookOpen, Zap, Layers, Lightbulb, ChevronLeft, ChevronRight, Sparkles, Clock, Play, Pause } from "lucide-react";
 
 interface Slide {
   id: string;

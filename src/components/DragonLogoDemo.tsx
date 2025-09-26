@@ -60,7 +60,7 @@ const DragonLogoDemo: React.FC<DragonLogoDemoProps> = ({ className = '' }) => {
           </div>
           <div className="text-slate-300">
             <span className="text-teal-400">Custom size:</span> 
-            <code className="ml-2 px-2 py-1 bg-slate-700 rounded text-xs">style={{'--dragon-size': '72px'}}</code>
+            <code className="ml-2 px-2 py-1 bg-slate-700 rounded text-xs">{"style={{'--dragon-size': '72px'}}"}</code>
           </div>
           <div className="text-slate-300">
             <span className="text-teal-400">Features:</span> 

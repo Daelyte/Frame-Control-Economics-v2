@@ -9,7 +9,7 @@
   background:
     radial-gradient(140% 140% at 10% 10%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.5) 100%),
     radial-gradient(100% 120% at 20% 10%, #0f2a33 0%, #07181b 45%, #041013 100%),
-    url("/og-image.jpg") center/112% 112% no-repeat;
+    url("/dragon-og-new.png") center/112% 112% no-repeat;
   background-size: cover, cover, 112% 112%;
   animation: kenburns 14s ease-in-out infinite alternate;
   isolation: isolate;
