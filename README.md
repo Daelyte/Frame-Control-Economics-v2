@@ -267,3 +267,4 @@ For questions or feedback, please open an issue on GitHub.
 ---
 
 **Remember**: You're not trying to "win" every interaction. You're building an unshakeable internal frame based on your values, standards, and long-term vision. The goal is authentic power, not manipulation.
+# Force deployment update
