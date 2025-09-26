@@ -290,6 +290,10 @@ const FrameEconomicsWebsite: React.FC = () => {
                 <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent block">
                   Psychology of Influence
                 </span>
+                {/* Deployment test indicator */}
+                <div className="text-xs text-green-500 mt-2 opacity-75">
+                  🚀 Live v3.1 - Mobile Optimized
+                </div>
               </h1>
               
               {/* Compelling subtitle */}
