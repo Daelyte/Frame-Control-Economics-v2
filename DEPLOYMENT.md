@@ -7,6 +7,8 @@ Click this button to deploy to Netlify instantly:
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Daelyte/Frame-Control-Economics-v2)
 
+**Live Demo**: [https://frame-control-.netlify.app](https://frame-control-.netlify.app)
+
 ### Option 2: Manual Netlify Setup
 
 1. **Fork/Clone the Repository**
