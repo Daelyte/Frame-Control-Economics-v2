@@ -10,21 +10,10 @@
   NETLIFY_DISABLE_PLUGIN_GHOST_MARKDOWN = "true"
   NETLIFY_DISABLE_PLUGIN_FETCH_FEEDS = "true"
 
-# Ghost plugin explicitly disabled
-[[plugins]]
-  package = "netlify-plugin-ghost-markdown"
-  enabled = false
-  [plugins.inputs]
-    ghostURL = "disabled"
-    ghostKey = "disabled"
-
-# Feeds plugin explicitly disabled
-[[plugins]]
-  package = "netlify-plugin-fetch-feeds"
-  enabled = false
-  [plugins.inputs]
-    dataDir = "disabled"
-    feeds = []
+# Problematic plugins are disabled via environment variables:
+# NETLIFY_DISABLE_PLUGIN_GHOST_MARKDOWN = "true"
+# NETLIFY_DISABLE_PLUGIN_FETCH_FEEDS = "true"
+# No plugin definitions needed - they're disabled at build level
 
 [build.processing]
   skip_processing = false
