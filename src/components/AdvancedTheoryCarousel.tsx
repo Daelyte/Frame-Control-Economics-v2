@@ -1,5 +1,5 @@
-import React, { useMemo, useRef, useState } from "react";
-import { Brain, Target, TrendingUp, BookOpen, Zap, Layers, Lightbulb, ArrowRight, ChevronLeft, ChevronRight, Sparkles, Clock } from "lucide-react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
+import { Brain, Target, TrendingUp, BookOpen, Zap, Layers, Lightbulb, ArrowRight, ChevronLeft, ChevronRight, Sparkles, Clock, Play, Pause } from "lucide-react";
 
 interface Slide {
   id: string;
@@ -13,6 +13,10 @@ interface Slide {
 const AdvancedTheoryCarousel: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const slides: Slide[] = useMemo(() => [
     {
@@ -22,24 +26,24 @@ const AdvancedTheoryCarousel: React.FC = () => {
       icon: <Target className="w-6 h-6" />,
       color: "from-purple-500 to-blue-500",
       content: (
-        <div className="space-y-4">
-          <div className="rounded-xl p-4 sm:p-6 bg-violet-50 dark:bg-purple-900/40">
-            <h4 className="font-bold mb-2 sm:mb-3 text-violet-800 dark:text-violet-200">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="rounded-xl p-4 sm:p-5 bg-white/20 backdrop-blur-sm border border-white/30">
+            <h4 className="font-bold mb-2 sm:mb-3 text-white text-base sm:text-lg">
               Nash Equilibrium in Social Dynamics
             </h4>
-            <p className="mb-3 sm:mb-4 text-violet-900 dark:text-violet-100 text-sm sm:text-base">
+            <p className="mb-3 text-white/90 text-sm sm:text-base leading-relaxed">
               Equilibrium occurs when neither party can improve their outcome by changing strategy unilaterally. The steadier frame often reaches equilibrium first.
             </p>
-            <div className="bg-white/50 dark:bg-black/20 rounded-lg p-3 sm:p-4">
-              <h5 className="font-semibold mb-1 sm:mb-2 text-slate-900 dark:text-white">Example</h5>
-              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+            <div className="bg-white/20 rounded-lg p-3 sm:p-4 border border-white/20">
+              <h5 className="font-semibold mb-1 sm:mb-2 text-white text-sm sm:text-base">Example</h5>
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
                 In a heated argument, remaining calm turns your frame into the stable equilibrium others adopt.
               </p>
             </div>
           </div>
-          <div className="rounded-xl p-4 sm:p-6 bg-blue-50 dark:bg-blue-900/40">
-            <h4 className="font-bold mb-2 sm:mb-3 text-blue-800 dark:text-blue-200">Zero-Sum vs. Positive-Sum Frames</h4>
-            <p className="text-blue-900 dark:text-blue-100 text-sm sm:text-base">
+          <div className="rounded-xl p-4 sm:p-5 bg-white/20 backdrop-blur-sm border border-white/30">
+            <h4 className="font-bold mb-2 sm:mb-3 text-white text-base sm:text-lg">Zero-Sum vs. Positive-Sum Frames</h4>
+            <p className="text-white/90 text-sm sm:text-base leading-relaxed">
               Reframe outcomes from winner-takes-all to mutual benefit to reduce tension and create collaboration.
             </p>
           </div>
@@ -82,7 +86,8 @@ const AdvancedTheoryCarousel: React.FC = () => {
       icon: <TrendingUp className="w-6 h-6" />,
       color: "from-pink-500 to-violet-500",
       content: (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Mobile: stack vertically, Desktop: 3 columns */}
           <div className="rounded-xl p-4 sm:p-6 bg-purple-50 dark:bg-purple-900/40">
             <h4 className="font-bold mb-2 sm:mb-3 text-purple-800 dark:text-purple-200">Meta-Frames</h4>
             <p className="text-purple-900 dark:text-purple-100 text-sm sm:text-base">
@@ -157,7 +162,8 @@ const AdvancedTheoryCarousel: React.FC = () => {
       icon: <BookOpen className="w-6 h-6" />,
       color: "from-rose-500 to-fuchsia-500",
       content: (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Mobile: stack vertically, Desktop: 2 columns */}
           <div className="rounded-xl p-4 sm:p-6 bg-rose-50 dark:bg-rose-900/40">
             <h4 className="font-bold mb-2 sm:mb-3 text-rose-800 dark:text-rose-200">Public Pressure</h4>
             <p className="text-rose-900 dark:text-rose-100 text-sm sm:text-base">Playful deflection + positive reframe. Don’t feed the crowd’s cortisol.
@@ -318,84 +324,217 @@ const AdvancedTheoryCarousel: React.FC = () => {
     }
   ], []);
 
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlay) return;
+    
+    const interval = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % slides.length);
+    }, 8000); // 8 seconds per slide
+    
+    return () => clearInterval(interval);
+  }, [isAutoPlay, slides.length]);
+
+  // Smooth scrolling to active slide
+  useEffect(() => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const slideWidth = container.scrollWidth / slides.length;
+      container.scrollTo({ 
+        left: activeIndex * slideWidth, 
+        behavior: 'smooth' 
+      });
+    }
+  }, [activeIndex, slides.length]);
+
   const next = () => {
     setActiveIndex((i) => (i + 1) % slides.length);
-    containerRef.current?.scrollTo({ left: (activeIndex + 1) * (containerRef.current.clientWidth), behavior: 'smooth' });
+    setIsAutoPlay(false); // Pause auto-play when user interacts
   };
 
   const prev = () => {
     setActiveIndex((i) => (i - 1 + slides.length) % slides.length);
-    containerRef.current?.scrollTo({ left: (activeIndex - 1 + slides.length) * (containerRef.current.clientWidth), behavior: 'smooth' });
+    setIsAutoPlay(false);
   };
 
+  const goToSlide = (index: number) => {
+    setActiveIndex(index);
+    setIsAutoPlay(false);
+  };
+
+  const toggleAutoPlay = () => {
+    setIsAutoPlay(!isAutoPlay);
+  };
+
+  // Touch handling for swipe gestures
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isDragging) {
+      setTouchEnd(e.targetTouches[0].clientX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      next();
+    } else if (isRightSwipe) {
+      prev();
+    }
+    
+    setIsDragging(false);
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        prev();
+      } else if (e.key === 'ArrowRight') {
+        next();
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        toggleAutoPlay();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
-    <section id="section-advanced" aria-labelledby="tab-advanced" className="max-w-6xl mx-auto animate-fade-in">
-      <div className="mb-4 sm:mb-6 md:mb-8 text-center">
-        <h2 className="text-responsive-3xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-4">
+    <section id="section-advanced" aria-labelledby="tab-advanced" className="max-w-7xl mx-auto animate-fade-in px-4 sm:px-6">
+      <div className="mb-6 sm:mb-8 md:mb-12 text-center">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
           Advanced Theoretical Framework
         </h2>
-        <p className="text-responsive-base text-slate-700 dark:text-slate-300">
-          Double the depth. Powerful mental models. Built for action.
+        <p className="text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-2xl mx-auto">
+          Master the science behind influence. Powerful mental models built for action.
         </p>
       </div>
 
-      {/* Carousel Controls */}
-      <div className="relative">
+      {/* Enhanced Carousel Container */}
+      <div className="relative bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl">
+        {/* Carousel Header with Controls */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <span className="ml-4 text-sm font-medium text-slate-600 dark:text-slate-400">
+              {activeIndex + 1} of {slides.length}
+            </span>
+          </div>
+          <button
+            onClick={toggleAutoPlay}
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+            aria-label={isAutoPlay ? 'Pause slideshow' : 'Play slideshow'}
+          >
+            {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            <span className="hidden sm:inline">{isAutoPlay ? 'Pause' : 'Play'}</span>
+          </button>
+        </div>
+
+        {/* Main Carousel */}
         <div
           ref={containerRef}
-          className="overflow-x-auto whitespace-nowrap snap-x snap-mandatory scrollbar-hide rounded-2xl glass-effect-mobile p-2 sm:p-3"
-          style={{ WebkitOverflowScrolling: 'touch' }}
+          className="overflow-hidden rounded-2xl"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           aria-roledescription="carousel"
         >
-          <div className="flex gap-3 sm:gap-6">
+          <div 
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          >
             {slides.map((slide, idx) => (
               <article
                 key={slide.id}
-                className={`snap-start min-w-[92%] xs:min-w-[88%] sm:min-w-[75%] md:min-w-[60%] lg:min-w-[48%] p-4 sm:p-6 rounded-2xl bg-gradient-to-br ${slide.color} text-white shadow-xl section-card-mobile transition-transform duration-300 ${idx === activeIndex ? 'scale-[1.0] sm:scale-[1.02]' : 'scale-[0.98]'}`}
+                className="w-full flex-shrink-0 p-1"
                 aria-roledescription="slide"
                 aria-label={`${idx + 1} of ${slides.length}`}
               >
-                <header className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur">
-                    <span className="w-5 h-5 text-white">{slide.icon}</span>
+                <div className={`h-full p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br ${slide.color} text-white shadow-xl relative overflow-hidden`}>
+                  {/* Background Pattern */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute -top-4 -right-4 w-32 h-32 rounded-full bg-white/20"></div>
+                    <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-white/10"></div>
                   </div>
-                  <div>
-                    <h3 className="text-lg sm:text-2xl font-bold leading-tight">{slide.title}</h3>
-                    <p className="text-xs sm:text-sm text-white/90">{slide.subtitle}</p>
+                  
+                  {/* Slide Content */}
+                  <div className="relative z-10">
+                    <header className="flex items-start gap-4 mb-6">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30">
+                        <span className="w-6 h-6 sm:w-7 sm:h-7 text-white">{slide.icon}</span>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-tight mb-2">
+                          {slide.title}
+                        </h3>
+                        <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+                          {slide.subtitle}
+                        </p>
+                      </div>
+                    </header>
+                    
+                    <div className="bg-white/15 rounded-2xl p-4 sm:p-6 backdrop-blur-md border border-white/20">
+                      {slide.content}
+                    </div>
                   </div>
-                </header>
-                <div className="bg-white/10 rounded-xl p-3 sm:p-4 backdrop-blur-md">
-                  {slide.content}
                 </div>
               </article>
             ))}
           </div>
         </div>
 
-        {/* Navigation buttons */}
-        <div className="flex items-center justify-between mt-3 sm:mt-4">
+        {/* Enhanced Navigation */}
+        <div className="flex items-center justify-between mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
           <button
             onClick={prev}
-            className="btn-touch inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-all duration-200 hover:scale-105 active:scale-95"
             aria-label="Previous slide"
+            disabled={activeIndex === 0 && !isAutoPlay}
           >
-            <ChevronLeft className="w-4 h-4" /> Prev
+            <ChevronLeft className="w-5 h-5" />
+            <span className="font-medium">Previous</span>
           </button>
-          <div className="flex items-center gap-1">
+          
+          {/* Dot Navigation */}
+          <div className="flex items-center gap-2">
             {slides.map((_, idx) => (
-              <span
+              <button
                 key={idx}
-                className={`w-2 h-2 rounded-full ${idx === activeIndex ? 'bg-purple-600' : 'bg-slate-300 dark:bg-slate-600'}`}
-                aria-hidden
+                onClick={() => goToSlide(idx)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  idx === activeIndex 
+                    ? 'bg-gradient-to-r from-purple-500 to-blue-500 scale-125' 
+                    : 'bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
           </div>
+          
           <button
             onClick={next}
-            className="btn-touch inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-all duration-200 hover:scale-105 active:scale-95"
             aria-label="Next slide"
+            disabled={activeIndex === slides.length - 1 && !isAutoPlay}
           >
-            Next <ChevronRight className="w-4 h-4" />
+            <span className="font-medium">Next</span>
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       </div>

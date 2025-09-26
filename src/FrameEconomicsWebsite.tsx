@@ -265,8 +265,8 @@ const FrameEconomicsWebsite: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen safe-area-top safe-area-bottom">
-      <div className="container mx-auto container-mobile py-4 sm:py-8">
+    <div className="min-h-screen safe-area-padding desktop-enhanced bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="container mx-auto container-mobile ultrawide-container py-4 sm:py-8 tablet-optimized">
         {/* Hero Section */}
         <section className="relative py-8 sm:py-12 md:py-16 lg:py-24 mb-6 sm:mb-8 md:mb-12 overflow-hidden">
           {/* Enhanced background pattern */}
@@ -303,21 +303,21 @@ const FrameEconomicsWebsite: React.FC = () => {
               
               {/* Value proposition - mobile optimized */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12 max-w-5xl mx-auto">
-                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl">
+                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl hover-lift card-interactive">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
                   <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">10 Proven Rules</h3>
                   <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Science-backed behavioral economics principles that reveal the hidden psychology of influence</p>
                 </div>
-                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl">
+                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl hover-lift card-interactive">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
                   <h3 className="text-responsive-lg font-bold text-slate-900 dark:text-white mb-2 sm:mb-3">Interactive Training</h3>
                   <p className="text-responsive-sm text-slate-600 dark:text-slate-400 leading-relaxed">Practice real-world scenarios with instant feedback and personalized learning paths</p>
                 </div>
-                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl sm:col-span-2 md:col-span-1">
+                <div className="group text-center p-4 sm:p-6 glass-effect-mobile section-card-mobile rounded-xl sm:rounded-2xl sm:col-span-2 md:col-span-1 hover-lift card-interactive">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg sm:rounded-xl mx-auto mb-3 sm:mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
@@ -330,7 +330,7 @@ const FrameEconomicsWebsite: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-6 sm:mb-8">
                 <button
                   onClick={() => setSectionAndHash("assessment")}
-                  className="group w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="group w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 gradient-animate"
                 >
                   <span className="flex items-center justify-center gap-2 sm:gap-3">
                     <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -340,7 +340,7 @@ const FrameEconomicsWebsite: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setSectionAndHash("rules")}
-                  className="w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300"
+                  className="w-full sm:w-auto btn-touch px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-purple-600 dark:border-purple-400 text-purple-600 dark:text-purple-400 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-400 dark:hover:text-slate-900 font-semibold rounded-xl transition-all duration-300 hover-lift"
                 >
                   <span className="flex items-center justify-center gap-2 sm:gap-3">
                     <Target className="w-4 h-4 sm:w-5 sm:h-5" />
