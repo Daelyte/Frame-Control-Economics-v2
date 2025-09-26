@@ -208,83 +208,90 @@ const ProjectsRoadmap: React.FC = () => {
         </div>
 
         {/* Current Projects */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl">
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 sm:p-6 md:p-8 shadow-xl border border-slate-200/50 dark:border-slate-700/50">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
-              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </div>
             <div className="min-w-0">
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Current Projects</h2>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">Active development and ongoing initiatives</p>
+              <h2 className="text-base sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Current Projects</h2>
+              <p className="text-xs sm:text-base text-slate-600 dark:text-slate-400">Active development and ongoing initiatives</p>
             </div>
           </div>
 
-          <div className="space-y-4 sm:space-y-6">
+          <div className="space-y-3 sm:space-y-6">
             {currentProjects.map((project) => (
-              <div key={project.title} className="bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
-                <div className="mb-3 sm:mb-4">
-                  <div className="flex flex-col md:flex-row md:items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white break-words">
+              <div key={project.title} className="bg-gradient-to-br from-slate-50/80 to-gray-100/80 dark:from-slate-800/40 dark:to-gray-900/40 rounded-lg sm:rounded-2xl p-3 sm:p-6 border border-slate-200/60 dark:border-slate-700/60 backdrop-blur-sm">
+                <div className="mb-2 sm:mb-4">
+                  {/* Mobile-optimized header */}
+                  <div className="flex flex-col gap-2 mb-2 sm:mb-3">
+                    <h3 className="text-sm sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white leading-tight">
                       {project.title}
                     </h3>
-                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getStatusColor(project.status)}`}>
+                    <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+                      <span className={`px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
                         {project.status}
                       </span>
-                      {getPriorityIcon(project.priority)}
-                      <span className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-full text-xs sm:text-sm font-medium">
+                      <div className="flex items-center gap-1">
+                        {getPriorityIcon(project.priority)}
+                      </div>
+                      <span className="px-2 py-0.5 sm:px-2 sm:py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-200 rounded-full text-xs font-medium">
                         {project.category}
                       </span>
                     </div>
                   </div>
                   
-                  <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
+                  <p className="text-xs sm:text-base text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 leading-relaxed">
                     {project.description}
                   </p>
                   
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Key Features:</h4>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {/* Features - Mobile optimized */}
+                  <div className="mb-3 sm:mb-4">
+                    <h4 className="font-semibold text-slate-900 dark:text-white mb-2 text-xs sm:text-sm">Key Features:</h4>
+                    <ul className="space-y-1 sm:space-y-2">
                       {project.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
-                          <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{feature}</span>
+                        <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                          <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="leading-tight">{feature}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  {/* Tech stack - Mobile optimized */}
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
                     {project.tech.map((tech) => (
-                      <span key={tech} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-md text-sm font-medium">
+                      <span key={tech} className="px-2 py-0.5 sm:px-3 sm:py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded text-xs font-medium">
                         {tech}
                       </span>
                     ))}
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  {/* Metrics - Mobile optimized */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
                     {Object.entries(project.metrics).map(([key, value]) => (
-                      <div key={key} className="bg-white dark:bg-slate-800 rounded-lg p-3 border border-slate-200 dark:border-slate-600">
-                        <div className="font-semibold text-slate-900 dark:text-white capitalize">{key}</div>
-                        <div className="text-slate-600 dark:text-slate-400 text-sm">{value}</div>
+                      <div key={key} className="bg-white/60 dark:bg-slate-800/60 rounded-md sm:rounded-lg p-2 sm:p-3 border border-slate-200/50 dark:border-slate-600/50">
+                        <div className="font-semibold text-slate-900 dark:text-white capitalize text-xs sm:text-sm">{key}</div>
+                        <div className="text-slate-600 dark:text-slate-400 text-xs">{value}</div>
                       </div>
                     ))}
                   </div>
                 </div>
                 
+                {/* Links - Mobile optimized */}
                 {project.links && (
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     {project.links.map((link) => (
                       <a
                         key={link.name}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 font-medium"
+                        className="group flex items-center justify-center gap-2 px-3 py-2 sm:px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 font-medium text-sm btn-touch"
                       >
                         {link.icon}
-                        {link.name}
-                        <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <span>{link.name}</span>
+                        <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
                       </a>
                     ))}
                   </div>
@@ -295,60 +302,61 @@ const ProjectsRoadmap: React.FC = () => {
         </div>
 
         {/* 2025 Roadmap */}
-        <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-xl">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
-              <Calendar className="w-6 h-6 text-white" />
+        <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl md:rounded-3xl p-3 sm:p-6 md:p-8 shadow-xl border border-slate-200/50 dark:border-slate-700/50">
+          <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+              <Calendar className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </div>
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">2025 Roadmap</h2>
-              <p className="text-slate-600 dark:text-slate-400">Planned initiatives and future development</p>
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">2025 Roadmap</h2>
+              <p className="text-xs sm:text-base text-slate-600 dark:text-slate-400">Planned initiatives and future development</p>
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-3 sm:space-y-6">
             {upcomingProjects.map((project, index) => (
               <div key={project.title} className="relative">
+                {/* Timeline connector - hidden on mobile */}
                 {index < upcomingProjects.length - 1 && (
-                  <div className="absolute left-6 top-16 w-0.5 h-16 bg-gradient-to-b from-blue-400 to-purple-400"></div>
+                  <div className="absolute left-4 sm:left-6 top-12 sm:top-16 w-0.5 h-8 sm:h-16 bg-gradient-to-b from-blue-400 to-purple-400 hidden sm:block"></div>
                 )}
                 
-                <div className="flex gap-6">
+                <div className="flex gap-3 sm:gap-6">
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                      <ArrowRight className="w-6 h-6 text-white" />
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center">
+                      <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
                   
-                  <div className="flex-1 bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-800/50 dark:to-gray-900/50 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
-                    <div className="mb-4">
-                      <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3">
+                  <div className="flex-1 bg-gradient-to-br from-slate-50/80 to-gray-100/80 dark:from-slate-800/40 dark:to-gray-900/40 rounded-lg sm:rounded-2xl p-3 sm:p-6 border border-slate-200/60 dark:border-slate-700/60 backdrop-blur-sm">
+                    <div className="mb-2 sm:mb-4">
+                      <h3 className="text-sm sm:text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2 sm:mb-3 leading-tight">
                         {project.title}
                       </h3>
-                      <div className="flex flex-wrap items-center gap-3 mb-3">
-                        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">
+                      <div className="flex flex-wrap items-center gap-1 sm:gap-3 mb-2 sm:mb-3">
+                        <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">
                           {project.timeline}
                         </span>
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-200 rounded-full text-sm font-medium">
+                        <span className="px-2 py-0.5 sm:px-2 sm:py-1 bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-200 rounded-full text-xs font-medium">
                           {project.category}
                         </span>
-                        <div className={`text-sm font-semibold ${getImpactColor(project.impact)}`}>
+                        <div className={`text-xs sm:text-sm font-semibold ${getImpactColor(project.impact)}`}>
                           {project.impact} Impact
                         </div>
                       </div>
                     </div>
                     
-                    <p className="text-slate-700 dark:text-slate-300 mb-4 leading-relaxed">
+                    <p className="text-xs sm:text-base text-slate-700 dark:text-slate-300 mb-3 sm:mb-4 leading-relaxed">
                       {project.description}
                     </p>
                     
                     <div>
-                      <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Planned Features:</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <h4 className="font-semibold text-slate-900 dark:text-white mb-2 text-xs sm:text-sm">Planned Features:</h4>
+                      <div className="space-y-1 sm:space-y-2">
                         {project.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
-                            <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                            <span>{feature}</span>
+                          <div key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full mt-1.5 sm:mt-2 flex-shrink-0"></div>
+                            <span className="leading-tight">{feature}</span>
                           </div>
                         ))}
                       </div>
