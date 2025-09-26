@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐉 Dragon Visibility Test - Local</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Test the exact same styling as production */
+        .dragon-backdrop-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            pointer-events: none;
+        }
+        
+        .dragon-aurora {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background: conic-gradient(from 180deg at 50% 50%, 
+                oklch(65% 0.11 170) 0deg, 
+                oklch(70% 0.15 95) 120deg, 
+                oklch(50% 0.12 170) 240deg, 
+                oklch(65% 0.11 170) 360deg);
+            opacity: 0.08;
+            filter: blur(70px);
+            animation: aurora-pulse 14s ease-in-out infinite;
+        }
+        
+        .dragon-silhouette {
+            position: absolute;
+            top: 25%;
+            left: 20%;
+            width: 300px;
+            height: 150px;
+            border: 2px solid oklch(65% 0.11 170);
+            border-radius: 60% 40% 80% 20%;
+            background: radial-gradient(ellipse, oklch(65% 0.11 170)33, transparent);
+            opacity: 0.44;
+            animation: dragon-float 4s ease-in-out infinite;
+        }
+        
+        .dragon-eye {
+            position: absolute;
+            top: 35%;
+            right: 30%;
+            width: 8px;
+            height: 8px;
+            background: oklch(65% 0.11 170);
+            border-radius: 50%;
+            box-shadow: 0 0 10px oklch(65% 0.11 170);
+            animation: dragon-blink 2.5s infinite;
+        }
+        
+        .storm-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(12deg, 
+                transparent 0px, transparent 38px, 
+                rgba(64, 224, 208, 0.15) 38px, rgba(64, 224, 208, 0.15) 40px);
+            animation: rain-fall 3.6s linear infinite;
+        }
+        
+        @keyframes aurora-pulse {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.08; }
+            50% { transform: translateY(-1.5%) scale(1.015); opacity: 0.12; }
+        }
+        
+        @keyframes dragon-float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
+        }
+        
+        @keyframes dragon-blink {
+            0%, 85%, 100% { opacity: 1; }
+            90%, 95% { opacity: 0.1; }
+        }
+        
+        @keyframes rain-fall {
+            0% { background-position: 0 0; }
+            100% { background-position: -140px 260px; }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; }
+        }
+        
+        /* Test UI */
+        .test-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid oklch(65% 0.11 170);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            z-index: 1000;
+            font-size: 14px;
+        }
+        
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .status-good { color: #00ff7f; }
+        .status-warn { color: #ffd700; }
+        .status-bad { color: #ff4444; }
+        
+        .visibility-test {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(64, 224, 208, 0.1);
+            border: 1px solid rgba(64, 224, 208, 0.3);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Production Dragon Test -->
+    <div class="dragon-backdrop-container" id="dragonContainer" data-testid="dragon-backdrop">
+        <div class="dragon-aurora"></div>
+        <div class="storm-rain"></div>
+        <div class="dragon-silhouette">
+            <div class="dragon-eye"></div>
+        </div>
+    </div>
+    
+    <!-- Test Panel -->
+    <div class="test-panel">
+        <h2>🐉 Dragon Visibility Test</h2>
+        <div class="metric-item">
+            <span>Dragon Container:</span>
+            <span id="containerStatus" class="status-warn">Checking...</span>
+        </div>
+        <div class="metric-item">
+            <span>Aurora Layer:</span>
+            <span id="auroraStatus" class="status-warn">Checking...</span>
+        </div>
+        <div class="metric-item">
+            <span>Dragon Silhouette:</span>
+            <span id="dragonStatus" class="status-warn">Checking...</span>
+        </div>
+        <div class="metric-item">
+            <span>OKLCH Support:</span>
+            <span id="colorStatus" class="status-warn">Checking...</span>
+        </div>
+        <div class="metric-item">
+            <span>Animations:</span>
+            <span id="animationStatus" class="status-warn">Checking...</span>
+        </div>
+        <div class="metric-item">
+            <span>Performance:</span>
+            <span id="performanceStatus" class="status-warn">Monitoring...</span>
+        </div>
+        
+        <div class="visibility-test">
+            <strong>✅ What You Should See:</strong><br>
+            • Faint aurora glow (gentle pulsing)<br>
+            • Diagonal rain lines moving<br>
+            • Large dragon silhouette with teal border<br>
+            • Blinking dragon eye<br>
+            <br>
+            <strong>🔧 Debug Actions:</strong><br>
+            <button onclick="toggleDebugMode()" style="margin: 5px; padding: 5px 10px; background: oklch(65% 0.11 170); color: black; border: none; border-radius: 3px;">Toggle Debug</button>
+            <button onclick="measurePerformance()" style="margin: 5px; padding: 5px 10px; background: oklch(65% 0.11 170); color: black; border: none; border-radius: 3px;">Measure FPS</button>
+        </div>
+    </div>
+
+    <script>
+        // Visibility Detection System
+        class DragonVisibilityTest {
+            constructor() {
+                this.results = {};
+                this.fpsMeasurement = { frames: 0, lastTime: 0, fps: 0 };
+                this.init();
+            }
+
+            init() {
+                this.testContainer();
+                this.testColorSupport();
+                this.testAnimationSupport();
+                this.startVisibilityMonitoring();
+                this.startFPSMonitoring();
+                
+                // Update UI every second
+                setInterval(() => this.updateUI(), 1000);
+            }
+
+            testContainer() {
+                const container = document.getElementById('dragonContainer');
+                const computed = getComputedStyle(container);
+                
+                this.results.containerVisible = computed.position === 'fixed' && 
+                                              computed.zIndex === '-10';
+                
+                // Check if element is in viewport
+                const rect = container.getBoundingClientRect();
+                this.results.containerInViewport = rect.width > 0 && rect.height > 0;
+            }
+
+            testColorSupport() {
+                // Test OKLCH support
+                const testEl = document.createElement('div');
+                testEl.style.color = 'oklch(65% 0.11 170)';
+                document.body.appendChild(testEl);
+                
+                const computed = getComputedStyle(testEl);
+                this.results.oklchSupport = computed.color !== 'oklch(65% 0.11 170)';
+                
+                document.body.removeChild(testEl);
+            }
+
+            testAnimationSupport() {
+                const testEl = document.createElement('div');
+                testEl.style.animation = 'test 1s';
+                
+                const computed = getComputedStyle(testEl);
+                this.results.animationsEnabled = computed.animationName !== 'none';
+                
+                // Check reduced motion preference
+                this.results.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            }
+
+            startVisibilityMonitoring() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        this.results.intersectionVisible = entry.isIntersecting;
+                    });
+                });
+                
+                const container = document.getElementById('dragonContainer');
+                observer.observe(container);
+            }
+
+            startFPSMonitoring() {
+                const measureFPS = (timestamp) => {
+                    this.fpsMeasurement.frames++;
+                    
+                    if (timestamp - this.fpsMeasurement.lastTime >= 1000) {
+                        this.fpsMeasurement.fps = Math.round(
+                            this.fpsMeasurement.frames * 1000 / (timestamp - this.fpsMeasurement.lastTime)
+                        );
+                        this.fpsMeasurement.frames = 0;
+                        this.fpsMeasurement.lastTime = timestamp;
+                    }
+                    
+                    requestAnimationFrame(measureFPS);
+                };
+                
+                requestAnimationFrame(measureFPS);
+            }
+
+            updateUI() {
+                const elements = {
+                    containerStatus: document.getElementById('containerStatus'),
+                    auroraStatus: document.getElementById('auroraStatus'),
+                    dragonStatus: document.getElementById('dragonStatus'),
+                    colorStatus: document.getElementById('colorStatus'),
+                    animationStatus: document.getElementById('animationStatus'),
+                    performanceStatus: document.getElementById('performanceStatus')
+                };
+
+                // Container status
+                if (this.results.containerVisible && this.results.containerInViewport && this.results.intersectionVisible) {
+                    elements.containerStatus.textContent = '✅ Mounted & Visible';
+                    elements.containerStatus.className = 'status-good';
+                } else {
+                    elements.containerStatus.textContent = '❌ Issues Detected';
+                    elements.containerStatus.className = 'status-bad';
+                }
+
+                // Aurora status (assume visible if container is)
+                elements.auroraStatus.textContent = this.results.containerVisible ? '✅ Rendering' : '❌ Hidden';
+                elements.auroraStatus.className = this.results.containerVisible ? 'status-good' : 'status-bad';
+
+                // Dragon silhouette status
+                elements.dragonStatus.textContent = this.results.containerVisible ? '✅ Visible' : '❌ Hidden';
+                elements.dragonStatus.className = this.results.containerVisible ? 'status-good' : 'status-bad';
+
+                // Color support
+                elements.colorStatus.textContent = this.results.oklchSupport ? '✅ OKLCH Supported' : '⚠️ Fallback Colors';
+                elements.colorStatus.className = this.results.oklchSupport ? 'status-good' : 'status-warn';
+
+                // Animation status
+                if (this.results.reducedMotion) {
+                    elements.animationStatus.textContent = '⚠️ Reduced Motion';
+                    elements.animationStatus.className = 'status-warn';
+                } else if (this.results.animationsEnabled) {
+                    elements.animationStatus.textContent = '✅ Animations Active';
+                    elements.animationStatus.className = 'status-good';
+                } else {
+                    elements.animationStatus.textContent = '❌ Animations Disabled';
+                    elements.animationStatus.className = 'status-bad';
+                }
+
+                // Performance
+                const fps = this.fpsMeasurement.fps;
+                if (fps >= 55) {
+                    elements.performanceStatus.textContent = `✅ ${fps} FPS`;
+                    elements.performanceStatus.className = 'status-good';
+                } else if (fps >= 30) {
+                    elements.performanceStatus.textContent = `⚠️ ${fps} FPS`;
+                    elements.performanceStatus.className = 'status-warn';
+                } else if (fps > 0) {
+                    elements.performanceStatus.textContent = `❌ ${fps} FPS`;
+                    elements.performanceStatus.className = 'status-bad';
+                } else {
+                    elements.performanceStatus.textContent = 'Measuring...';
+                    elements.performanceStatus.className = 'status-warn';
+                }
+            }
+        }
+
+        // Initialize test
+        const dragonTest = new DragonVisibilityTest();
+
+        // Debug functions
+        function toggleDebugMode() {
+            const container = document.getElementById('dragonContainer');
+            if (container.style.border === '2px solid red') {
+                // Reset
+                container.style.border = '';
+                container.style.backgroundColor = '';
+                container.style.zIndex = '-10';
+            } else {
+                // Debug mode
+                container.style.border = '2px solid red';
+                container.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
+                container.style.zIndex = '9999';
+            }
+        }
+
+        function measurePerformance() {
+            const startTime = performance.now();
+            let frames = 0;
+            
+            const testFrame = () => {
+                frames++;
+                if (frames < 60) {
+                    requestAnimationFrame(testFrame);
+                } else {
+                    const endTime = performance.now();
+                    const avgFrameTime = (endTime - startTime) / 60;
+                    const estimatedFPS = 1000 / avgFrameTime;
+                    
+                    alert(`Performance Test Results:\n60 frames in ${Math.round(endTime - startTime)}ms\nAverage frame time: ${avgFrameTime.toFixed(2)}ms\nEstimated FPS: ${Math.round(estimatedFPS)}`);
+                }
+            };
+            
+            requestAnimationFrame(testFrame);
+        }
+
+        // Console logging
+        console.log('🐉 Dragon Visibility Test loaded!');
+        console.log('Check the test panel in the top-left corner for real-time status.');
+        console.log('Use browser DevTools to inspect elements and verify positioning.');
+    </script>
+</body>
+</html>

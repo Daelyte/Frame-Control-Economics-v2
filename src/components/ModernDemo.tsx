@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ModernHero } from './ModernHero';
 import { ModernRuleCard, Rule } from './ModernRuleCard';
 import MotionDemo from './MotionDemo';
-import ProductionDragon from './ambient/ProductionDragon';
+import DragonBoot from './dragon/DragonBoot';
 import { Clock, Shield, Target, Zap, Users, Brain } from 'lucide-react';
 
 // Sample rules data with complete structure
@@ -90,7 +90,7 @@ export const ModernDemo: React.FC = () => {
 
   return (
     <main className="relative isolate z-0" style={{ background: 'var(--surface-0)', minHeight: '100vh' }}>
-      <ProductionDragon hue={170} opacity={0.14} intensity={1.2} debug={process.env.NODE_ENV === 'development'} />
+      <DragonBoot enabled={true} debug={process.env.NODE_ENV === 'development'} />
       {/* Demo Header */}
       <header className="section-container">
         <div className="container">
