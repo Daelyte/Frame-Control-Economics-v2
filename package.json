@@ -1,6 +1,6 @@
 {
-  "name": "frame-economics",
-  "version": "3.0.0",
+  "name": "frame-control-economics-v2",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -30,6 +30,7 @@
     "@netlify/functions": "^4.2.6",
     "@supabase/supabase-js": "^2.57.4",
     "bcryptjs": "^3.0.2",
+    "framer-motion": "^12.23.22",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.449.0",
     "pg": "^8.16.3",

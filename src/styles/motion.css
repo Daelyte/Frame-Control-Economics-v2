@@ -1,0 +1,418 @@
+/* Frame Economics Motion System - Accessible & Performant */
+
+/* Motion preferences and base settings */
+:root {
+  --motion-duration-instant: 0ms;
+  --motion-duration-fast: 120ms;
+  --motion-duration-normal: 200ms;
+  --motion-duration-slow: 300ms;
+  --motion-duration-slower: 500ms;
+  
+  --motion-ease-linear: linear;
+  --motion-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Base motion behavior - respects user preferences */
+* {
+  animation-duration: var(--motion-duration-normal);
+  animation-timing-function: var(--motion-ease-smooth);
+  transition-duration: var(--motion-duration-normal);
+  transition-timing-function: var(--motion-ease-smooth);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--motion-duration-instant) !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--motion-duration-instant) !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Preserve essential feedback animations with minimal motion */
+  .preserve-motion {
+    animation-duration: 80ms !important;
+    transition-duration: 80ms !important;
+  }
+}
+
+/* Performance-optimized animations - only transform and opacity */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.25rem);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes rotate-subtle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+/* Animation utilities */
+.animate-fade-in {
+  animation: fade-in var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.animate-slide-up {
+  animation: slide-up var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.animate-slide-down {
+  animation: slide-down var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.animate-slide-left {
+  animation: slide-left var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.animate-slide-right {
+  animation: slide-right var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.animate-scale-in {
+  animation: scale-in var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s var(--motion-ease-in-out) infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s var(--motion-ease-in-out) infinite;
+}
+
+/* Staggered animations for groups */
+.animate-stagger > * {
+  animation: slide-up var(--motion-duration-normal) var(--motion-ease-out);
+  animation-fill-mode: both;
+}
+
+.animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.animate-stagger > *:nth-child(2) { animation-delay: 100ms; }
+.animate-stagger > *:nth-child(3) { animation-delay: 200ms; }
+.animate-stagger > *:nth-child(4) { animation-delay: 300ms; }
+.animate-stagger > *:nth-child(5) { animation-delay: 400ms; }
+.animate-stagger > *:nth-child(6) { animation-delay: 500ms; }
+
+/* Micro-interactions */
+.micro-bounce {
+  transition: transform var(--motion-duration-fast) var(--motion-ease-smooth);
+}
+
+.micro-bounce:active {
+  transform: scale(0.98);
+}
+
+.hover-lift {
+  transition: 
+    transform var(--motion-duration-normal) var(--motion-ease-smooth),
+    box-shadow var(--motion-duration-normal) var(--motion-ease-smooth);
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-scale {
+  transition: transform var(--motion-duration-normal) var(--motion-ease-smooth);
+  will-change: transform;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-rotate {
+  transition: transform var(--motion-duration-normal) var(--motion-ease-smooth);
+  will-change: transform;
+}
+
+.hover-rotate:hover {
+  transform: rotate(5deg);
+}
+
+/* Focus animations */
+.focus-ring {
+  outline: none;
+  transition: box-shadow var(--motion-duration-fast) var(--motion-ease-smooth);
+}
+
+.focus-ring:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+
+/* Loading states */
+.loading-fade {
+  animation: pulse-subtle 1.5s var(--motion-ease-in-out) infinite;
+}
+
+.loading-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--surface-2) 50%, transparent) 20%,
+    color-mix(in oklab, var(--surface-2) 80%, transparent) 60%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2s var(--motion-ease-in-out) infinite;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Page transitions */
+.page-enter {
+  animation: fade-in var(--motion-duration-slow) var(--motion-ease-out);
+}
+
+.page-exit {
+  animation: fade-in var(--motion-duration-normal) var(--motion-ease-in) reverse;
+}
+
+/* Modal and overlay animations */
+.modal-backdrop {
+  animation: fade-in var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.modal-content {
+  animation: 
+    scale-in var(--motion-duration-normal) var(--motion-ease-out),
+    fade-in var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.drawer-slide {
+  animation: slide-right var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+/* Button and interactive states */
+.button-press {
+  transition: 
+    transform var(--motion-duration-fast) var(--motion-ease-smooth),
+    box-shadow var(--motion-duration-fast) var(--motion-ease-smooth);
+}
+
+.button-press:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Card animations */
+.card-hover {
+  transition: 
+    transform var(--motion-duration-normal) var(--motion-ease-smooth),
+    box-shadow var(--motion-duration-normal) var(--motion-ease-smooth),
+    border-color var(--motion-duration-normal) var(--motion-ease-smooth);
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Navigation animations */
+.nav-fade {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition: 
+    opacity var(--motion-duration-normal) var(--motion-ease-out),
+    transform var(--motion-duration-normal) var(--motion-ease-out);
+}
+
+.nav-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll-triggered animations */
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: 
+    opacity var(--motion-duration-slow) var(--motion-ease-out),
+    transform var(--motion-duration-slow) var(--motion-ease-out);
+}
+
+.scroll-fade.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Toggle animations */
+.toggle-rotate {
+  transition: transform var(--motion-duration-normal) var(--motion-ease-smooth);
+}
+
+.toggle-rotate.is-active {
+  transform: rotate(180deg);
+}
+
+/* Accordion animations */
+.accordion-panel {
+  overflow: hidden;
+  transition: 
+    max-height var(--motion-duration-normal) var(--motion-ease-smooth),
+    opacity var(--motion-duration-normal) var(--motion-ease-smooth);
+}
+
+.accordion-panel.is-collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Tooltip animations */
+.tooltip {
+  opacity: 0;
+  transform: scale(0.95) translateY(0.25rem);
+  transition: 
+    opacity var(--motion-duration-fast) var(--motion-ease-out),
+    transform var(--motion-duration-fast) var(--motion-ease-out);
+}
+
+.tooltip.is-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Performance optimizations */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+.gpu-layer {
+  transform: translateZ(0);
+}
+
+/* Remove will-change after animations complete */
+.animate-fade-in,
+.animate-slide-up,
+.animate-slide-down,
+.animate-slide-left,
+.animate-slide-right,
+.animate-scale-in {
+  animation-fill-mode: both;
+}
+
+/* Reset will-change after animation */
+.animate-fade-in {
+  animation-name: fade-in, reset-will-change;
+  animation-delay: 0s, var(--motion-duration-normal);
+  animation-duration: var(--motion-duration-normal), 1ms;
+}
+
+@keyframes reset-will-change {
+  to {
+    will-change: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .hover-lift:hover {
+    outline: 2px solid;
+  }
+  
+  .focus-ring:focus-visible {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
