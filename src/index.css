@@ -991,8 +991,9 @@ body {
   display: inline-block; 
   position: relative; 
   isolation: isolate;
-  -webkit-mask: url('/dragon-mark.png') center / contain no-repeat;
-          mask: url('/dragon-mark.png') center / contain no-repeat;
+  /* Temporarily use gradient background instead of missing image */
+  background: radial-gradient(circle, var(--dragon-base) 30%, var(--dragon-glow) 100%);
+  border-radius: 50%;
   background: radial-gradient(120% 120% at 30% 30%, #0e2b30 0%, #07181b 60%, #041014 100%);
   filter: drop-shadow(0 0 0 rgba(0,0,0,0));
   transition: transform .2s ease, filter .2s ease;

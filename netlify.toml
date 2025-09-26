@@ -1,12 +1,35 @@
-# Netlify Vite Framework Configuration
-# Following official Netlify Vite guide: https://docs.netlify.com/frameworks/vite/
+# Netlify Configuration - Frame Economics
 
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Function-specific configuration
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "nft"
+
+# API function redirects
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA fallback - must be last
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  node_bundler = "nft"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"
