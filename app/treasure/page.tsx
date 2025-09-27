@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navigation from '@/components/Navigation';
+import Navigation from '../../components/Navigation';
 
 const TreasureChest = () => {
   const [isHovered, setIsHovered] = useState(false);
