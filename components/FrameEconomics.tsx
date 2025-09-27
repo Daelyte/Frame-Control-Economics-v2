@@ -66,7 +66,7 @@ const EarthGodTrail = () => {
       // Generate earth particles
       if (speed > 4) {
         const particleCount = Math.min(Math.floor(speed / 15), 3);
-        const newParticles = Array.from({ length: particleCount }, (_, i) => ({
+        const newParticles = Array.from({ length: particleCount }, () => ({
           id: particleIdRef.current++,
           x: newPos.x + (Math.random() - 0.5) * 40,
           y: newPos.y + (Math.random() - 0.5) * 40,
@@ -283,7 +283,7 @@ const MatrixLightning = () => {
   const [mouseTrail, setMouseTrail] = useState<Array<{ x: number; y: number; opacity: number }>>([]);
   const particleIdRef = useRef(0);
   const lastMouseRef = useRef({ x: 0, y: 0 });
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -304,7 +304,7 @@ const MatrixLightning = () => {
       // Generate lightning bolts based on movement speed
       if (speed > 3) {
         const boltCount = Math.min(Math.floor(speed / 8), 2);
-        const newBolts = Array.from({ length: boltCount }, (_, i) => ({
+        const newBolts = Array.from({ length: boltCount }, () => ({
           id: particleIdRef.current++,
           x: newPos.x + (Math.random() - 0.5) * 40,
           y: newPos.y + (Math.random() - 0.5) * 40,
@@ -448,7 +448,7 @@ const MatrixLightning = () => {
 const NeuralBackground = React.memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const animationIdRef = useRef<number>();
+  const animationIdRef = useRef<number | null>(null);
   const lastFrameTimeRef = useRef(0);
   const TARGET_FPS = 30; // Reduced from 60fps for better performance
   const FRAME_INTERVAL = 1000 / TARGET_FPS;

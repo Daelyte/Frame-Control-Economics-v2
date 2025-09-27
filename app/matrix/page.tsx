@@ -173,7 +173,7 @@ export default function MatrixTrainingPage() {
             key={i}
             className="absolute w-px font-mono text-xs"
             style={{ left: `${i * 5}%`, top: '-50px' }}
-            animate={{ y: [0, window.innerHeight + 50] }}
+            animate={{ y: [0, typeof window !== 'undefined' ? window.innerHeight + 50 : 1050] }}
             transition={{ 
               duration: 3 + Math.random() * 2, 
               repeat: Infinity, 
