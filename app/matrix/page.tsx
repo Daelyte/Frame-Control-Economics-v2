@@ -102,6 +102,7 @@ export default function MatrixTrainingPage() {
     persuasion: 72,
     manipulation: 65,
     charisma: 81,
+    psychology: 79,
   });
   const [terminalOutput, setTerminalOutput] = useState<string[]>([
     '> NEURAL_INTERFACE_LOADED...',
