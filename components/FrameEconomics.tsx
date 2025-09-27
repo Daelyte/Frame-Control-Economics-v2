@@ -2249,10 +2249,201 @@ const FrameEconomics = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
+                    className="relative inline-block"
                   >
-                    <LiquidButton onClick={() => window.location.href = '/treasure'}>
-                      🔐 Claim Your Access 🔐
-                    </LiquidButton>
+                    {/* Smoke effects rising from button */}
+                    {Array.from({ length: 8 }, (_, i) => (
+                      <motion.div
+                        key={`smoke-${i}`}
+                        className="absolute bottom-0 pointer-events-none"
+                        style={{
+                          left: `${20 + i * 8}%`,
+                          width: `${20 + Math.random() * 20}px`,
+                          height: `${20 + Math.random() * 20}px`,
+                          background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(31,122,114,0.2) 50%, transparent 70%)',
+                          filter: `blur(${4 + Math.random() * 4}px)`,
+                        }}
+                        animate={{
+                          y: [-20, -80 - Math.random() * 40],
+                          x: [0, (Math.random() - 0.5) * 30],
+                          scale: [0.5, 1.5 + Math.random() * 0.5, 2],
+                          opacity: [0, 0.6, 0],
+                        }}
+                        transition={{
+                          duration: 3 + Math.random() * 2,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                          ease: 'easeOut'
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Hypnotic rings pulsing outward */}
+                    {Array.from({ length: 3 }, (_, i) => (
+                      <motion.div
+                        key={`ring-${i}`}
+                        className="absolute inset-0 rounded-full border-2 pointer-events-none"
+                        style={{
+                          borderColor: i === 0 ? '#1F7A72' : i === 1 ? '#FF3B30' : '#00ffff',
+                          top: '-20px',
+                          bottom: '-20px',
+                          left: '-20px',
+                          right: '-20px',
+                        }}
+                        animate={{
+                          scale: [1, 2, 2.5],
+                          opacity: [0.8, 0.4, 0],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.6,
+                          ease: 'easeOut'
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Spotlight effect */}
+                    <motion.div
+                      className="absolute inset-0 -inset-x-10 -inset-y-10 pointer-events-none"
+                      style={{
+                        background: 'radial-gradient(ellipse at center, rgba(31,122,114,0.3) 0%, transparent 50%)',
+                        filter: 'blur(20px)',
+                      }}
+                      animate={{
+                        opacity: [0.3, 0.8, 0.3],
+                        scale: [0.9, 1.1, 0.9],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    />
+                    
+                    {/* Electric particles */}
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <motion.div
+                        key={`particle-${i}`}
+                        className="absolute w-1 h-1 bg-cyan-400 rounded-full pointer-events-none"
+                        style={{
+                          left: '50%',
+                          top: '50%',
+                        }}
+                        animate={{
+                          x: [0, Math.cos(i * 30 * Math.PI / 180) * 80],
+                          y: [0, Math.sin(i * 30 * Math.PI / 180) * 80],
+                          opacity: [1, 0],
+                          scale: [0, 1.5],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          delay: i * 0.1,
+                          ease: 'easeOut'
+                        }}
+                      />
+                    ))}
+                    
+                    {/* The actual button with enhanced effects */}
+                    <motion.div
+                      className="relative z-10"
+                      animate={{
+                        y: [0, -5, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    >
+                      <motion.div
+                        className="relative"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {/* Glowing background */}
+                        <motion.div
+                          className="absolute inset-0 rounded-full"
+                          style={{
+                            background: 'linear-gradient(135deg, #1F7A72 0%, #00ffff 50%, #1F7A72 100%)',
+                            filter: 'blur(15px)',
+                            opacity: 0.5,
+                          }}
+                          animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.5, 0.8, 0.5],
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: 'easeInOut'
+                          }}
+                        />
+                        
+                        <LiquidButton 
+                          onClick={() => window.location.href = '/treasure'}
+                          className="relative bg-gradient-to-r from-[#1F7A72] via-[#2A8A82] to-[#1F7A72] border-2 border-cyan-400/50 shadow-2xl"
+                        >
+                          <motion.span
+                            className="relative z-10 flex items-center gap-2 text-lg font-bold"
+                            animate={{
+                              textShadow: [
+                                '0 0 20px rgba(0,255,255,0.5)',
+                                '0 0 40px rgba(0,255,255,0.8)',
+                                '0 0 20px rgba(0,255,255,0.5)'
+                              ]
+                            }}
+                            transition={{
+                              duration: 1,
+                              repeat: Infinity,
+                              ease: 'easeInOut'
+                            }}
+                          >
+                            <motion.span
+                              animate={{ rotate: [0, 10, -10, 0] }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                            >
+                              🔐
+                            </motion.span>
+                            CLAIM YOUR ACCESS
+                            <motion.span
+                              animate={{ rotate: [0, -10, 10, 0] }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                            >
+                              🔐
+                            </motion.span>
+                          </motion.span>
+                        </LiquidButton>
+                      </motion.div>
+                    </motion.div>
+                    
+                    {/* Arrows pointing to button */}
+                    {Array.from({ length: 4 }, (_, i) => (
+                      <motion.div
+                        key={`arrow-${i}`}
+                        className="absolute text-cyan-400 text-2xl pointer-events-none"
+                        style={{
+                          left: i < 2 ? '-60px' : 'auto',
+                          right: i >= 2 ? '-60px' : 'auto',
+                          top: i % 2 === 0 ? '0' : 'auto',
+                          bottom: i % 2 === 1 ? '0' : 'auto',
+                          transform: `rotate(${i * 90 + 45}deg)`,
+                        }}
+                        animate={{
+                          opacity: [0, 1, 0],
+                          scale: [0.5, 1, 0.5],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                          ease: 'easeInOut'
+                        }}
+                      >
+                        ➤
+                      </motion.div>
+                    ))}
                   </motion.div>
                 </div>
               </ParallaxSection>
