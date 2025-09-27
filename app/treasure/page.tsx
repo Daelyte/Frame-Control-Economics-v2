@@ -263,6 +263,93 @@ const TreasureChest = () => {
                 {/* Metal reinforcements */}
                 <div className="absolute top-2 left-2 right-2 h-8 bg-gradient-to-b from-gray-400 to-gray-600 rounded" />
                 <div className="absolute bottom-2 left-2 right-2 h-8 bg-gradient-to-b from-gray-400 to-gray-600 rounded" />
+                
+                {/* Jarvis C.I. Text */}
+                <motion.div
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <motion.div
+                    className="text-3xl font-bold tracking-wider"
+                    style={{
+                      fontFamily: 'monospace',
+                      textShadow: '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5)',
+                      background: 'linear-gradient(135deg, #00ffff 0%, #0088ff 50%, #00ffff 100%)',
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text',
+                      color: 'transparent',
+                      backgroundSize: '200% 200%',
+                    }}
+                    animate={{
+                      backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                      textShadow: [
+                        '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5)',
+                        '0 0 30px rgba(0, 255, 255, 1), 0 0 60px rgba(0, 255, 255, 0.7)',
+                        '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5)'
+                      ]
+                    }}
+                    transition={{
+                      backgroundPosition: { duration: 3, repeat: Infinity, ease: 'linear' },
+                      textShadow: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+                    }}
+                  >
+                    JARVIS C.I.
+                  </motion.div>
+                  
+                  {/* Tech circuit lines around text */}
+                  <svg className="absolute inset-0 w-full h-full" style={{ width: '300px', height: '60px', left: '-75px', top: '-15px' }}>
+                    <motion.path
+                      d="M 10 30 L 50 30 L 55 25 L 100 25 L 105 30 L 140 30"
+                      stroke="#00ffff"
+                      strokeWidth="1"
+                      fill="none"
+                      opacity="0.5"
+                      animate={{
+                        pathLength: [0, 1, 1, 0],
+                        opacity: [0, 0.5, 0.5, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'linear'
+                      }}
+                    />
+                    <motion.path
+                      d="M 160 30 L 195 30 L 200 35 L 245 35 L 250 30 L 290 30"
+                      stroke="#00ffff"
+                      strokeWidth="1"
+                      fill="none"
+                      opacity="0.5"
+                      animate={{
+                        pathLength: [0, 1, 1, 0],
+                        opacity: [0, 0.5, 0.5, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'linear',
+                        delay: 0.5
+                      }}
+                    />
+                  </svg>
+                  
+                  {/* AI scanning effect */}
+                  <motion.div
+                    className="absolute inset-0 border border-cyan-400/30 rounded"
+                    style={{ width: '200px', height: '40px', left: '-35px', top: '-5px' }}
+                    animate={{
+                      borderColor: ['rgba(0, 255, 255, 0.3)', 'rgba(0, 255, 255, 0.8)', 'rgba(0, 255, 255, 0.3)'],
+                      scale: [1, 1.05, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
+                    }}
+                  />
+                </motion.div>
               </div>
 
               {/* Chest Lid */}
