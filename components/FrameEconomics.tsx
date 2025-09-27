@@ -49,7 +49,7 @@ const EarthGodTrail = () => {
       // Generate vines based on movement
       if (speed > 2) {
         const vineCount = Math.min(Math.floor(speed / 10), 2);
-        const newVines = Array.from({ length: vineCount }, (_, i) => ({
+        const newVines = Array.from({ length: vineCount }, () => ({
           id: particleIdRef.current++,
           x: newPos.x + (Math.random() - 0.5) * 30,
           y: newPos.y + (Math.random() - 0.5) * 30,
