@@ -9,24 +9,50 @@ const TreasureChest = () => {
   const [shakeTrigger, setShakeTrigger] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const [password, setPassword] = useState('');
+  const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [wrongPassword, setWrongPassword] = useState(false);
 
   const handleChestClick = () => {
-    // Trigger shake animation
-    setShakeTrigger(prev => prev + 1);
-    setShowMessage(true);
-    
-    // Generate particles
-    const newParticles = Array.from({ length: 20 }, (_, i) => ({
-      id: Date.now() + i,
-      x: Math.random() * 100 - 50,
-      y: Math.random() * 100 - 50,
-    }));
-    setParticles(newParticles);
-    
-    setTimeout(() => {
+    if (!isUnlocked) {
+      // Show password input instead of just shaking
+      setShowPasswordInput(true);
+      setShakeTrigger(prev => prev + 1);
+      
+      // Generate particles
+      const newParticles = Array.from({ length: 20 }, (_, i) => ({
+        id: Date.now() + i,
+        x: Math.random() * 100 - 50,
+        y: Math.random() * 100 - 50,
+      }));
+      setParticles(newParticles);
+      
+      setTimeout(() => {
+        setParticles([]);
+      }, 1000);
+    }
+  };
+  
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password.toLowerCase() === 'amy') {
+      setIsUnlocked(true);
+      setShowPasswordInput(false);
       setShowMessage(false);
-      setParticles([]);
-    }, 3000);
+      // Epic unlock animation
+      const unlockParticles = Array.from({ length: 50 }, (_, i) => ({
+        id: Date.now() + i,
+        x: Math.random() * 200 - 100,
+        y: Math.random() * 200 - 100,
+      }));
+      setParticles(unlockParticles);
+      setTimeout(() => setParticles([]), 2000);
+    } else {
+      setWrongPassword(true);
+      setShakeTrigger(prev => prev + 1);
+      setTimeout(() => setWrongPassword(false), 2000);
+    }
   };
 
   return (
@@ -197,12 +223,44 @@ const TreasureChest = () => {
 
       <div className="relative z-10 min-h-screen flex items-center justify-center px-6 pt-20">
         <div className="text-center max-w-4xl mx-auto">
+          {/* JARVIS C.I. Official Header */}
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.div
+              className="inline-block px-6 py-2 bg-black/90 border-2 border-cyan-400 rounded-lg"
+              animate={{
+                boxShadow: [
+                  '0 0 20px rgba(0, 255, 255, 0.5)',
+                  '0 0 40px rgba(0, 255, 255, 0.8)',
+                  '0 0 20px rgba(0, 255, 255, 0.5)',
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <div className="text-cyan-400 text-sm font-mono mb-1">SECURE SYSTEM v2.4.1</div>
+              <div
+                className="text-3xl font-bold tracking-wider font-mono"
+                style={{
+                  textShadow: '0 0 20px rgba(0, 255, 255, 1)',
+                  color: '#00ffff',
+                }}
+              >
+                JARVIS C.I.
+              </div>
+              <div className="text-cyan-300 text-xs font-mono mt-1">Central Intelligence</div>
+            </motion.div>
+          </motion.div>
+          
           {/* Title */}
           <motion.h1
             className="text-6xl md:text-7xl font-bold mb-8"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
             style={{
               background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 25%, #ff8c00 50%, #ffd700 75%, #ffed4e 100%)',
               backgroundClip: 'text',
@@ -264,23 +322,24 @@ const TreasureChest = () => {
                 <div className="absolute top-2 left-2 right-2 h-8 bg-gradient-to-b from-gray-400 to-gray-600 rounded" />
                 <div className="absolute bottom-2 left-2 right-2 h-8 bg-gradient-to-b from-gray-400 to-gray-600 rounded" />
                 
-                {/* Jarvis C.I. Text */}
+                {/* Jarvis C.I. Text - Prominent and Official */}
                 <motion.div
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                 >
                   <motion.div
-                    className="text-3xl font-bold tracking-wider"
+                    className="text-4xl font-black tracking-wider px-8 py-3 bg-black/80 rounded border-2 border-cyan-400/60"
                     style={{
                       fontFamily: 'monospace',
-                      textShadow: '0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.5)',
-                      background: 'linear-gradient(135deg, #00ffff 0%, #0088ff 50%, #00ffff 100%)',
+                      textShadow: '0 0 30px rgba(0, 255, 255, 1), 0 0 60px rgba(0, 255, 255, 0.5)',
+                      background: 'linear-gradient(135deg, #00ffff 0%, #ffffff 25%, #0088ff 50%, #ffffff 75%, #00ffff 100%)',
                       backgroundClip: 'text',
                       WebkitBackgroundClip: 'text',
                       color: 'transparent',
                       backgroundSize: '200% 200%',
+                      boxShadow: '0 0 40px rgba(0, 255, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.2)'
                     }}
                     animate={{
                       backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
@@ -512,32 +571,114 @@ const TreasureChest = () => {
             </AnimatePresence>
           </motion.div>
 
-          {/* Message when clicked */}
+          {/* Password Input */}
           <AnimatePresence>
-            {showMessage && (
+            {showPasswordInput && !isUnlocked && (
               <motion.div
                 className="mt-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
               >
-                <motion.p
-                  className="text-2xl font-bold text-red-500"
+                <form onSubmit={handlePasswordSubmit} className="flex flex-col items-center space-y-4">
+                  <motion.label
+                    className="text-xl text-purple-300 font-semibold"
+                    animate={{
+                      textShadow: [
+                        '0 0 10px rgba(168, 85, 247, 0.5)',
+                        '0 0 20px rgba(168, 85, 247, 0.8)',
+                        '0 0 10px rgba(168, 85, 247, 0.5)',
+                      ],
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    Enter the Secret Password:
+                  </motion.label>
+                  <motion.input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="px-6 py-3 bg-black/50 border-2 border-purple-400/50 rounded-lg text-white text-center text-xl focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/50 backdrop-blur-md"
+                    placeholder="🔑 • • • • •"
+                    autoFocus
+                    whileFocus={{ scale: 1.05 }}
+                  />
+                  <motion.button
+                    type="submit"
+                    className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg hover:from-purple-500 hover:to-pink-500 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    🗝️ UNLOCK
+                  </motion.button>
+                  {wrongPassword && (
+                    <motion.p
+                      className="text-red-500 font-bold"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      ❌ Wrong Password! Try Again...
+                    </motion.p>
+                  )}
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
+          {/* Unlocked Message */}
+          <AnimatePresence>
+            {isUnlocked && (
+              <motion.div
+                className="mt-8 text-center"
+                initial={{ opacity: 0, scale: 0.5, rotateY: 180 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                transition={{ duration: 1, type: 'spring' }}
+              >
+                <motion.h2
+                  className="text-4xl font-bold mb-4"
+                  style={{
+                    background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent',
+                  }}
                   animate={{
                     textShadow: [
-                      '0 0 10px rgba(239, 68, 68, 0.5)',
-                      '0 0 20px rgba(239, 68, 68, 0.8)',
-                      '0 0 10px rgba(239, 68, 68, 0.5)',
+                      '0 0 30px rgba(255, 215, 0, 0.8)',
+                      '0 0 50px rgba(255, 215, 0, 1)',
+                      '0 0 30px rgba(255, 215, 0, 0.8)',
                     ],
                   }}
                   transition={{ duration: 1, repeat: Infinity }}
                 >
-                  🔒 ACCESS DENIED 🔒
+                  🎉 CHEST UNLOCKED! 🎉
+                </motion.h2>
+                <motion.p
+                  className="text-2xl text-yellow-300 mb-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  Welcome, Amy! The treasures are yours! 💎✨
                 </motion.p>
-                <p className="text-lg text-purple-300 mt-2">
-                  The ancient lock remains sealed. Only the worthy may enter...
-                </p>
+                <motion.div
+                  className="text-6xl mb-4"
+                  animate={{
+                    rotate: [0, 360],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    rotate: { duration: 3, repeat: Infinity, ease: 'linear' },
+                    scale: { duration: 1.5, repeat: Infinity }
+                  }}
+                >
+                  💰
+                </motion.div>
+                <motion.p className="text-purple-300 text-lg italic">
+                  "The one who holds the key holds infinite power..."
+                </motion.p>
               </motion.div>
             )}
           </AnimatePresence>

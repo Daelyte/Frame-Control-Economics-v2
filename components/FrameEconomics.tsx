@@ -2444,6 +2444,69 @@ const FrameEconomics = () => {
                         ➤
                       </motion.div>
                     ))}
+                    
+                    {/* White and Blue Striped Dress Clue */}
+                    <motion.div
+                      className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 pointer-events-none"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: [0.3, 0.6, 0.3], y: [0, -5, 0] }}
+                      transition={{ 
+                        opacity: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
+                        y: { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+                      }}
+                    >
+                      <div className="text-center">
+                        <motion.div
+                          className="text-5xl mb-2"
+                          animate={{ 
+                            rotate: [0, 5, -5, 0],
+                            scale: [1, 1.1, 1]
+                          }}
+                          transition={{ duration: 4, repeat: Infinity }}
+                        >
+                          👗
+                        </motion.div>
+                        <div className="text-xs text-blue-300 opacity-60 font-mono">
+                          <span className="text-white">━━━</span>
+                          <span className="text-blue-400">━━━</span>
+                          <span className="text-white">━━━</span>
+                        </div>
+                        
+                        {/* Food clues */}
+                        <div className="flex justify-center space-x-4 mt-3">
+                          <motion.div
+                            className="text-3xl"
+                            animate={{ 
+                              y: [0, -5, 0],
+                              rotate: [0, 10, -10, 0]
+                            }}
+                            transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+                            title="Mussels"
+                          >
+                            🦪
+                          </motion.div>
+                          <motion.div
+                            className="text-3xl"
+                            animate={{ 
+                              y: [0, -5, 0],
+                              rotate: [0, -10, 10, 0]
+                            }}
+                            transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                            title="Italian Pasta"
+                          >
+                            🍝
+                          </motion.div>
+                        </div>
+                        
+                        <motion.div
+                          className="text-xs text-purple-300 opacity-40 mt-2 italic"
+                          animate={{ opacity: [0.2, 0.5, 0.2] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          (hints for Amy)
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   </motion.div>
                 </div>
               </ParallaxSection>
