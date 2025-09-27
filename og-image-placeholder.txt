@@ -1,0 +1,17 @@
+This file represents where the Open Graph image should be placed.
+
+Requirements per audit:
+- Filename: og-image.jpg 
+- Size: 1200x630 pixels
+- Format: JPG or PNG
+- Content: Brand title "Frame Economics", subtitle "Master Behavioral Psychology & Influence"
+- Design: Professional, readable on social media previews
+- Dark gradient background with clear white/light text
+
+This image will be used for:
+- Facebook/Meta link previews
+- Twitter/X card previews
+- LinkedIn link previews
+- Other social media platforms
+
+TODO: Create actual og-image.jpg file with proper design
