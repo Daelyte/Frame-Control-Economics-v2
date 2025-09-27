@@ -30,30 +30,167 @@ const TreasureChest = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-black relative overflow-hidden">
-      {/* Mystical background particles */}
-      <div className="fixed inset-0 opacity-30">
-        {Array.from({ length: 50 }, (_, i) => (
+    <div className="min-h-screen bg-gradient-to-b from-purple-900/50 via-purple-900/30 to-black relative overflow-hidden">
+      {/* Aggressive Abyssal Black Waves */}
+      <div className="fixed inset-0 z-0">
+        {/* Main abyssal wave */}
+        <motion.div
+          className="absolute bottom-0 w-full"
+          style={{
+            height: '80%',
+            background: 'radial-gradient(ellipse at bottom, #000000 0%, #0a0014 40%, transparent 70%)',
+            filter: 'blur(40px)'
+          }}
+          animate={{
+            y: [0, -50, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: 'easeInOut'
+          }}
+        />
+        
+        {/* Aggressive black tentacles rising */}
+        {Array.from({ length: 8 }, (_, i) => (
           <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-400 rounded-full"
+            key={`tentacle-${i}`}
+            className="absolute bottom-0"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${i * 15 - 10}%`,
+              width: '200px',
+              height: '100%',
+              background: `linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 40%, #000000 70%)`,
+              filter: 'blur(20px)',
+              transformOrigin: 'bottom'
             }}
             animate={{
-              y: [0, -30, 0],
-              opacity: [0.3, 1, 0.3],
-              scale: [1, 1.5, 1],
+              scaleY: [0.8, 1.4, 0.8],
+              x: [0, 30 * Math.sin(i), 0],
+              rotate: [0, 5 * Math.sin(i), 0]
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
+              duration: 3 + i * 0.3,
               repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: 'easeInOut',
+              ease: 'easeInOut'
             }}
           />
         ))}
+        
+        {/* White undercurrents */}
+        {Array.from({ length: 6 }, (_, i) => (
+          <motion.div
+            key={`undercurrent-${i}`}
+            className="absolute"
+            style={{
+              bottom: `${20 + i * 10}%`,
+              left: '-10%',
+              width: '120%',
+              height: '3px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+              filter: 'blur(2px)'
+            }}
+            animate={{
+              x: ['-10%', '10%', '-10%'],
+              opacity: [0.2, 0.6, 0.2],
+              scaleY: [1, 2, 1]
+            }}
+            transition={{
+              duration: 4 + i * 0.5,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: i * 0.3
+            }}
+          />
+        ))}
+        
+        {/* Purple-black collision zones */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0"
+          style={{
+            height: '60%',
+            background: 'linear-gradient(180deg, transparent 0%, rgba(128,0,255,0.3) 30%, rgba(0,0,0,0.95) 80%, #000000 100%)',
+            mixBlendMode: 'multiply'
+          }}
+          animate={{
+            opacity: [0.8, 1, 0.8]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: 'easeInOut'
+          }}
+        />
+        
+        {/* Violent purple-black interaction */}
+        <svg className="absolute bottom-0 left-0 right-0" style={{ height: '70%' }}>
+          <defs>
+            <filter id="turbulence">
+              <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="2" result="turbulence" />
+              <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="20" />
+            </filter>
+          </defs>
+          <motion.rect
+            width="100%"
+            height="100%"
+            fill="url(#abyssGradient)"
+            filter="url(#turbulence)"
+            opacity="0.6"
+          />
+          <defs>
+            <linearGradient id="abyssGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#8b00ff" stopOpacity="0" />
+              <stop offset="50%" stopColor="#4b0082" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#000000" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
+        
+        {/* Mystical background particles */}
+        <div className="absolute inset-0 opacity-30">
+          {Array.from({ length: 50 }, (_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-purple-400 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Abyssal vortex at bottom */}
+        <motion.div
+          className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+          style={{
+            width: '800px',
+            height: '400px',
+            background: 'radial-gradient(ellipse, #000000 0%, transparent 70%)',
+            filter: 'blur(60px)'
+          }}
+          animate={{
+            scale: [1, 1.5, 1],
+            rotate: [0, 180, 360]
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'linear'
+          }}
+        />
       </div>
 
       <Navigation />
@@ -329,6 +466,277 @@ const TreasureChest = () => {
               "Those who seek the key must first master the frames of reality..."
             </p>
           </motion.div>
+          
+          {/* Social Media Links */}
+          <motion.div
+            className="mt-16 flex justify-center space-x-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+          >
+            {/* Twitter/X */}
+            <motion.a
+              href="https://twitter.com/cereseve"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-300" />
+              <div className="relative bg-gradient-to-br from-black/70 to-blue-900/50 backdrop-blur-md border-2 border-blue-400/40 p-5 rounded-full group-hover:border-blue-400/80 transition-all duration-300 shadow-lg group-hover:shadow-blue-400/50">
+                <svg
+                  className="w-10 h-10 text-blue-400 group-hover:text-white transition-colors"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </div>
+              <motion.span
+                className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-blue-400 text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-black/80 px-3 py-1 rounded-full border border-blue-400/40"
+                initial={{ y: -10 }}
+                whileHover={{ y: 0 }}
+              >
+                @cereseve
+              </motion.span>
+              
+              {/* Floating particles around icon */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                animate={{
+                  rotate: 360
+                }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-2 h-2 bg-blue-400 rounded-full"
+                    style={{
+                      top: '50%',
+                      left: '50%',
+                      transform: `rotate(${i * 120}deg) translateX(35px) translateY(-50%)`
+                    }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.7
+                    }}
+                  />
+                ))}
+              </motion.div>
+            </motion.a>
+            
+            {/* Instagram */}
+            <motion.a
+              href="https://instagram.com/j_m_f_g"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              whileHover={{ scale: 1.2, rotate: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 rounded-full blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-300" />
+              <div className="relative bg-gradient-to-br from-black/70 to-purple-900/50 backdrop-blur-md border-2 border-pink-400/40 p-5 rounded-full group-hover:border-pink-400/80 transition-all duration-300 shadow-lg group-hover:shadow-pink-400/50">
+                <svg
+                  className="w-10 h-10 text-pink-400 group-hover:text-white transition-colors"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z" />
+                </svg>
+              </div>
+              <motion.span
+                className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-pink-400 text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-black/80 px-3 py-1 rounded-full border border-pink-400/40"
+                initial={{ y: -10 }}
+                whileHover={{ y: 0 }}
+              >
+                @j_m_f_g
+              </motion.span>
+              
+              {/* Rainbow ring effect on hover */}
+              <motion.div
+                className="absolute inset-0 rounded-full pointer-events-none"
+                style={{
+                  background: 'conic-gradient(from 0deg, #f87171, #fbbf24, #34d399, #60a5fa, #a78bfa, #f87171)',
+                  padding: '2px',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  maskComposite: 'exclude',
+                  opacity: 0
+                }}
+                whileHover={{
+                  opacity: 1,
+                  rotate: 360
+                }}
+                transition={{
+                  rotate: { duration: 2, ease: "linear" },
+                  opacity: { duration: 0.3 }
+                }}
+              />
+            </motion.a>
+          </motion.div>
+          
+          {/* Connection line between social icons */}
+          <motion.svg
+            className="absolute left-1/2 transform -translate-x-1/2"
+            style={{ bottom: '140px', width: '200px', height: '60px' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.3 }}
+            transition={{ delay: 2 }}
+          >
+            <motion.path
+              d="M 30 30 Q 100 10 170 30"
+              stroke="url(#socialGradient)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="5 5"
+              animate={{
+                strokeDashoffset: [0, -10]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <defs>
+              <linearGradient id="socialGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#60a5fa" />
+                <stop offset="50%" stopColor="#a78bfa" />
+                <stop offset="100%" stopColor="#f472b6" />
+              </linearGradient>
+            </defs>
+          </motion.svg>
+          
+          {/* Glowing divider */}
+          <motion.div
+            className="mt-16 w-64 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"
+            animate={{
+              opacity: [0.3, 0.8, 0.3],
+              scaleX: [0.8, 1.2, 0.8]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
+          
+          {/* Social Media Links */}
+          <motion.div
+            className="mt-16 flex justify-center space-x-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+          >
+            {/* Twitter/X */}
+            <motion.a
+              href="https://twitter.com/YourHandle"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+              <div className="relative bg-black/50 backdrop-blur-md border border-blue-400/30 p-4 rounded-full group-hover:border-blue-400/60 transition-all duration-300">
+                <svg
+                  className="w-8 h-8 text-blue-400 group-hover:text-blue-300 transition-colors"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </div>
+              <motion.span
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+                initial={{ y: -10 }}
+                whileHover={{ y: 0 }}
+              >
+                @Daelyte
+              </motion.span>
+            </motion.a>
+            
+            {/* Instagram */}
+            <motion.a
+              href="https://instagram.com/YourHandle"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+              <div className="relative bg-black/50 backdrop-blur-md border border-pink-400/30 p-4 rounded-full group-hover:border-pink-400/60 transition-all duration-300">
+                <svg
+                  className="w-8 h-8 text-pink-400 group-hover:text-pink-300 transition-colors"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z" />
+                </svg>
+              </div>
+              <motion.span
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-pink-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+                initial={{ y: -10 }}
+                whileHover={{ y: 0 }}
+              >
+                @IceColdFroste
+              </motion.span>
+            </motion.a>
+            
+            {/* YouTube or TikTok - Optional */}
+            <motion.a
+              href="https://youtube.com/@YourChannel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+              <div className="relative bg-black/50 backdrop-blur-md border border-red-400/30 p-4 rounded-full group-hover:border-red-400/60 transition-all duration-300">
+                <svg
+                  className="w-8 h-8 text-red-400 group-hover:text-red-300 transition-colors"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              </div>
+              <motion.span
+                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-red-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+                initial={{ y: -10 }}
+                whileHover={{ y: 0 }}
+              >
+                Frame Economics
+              </motion.span>
+            </motion.a>
+          </motion.div>
+          
+          {/* Glowing divider */}
+          <motion.div
+            className="mt-12 w-64 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"
+            animate={{
+              opacity: [0.3, 0.8, 0.3],
+              scaleX: [0.8, 1, 0.8]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: 'easeInOut'
+            }}
+          />
         </div>
       </div>
 
