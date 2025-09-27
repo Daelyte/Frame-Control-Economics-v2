@@ -4,6 +4,7 @@ import React, { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Float, Text } from '@react-three/drei'
 import * as THREE from 'three'
+import IcySnowflake from './IcySnowflake'
 
 interface NeuralOrbProps {
   position?: [number, number, number];
@@ -17,7 +18,6 @@ export default function NeuralOrb({
   scale = 1, 
   deviceTier = 'medium'
 }: NeuralOrbProps) {
-  const snowflakeRef = useRef<THREE.Group>(null)
   const networkRef = useRef<THREE.Group>(null)
   const particlesRef = useRef<THREE.Points>(null)
   const connectionsRef = useRef<THREE.Group>(null)
@@ -85,17 +85,6 @@ export default function NeuralOrb({
   useFrame((state) => {
     const time = state.clock.elapsedTime
 
-    if (snowflakeRef.current) {
-      // Magical snowflake rotation with pulsing
-      const pulse = Math.sin(time * 1.5) * 0.15 + 1
-      snowflakeRef.current.scale.setScalar(pulse)
-      snowflakeRef.current.rotation.z = time * 0.3
-      
-      // Add a slight wobble
-      snowflakeRef.current.rotation.x = Math.sin(time * 0.8) * 0.1
-      snowflakeRef.current.rotation.y = Math.cos(time * 0.6) * 0.1
-    }
-
     if (networkRef.current) {
       // Dragon balls orbital dance
       networkRef.current.rotation.y = time * 0.15
@@ -150,60 +139,12 @@ export default function NeuralOrb({
   return (
     <Float speed={1.5} rotationIntensity={0.15} floatIntensity={0.3}>
       <group position={position} scale={scale}>
-        {/* Central Icy Blue Snowflake */}
-        <group ref={snowflakeRef}>
-          {/* Create 6 main branches of the snowflake directly */}
-          {Array.from({ length: 6 }, (_, i) => {
-            const angle = (i / 6) * Math.PI * 2
-            return (
-              <group key={`branch-group-${i}`}>
-                {/* Main branch */}
-                <mesh
-                  position={[Math.cos(angle) * 0.2, Math.sin(angle) * 0.2, 0]}
-                  rotation={[0, 0, angle]}
-                >
-                  <cylinderGeometry args={[0.02, 0.02, 0.8, 8]} />
-                  <meshPhysicalMaterial
-                    color="#87CEEB" // Sky blue
-                    emissive="#4169E1" // Royal blue
-                    emissiveIntensity={0.4}
-                    metalness={0.8}
-                    roughness={0.1}
-                    clearcoat={1}
-                    clearcoatRoughness={0.1}
-                    transmission={0.3}
-                    thickness={0.2}
-                  />
-                </mesh>
-                
-                {/* Sub-branches */}
-                {Array.from({ length: 3 }, (_, j) => (
-                  <mesh
-                    key={`sub-branch-${j}`}
-                    position={[
-                      Math.cos(angle) * (0.2 + j * 0.15),
-                      Math.sin(angle) * (0.2 + j * 0.15),
-                      0
-                    ]}
-                    rotation={[0, 0, angle + (j % 2 === 0 ? Math.PI / 6 : -Math.PI / 6)]}
-                    scale={[0.7, 0.7, 0.7]}
-                  >
-                    <cylinderGeometry args={[0.01, 0.01, 0.3, 6]} />
-                    <meshPhysicalMaterial
-                      color="#ADD8E6" // Light blue
-                      emissive="#87CEEB" // Sky blue
-                      emissiveIntensity={0.3}
-                      metalness={0.6}
-                      roughness={0.2}
-                      clearcoat={0.8}
-                      transmission={0.4}
-                    />
-                  </mesh>
-                ))}
-              </group>
-            )
-          })}
-        </group>
+        {/* Central Blender-Generated Icy Blue Snowflake */}
+        <IcySnowflake 
+          position={[0, 0, 0]} 
+          scale={scale} 
+          deviceTier={deviceTier}
+        />
 
         {/* Dragon Ball Network */}
         <group ref={networkRef}>
