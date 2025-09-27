@@ -27,6 +27,10 @@
 
 [build.environment]
   NODE_VERSION = "20.19.5"
+  
+# Enable Next.js static export
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # Function-specific configuration
 [functions]
