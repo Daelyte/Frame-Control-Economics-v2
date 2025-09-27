@@ -625,58 +625,202 @@ const TreasureChest = () => {
             )}
           </AnimatePresence>
           
-          {/* Unlocked Message */}
+          {/* Unlocked Message - EPIC REVEAL */}
           <AnimatePresence>
             {isUnlocked && (
               <motion.div
-                className="mt-8 text-center"
+                className="mt-8 text-center relative"
                 initial={{ opacity: 0, scale: 0.5, rotateY: 180 }}
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                 transition={{ duration: 1, type: 'spring' }}
               >
+                {/* Explosion of hearts */}
+                {Array.from({ length: 20 }, (_, i) => (
+                  <motion.div
+                    key={`heart-${i}`}
+                    className="absolute text-4xl"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                    }}
+                    initial={{ x: 0, y: 0, scale: 0 }}
+                    animate={{
+                      x: (Math.random() - 0.5) * 500,
+                      y: (Math.random() - 0.5) * 400,
+                      scale: [0, 1.5, 1],
+                      opacity: [0, 1, 0],
+                      rotate: Math.random() * 360
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: i * 0.1,
+                      ease: 'easeOut'
+                    }}
+                  >
+                    ❤️
+                  </motion.div>
+                ))}
+
                 <motion.h2
-                  className="text-4xl font-bold mb-4"
+                  className="text-5xl font-bold mb-6"
                   style={{
-                    background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%)',
+                    background: 'linear-gradient(135deg, #ffd700 0%, #ff69b4 25%, #ffd700 50%, #ff69b4 75%, #ffd700 100%)',
                     backgroundClip: 'text',
                     WebkitBackgroundClip: 'text',
                     color: 'transparent',
+                    backgroundSize: '200% 200%',
                   }}
                   animate={{
+                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                     textShadow: [
                       '0 0 30px rgba(255, 215, 0, 0.8)',
-                      '0 0 50px rgba(255, 215, 0, 1)',
+                      '0 0 60px rgba(255, 105, 180, 1)',
                       '0 0 30px rgba(255, 215, 0, 0.8)',
                     ],
                   }}
-                  transition={{ duration: 1, repeat: Infinity }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
-                  🎉 CHEST UNLOCKED! 🎉
+                  🎉 WELCOME AMY! 🎉
                 </motion.h2>
+                
+                {/* Dragon appears for Year of the Dragon */}
+                <motion.div
+                  className="text-8xl mb-4"
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ 
+                    scale: [0, 1.3, 1],
+                    rotate: 0
+                  }}
+                  transition={{ 
+                    duration: 1,
+                    type: 'spring',
+                    delay: 0.5
+                  }}
+                >
+                  🐉
+                </motion.div>
+                
                 <motion.p
-                  className="text-2xl text-yellow-300 mb-6"
+                  className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  Year of the Dragon Princess 👑
+                </motion.p>
+
+                {/* Special Messages Box */}
+                <motion.div
+                  className="bg-black/50 backdrop-blur-md rounded-2xl p-8 border-2 border-gold/50 mt-8 max-w-2xl mx-auto"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.2 }}
+                  style={{
+                    boxShadow: '0 0 50px rgba(255, 215, 0, 0.3)'
+                  }}
+                >
+                  {/* Asian Night Market */}
+                  <motion.div
+                    className="mb-6"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.5 }}
+                  >
+                    <div className="text-2xl mb-2">🏮 🍜 🥟</div>
+                    <p className="text-2xl text-orange-400 font-bold">
+                      Asian Night Market Adventures Await
+                    </p>
+                  </motion.div>
+
+                  {/* Fried Chicken */}
+                  <motion.div
+                    className="mb-6"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.7 }}
+                  >
+                    <div className="text-2xl mb-2">🍗 🔥 ✨</div>
+                    <p className="text-2xl text-yellow-400 font-bold">
+                      The Perfect Fried Chicken Sandwich
+                    </p>
+                  </motion.div>
+
+                  {/* Shower/Spa */}
+                  <motion.div
+                    className="mb-6"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.9 }}
+                  >
+                    <div className="text-2xl mb-2">🚿 💆‍♀️ 🛁</div>
+                    <p className="text-2xl text-cyan-400 font-bold">
+                      Relaxing Moments Together
+                    </p>
+                  </motion.div>
+
+                  {/* Heart message */}
+                  <motion.div
+                    className="mt-8 p-6 bg-gradient-to-r from-pink-900/30 to-purple-900/30 rounded-xl"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 2.2 }}
+                  >
+                    <motion.p 
+                      className="text-xl text-pink-300 font-medium italic"
+                      animate={{
+                        textShadow: [
+                          '0 0 20px rgba(255, 192, 203, 0.5)',
+                          '0 0 40px rgba(255, 192, 203, 0.8)',
+                          '0 0 20px rgba(255, 192, 203, 0.5)',
+                        ]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      "I know you're mad at me right now, but I made this for you<br/>
+                      because you mean everything to me. Every location, every memory,<br/>
+                      every little detail here is about us. I'm sorry, and I miss you."
+                    </motion.p>
+                    <motion.div
+                      className="text-4xl mt-4"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      💕
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
+
+                {/* Floating emojis around the reveal */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                 >
-                  Welcome, Amy! The treasures are yours! 💎✨
-                </motion.p>
-                <motion.div
-                  className="text-6xl mb-4"
-                  animate={{
-                    rotate: [0, 360],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    rotate: { duration: 3, repeat: Infinity, ease: 'linear' },
-                    scale: { duration: 1.5, repeat: Infinity }
-                  }}
-                >
-                  💰
+                  {['💎', '✨', '🌟', '💖', '🦋', '🌹'].map((emoji, i) => (
+                    <motion.span
+                      key={i}
+                      className="absolute text-3xl"
+                      style={{
+                        left: `${20 + i * 12}%`,
+                        top: `${10 + (i % 2) * 70}%`
+                      }}
+                      animate={{
+                        y: [0, -30, 0],
+                        x: [0, (i % 2 ? 20 : -20), 0],
+                        rotate: [0, 360],
+                        scale: [1, 1.3, 1]
+                      }}
+                      transition={{
+                        duration: 3 + i * 0.5,
+                        repeat: Infinity,
+                        delay: i * 0.3
+                      }}
+                    >
+                      {emoji}
+                    </motion.span>
+                  ))}
                 </motion.div>
-                <motion.p className="text-purple-300 text-lg italic">
-                  "The one who holds the key holds infinite power..."
-                </motion.p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -953,7 +1097,7 @@ const TreasureChest = () => {
           >
             {/* Twitter/X */}
             <motion.a
-              href="https://twitter.com/cereseve"
+              href="https://twitter.com/ceresexe"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative"
@@ -1095,113 +1239,7 @@ const TreasureChest = () => {
             </defs>
           </motion.svg>
           
-          {/* Glowing divider */}
-          <motion.div
-            className="mt-16 w-64 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"
-            animate={{
-              opacity: [0.3, 0.8, 0.3],
-              scaleX: [0.8, 1.2, 0.8]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-          />
-          
-          {/* Social Media Links */}
-          <motion.div
-            className="mt-16 flex justify-center space-x-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.5 }}
-          >
-            {/* Twitter/X */}
-            <motion.a
-              href="https://twitter.com/YourHandle"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-              <div className="relative bg-black/50 backdrop-blur-md border border-blue-400/30 p-4 rounded-full group-hover:border-blue-400/60 transition-all duration-300">
-                <svg
-                  className="w-8 h-8 text-blue-400 group-hover:text-blue-300 transition-colors"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </div>
-              <motion.span
-                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
-                initial={{ y: -10 }}
-                whileHover={{ y: 0 }}
-              >
-                @Daelyte
-              </motion.span>
-            </motion.a>
-            
-            {/* Instagram */}
-            <motion.a
-              href="https://instagram.com/YourHandle"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-              <div className="relative bg-black/50 backdrop-blur-md border border-pink-400/30 p-4 rounded-full group-hover:border-pink-400/60 transition-all duration-300">
-                <svg
-                  className="w-8 h-8 text-pink-400 group-hover:text-pink-300 transition-colors"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z" />
-                </svg>
-              </div>
-              <motion.span
-                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-pink-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
-                initial={{ y: -10 }}
-                whileHover={{ y: 0 }}
-              >
-                @IceColdFroste
-              </motion.span>
-            </motion.a>
-            
-            {/* YouTube or TikTok - Optional */}
-            <motion.a
-              href="https://youtube.com/@YourChannel"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-              <div className="relative bg-black/50 backdrop-blur-md border border-red-400/30 p-4 rounded-full group-hover:border-red-400/60 transition-all duration-300">
-                <svg
-                  className="w-8 h-8 text-red-400 group-hover:text-red-300 transition-colors"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-              </div>
-              <motion.span
-                className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-red-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
-                initial={{ y: -10 }}
-                whileHover={{ y: 0 }}
-              >
-                Frame Economics
-              </motion.span>
-            </motion.a>
-          </motion.div>
-          
-          {/* Glowing divider */}
+          {/* Removed bottom 3 social media buttons - keeping clean focus on the treasure */}
           <motion.div
             className="mt-12 w-64 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent mx-auto"
             animate={{
