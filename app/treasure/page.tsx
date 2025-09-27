@@ -791,6 +791,122 @@ const TreasureChest = () => {
               </div>
             </motion.div>
 
+            {/* Terrazza */}
+            <motion.div
+              className="absolute left-1/3 top-64"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ 
+                opacity: [0.4, 0.85, 0.4],
+                scale: [0.9, 1.1, 0.9],
+                x: [0, 40, 0],
+                y: [0, -30, 0],
+                rotate: [-5, 5, -5]
+              }}
+              transition={{
+                duration: 14,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 8
+              }}
+            >
+              <div className="text-4xl font-bold text-rose-400/80"
+                style={{
+                  textShadow: '0 0 40px rgba(251, 113, 133, 0.8), 0 0 80px rgba(251, 113, 133, 0.4)',
+                  fontFamily: 'Playfair Display, serif',
+                  letterSpacing: '0.3em',
+                  fontStyle: 'italic'
+                }}>
+                🌹 TERRAZZA 🌹
+              </div>
+            </motion.div>
+
+            {/* Soju Bottle - Floating and Glowing */}
+            <motion.div
+              className="absolute right-20 top-96"
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ 
+                opacity: [0.6, 1, 0.6],
+                y: [0, -20, 0],
+                rotate: [-10, 10, -10],
+                scale: [1, 1.15, 1]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3
+              }}
+            >
+              <motion.div
+                className="relative"
+                whileHover={{ scale: 1.3, rotate: 0 }}
+              >
+                {/* Glow effect behind bottle */}
+                <motion.div
+                  className="absolute inset-0 -inset-4 bg-green-400/30 rounded-full blur-2xl"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Soju bottle emoji with text */}
+                <div className="relative text-center">
+                  <div className="text-6xl mb-2">🍶</div>
+                  <motion.div 
+                    className="text-xl font-bold text-green-400"
+                    style={{
+                      textShadow: '0 0 20px rgba(74, 222, 128, 0.8), 0 0 40px rgba(74, 222, 128, 0.4)',
+                      fontFamily: 'sans-serif',
+                      letterSpacing: '0.2em'
+                    }}
+                    animate={{
+                      textShadow: [
+                        '0 0 20px rgba(74, 222, 128, 0.8), 0 0 40px rgba(74, 222, 128, 0.4)',
+                        '0 0 30px rgba(74, 222, 128, 1), 0 0 60px rgba(74, 222, 128, 0.6)',
+                        '0 0 20px rgba(74, 222, 128, 0.8), 0 0 40px rgba(74, 222, 128, 0.4)'
+                      ]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    SOJU
+                  </motion.div>
+                  
+                  {/* Sparkles around the bottle */}
+                  {Array.from({ length: 4 }, (_, i) => (
+                    <motion.div
+                      key={`soju-sparkle-${i}`}
+                      className="absolute w-2 h-2 bg-green-300 rounded-full"
+                      style={{
+                        top: '50%',
+                        left: '50%',
+                        transform: `rotate(${i * 90}deg) translateX(40px) translateY(-50%)`
+                      }}
+                      animate={{
+                        scale: [0, 1, 0],
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                        ease: "easeOut"
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+
             {/* Additional floating particles connecting the locations */}
             {Array.from({ length: 20 }, (_, i) => (
               <motion.div

@@ -2035,15 +2035,195 @@ const FrameEconomics = () => {
                 </motion.p>
                 
                 <motion.div variants={itemVariants} className="flex gap-6 justify-center flex-wrap">
-                  <LiquidButton onClick={() => window.location.href = '/matrix'}>
-                    Enter The Matrix
-                  </LiquidButton>
-                  <LiquidButton 
-                    className="bg-transparent border border-white/30"
-                    onClick={() => window.location.href = '/demo'}
-                  >
-                    Experience Demo
-                  </LiquidButton>
+                  {/* Enter The Matrix - Digital Rain Effect */}
+                  <motion.div className="relative group">
+                    <motion.div
+                      className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 blur-xl"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 0.8, 0.5]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    />
+                    <motion.button
+                      onClick={() => window.location.href = '/matrix'}
+                      className="relative px-10 py-5 bg-black/90 border-2 border-green-500/50 rounded-xl overflow-hidden"
+                      whileHover={{ scale: 1.05, borderColor: '#10b981' }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {/* Matrix rain inside button */}
+                      <div className="absolute inset-0 overflow-hidden">
+                        {Array.from({ length: 15 }, (_, i) => (
+                          <motion.div
+                            key={`matrix-drop-${i}`}
+                            className="absolute text-green-400 font-mono text-xs opacity-70"
+                            style={{ left: `${i * 7}%` }}
+                            animate={{
+                              y: [-20, 80],
+                              opacity: [0, 1, 1, 0]
+                            }}
+                            transition={{
+                              duration: 2 + Math.random() * 2,
+                              repeat: Infinity,
+                              delay: Math.random() * 2,
+                              ease: 'linear'
+                            }}
+                          >
+                            {String.fromCharCode(0x30A0 + Math.random() * 96)}
+                          </motion.div>
+                        ))}
+                      </div>
+                      <div className="relative z-10 flex items-center gap-3">
+                        <motion.span
+                          className="text-2xl"
+                          animate={{
+                            rotate: [0, 360],
+                            scale: [1, 1.2, 1]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: 'easeInOut'
+                          }}
+                        >
+                          🔓
+                        </motion.span>
+                        <span className="text-xl font-bold text-green-400 tracking-wider">ENTER THE MATRIX</span>
+                        <motion.div
+                          className="absolute -right-2 -top-2 w-4 h-4 bg-green-400 rounded-full"
+                          animate={{
+                            scale: [0, 1, 0],
+                            opacity: [1, 0.5, 0]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity
+                          }}
+                        />
+                      </div>
+                      {/* Scanning line effect */}
+                      <motion.div
+                        className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent"
+                        animate={{
+                          y: [0, 60, 0]
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: 'linear'
+                        }}
+                      />
+                    </motion.button>
+                  </motion.div>
+
+                  {/* Experience Demo - Holographic Effect */}
+                  <motion.div className="relative group">
+                    <motion.div
+                      className="absolute inset-0 rounded-xl"
+                      style={{
+                        background: 'conic-gradient(from 0deg, #06b6d4, #8b5cf6, #ec4899, #06b6d4)',
+                        filter: 'blur(20px)',
+                        opacity: 0.6
+                      }}
+                      animate={{
+                        rotate: [0, 360]
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: 'linear'
+                      }}
+                    />
+                    <motion.button
+                      onClick={() => window.location.href = '/demo'}
+                      className="relative px-10 py-5 bg-black/80 backdrop-blur-md border-2 border-transparent rounded-xl overflow-hidden"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(6,182,212,0.1), rgba(139,92,246,0.1), rgba(236,72,153,0.1))',
+                        borderImage: 'linear-gradient(135deg, #06b6d4, #8b5cf6, #ec4899) 1'
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {/* Holographic shimmer */}
+                      <motion.div
+                        className="absolute inset-0 opacity-30"
+                        style={{
+                          background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.7) 50%, transparent 60%)',
+                        }}
+                        animate={{
+                          x: ['-100%', '100%']
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatDelay: 1,
+                          ease: 'easeOut'
+                        }}
+                      />
+                      <div className="relative z-10 flex items-center gap-3">
+                        <motion.span
+                          className="text-2xl"
+                          animate={{
+                            rotateY: [0, 360],
+                            scale: [1, 1.3, 1]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut'
+                          }}
+                        >
+                          ✨
+                        </motion.span>
+                        <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wider">
+                          EXPERIENCE DEMO
+                        </span>
+                        <motion.span
+                          className="text-2xl"
+                          animate={{
+                            rotateY: [360, 0],
+                            scale: [1, 1.3, 1]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                            delay: 0.5
+                          }}
+                        >
+                          💎
+                        </motion.span>
+                      </div>
+                      {/* Floating particles */}
+                      {Array.from({ length: 6 }, (_, i) => (
+                        <motion.div
+                          key={`particle-${i}`}
+                          className="absolute w-1 h-1 bg-white rounded-full"
+                          style={{
+                            left: `${20 + i * 12}%`,
+                            bottom: '10%'
+                          }}
+                          animate={{
+                            y: [0, -30, 0],
+                            opacity: [0, 1, 0],
+                            scale: [0, 1.5, 0]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: i * 0.3,
+                            ease: 'easeOut'
+                          }}
+                        />
+                      ))}
+                    </motion.button>
+                  </motion.div>
+
+                  {/* Kickflip Reality Button - Keep the Special One */}
                   <LiquidButton 
                     className="bg-gradient-to-r from-red-600/80 to-blue-600/80 border border-cyan-400/50"
                     onClick={handleShowAbout}
