@@ -681,6 +681,141 @@ const TreasureChest = () => {
             )}
           </AnimatePresence>
 
+          {/* Floating Location Names */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {/* Trillium Park */}
+            <motion.div
+              className="absolute left-10 top-32"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ 
+                opacity: [0.3, 0.8, 0.3],
+                x: [-100, 20, -100],
+                y: [0, -20, 0]
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <div className="text-3xl font-bold text-cyan-400/70" 
+                style={{
+                  textShadow: '0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.4)',
+                  fontFamily: 'monospace',
+                  letterSpacing: '0.2em'
+                }}>
+                TRILLIUM PARK
+              </div>
+            </motion.div>
+
+            {/* Ontario Place */}
+            <motion.div
+              className="absolute right-10 top-48"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ 
+                opacity: [0.3, 0.9, 0.3],
+                x: [100, -30, 100],
+                y: [0, 30, 0],
+                rotate: [0, 5, 0]
+              }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2
+              }}
+            >
+              <div className="text-4xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+                style={{
+                  textShadow: '0 0 40px rgba(168, 85, 247, 0.6)',
+                  fontFamily: 'sans-serif',
+                  letterSpacing: '0.15em'
+                }}>
+                ONTARIO PLACE
+              </div>
+            </motion.div>
+
+            {/* Veld */}
+            <motion.div
+              className="absolute left-1/4 bottom-48"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0.4, 1, 0.4],
+                scale: [0.8, 1.2, 0.8],
+                x: [0, 50, 0],
+                y: [0, -40, 0]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 4
+              }}
+            >
+              <div className="text-5xl font-black text-orange-500/80"
+                style={{
+                  textShadow: '0 0 50px rgba(255, 165, 0, 0.8), 0 0 100px rgba(255, 165, 0, 0.4)',
+                  fontFamily: 'Impact, sans-serif',
+                  letterSpacing: '0.3em',
+                  transform: 'perspective(200px) rotateX(15deg)'
+                }}>
+                VELD
+              </div>
+            </motion.div>
+
+            {/* Solaris */}
+            <motion.div
+              className="absolute right-1/3 bottom-32"
+              initial={{ opacity: 0, rotateY: 180 }}
+              animate={{ 
+                opacity: [0.5, 0.95, 0.5],
+                rotateY: [0, 360],
+                x: [0, -60, 0],
+                y: [0, 20, 0]
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 6
+              }}
+            >
+              <div className="text-4xl font-bold bg-gradient-to-br from-yellow-300 via-yellow-400 to-orange-400 bg-clip-text text-transparent"
+                style={{
+                  textShadow: '0 0 60px rgba(255, 215, 0, 0.9), 0 0 120px rgba(255, 215, 0, 0.5)',
+                  fontFamily: 'Georgia, serif',
+                  letterSpacing: '0.25em',
+                  fontStyle: 'italic'
+                }}>
+                ✨ SOLARIS ✨
+              </div>
+            </motion.div>
+
+            {/* Additional floating particles connecting the locations */}
+            {Array.from({ length: 20 }, (_, i) => (
+              <motion.div
+                key={`connector-${i}`}
+                className="absolute w-1 h-1 bg-white/30 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  x: [0, Math.random() * 200 - 100, 0],
+                  y: [0, Math.random() * 200 - 100, 0],
+                  opacity: [0, 0.6, 0],
+                  scale: [0, 2, 0]
+                }}
+                transition={{
+                  duration: 8 + Math.random() * 4,
+                  repeat: Infinity,
+                  delay: Math.random() * 5,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
+
           {/* Mysterious hint */}
           <motion.div
             className="mt-12 text-gray-400"
