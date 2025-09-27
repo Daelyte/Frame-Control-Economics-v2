@@ -1639,16 +1639,105 @@ const FrameEconomics = () => {
             animate="visible"
             className="relative z-10"
           >
-            <section className="min-h-screen flex items-center justify-center relative px-6 pt-20">
-              <ParallaxSection offset={0.3} className="text-center max-w-6xl mx-auto">
+            <section className="min-h-screen flex items-center justify-center relative px-4 pt-20">
+              <ParallaxSection offset={0.3} className="text-center w-full max-w-[90vw] mx-auto">
                 <motion.div variants={itemVariants} className="mb-12">
                   <DragonEye />
                 </motion.div>
                 
                 <motion.div 
                   variants={itemVariants}
-                  className="relative text-8xl md:text-9xl font-black mb-6 tracking-tight"
+                  className="relative text-8xl md:text-[12rem] xl:text-[14rem] font-black mb-6 tracking-tight"
                 >
+                  {/* Starfield background */}
+                  <div className="absolute inset-0 -inset-x-20 -inset-y-10">
+                    {/* Static stars */}
+                    {Array.from({ length: 200 }, (_, i) => (
+                      <motion.div
+                        key={`star-${i}`}
+                        className="absolute rounded-full"
+                        style={{
+                          left: `${Math.random() * 100}%`,
+                          top: `${Math.random() * 100}%`,
+                          width: `${1 + Math.random() * 3}px`,
+                          height: `${1 + Math.random() * 3}px`,
+                          background: Math.random() > 0.8 ? '#ffffff' : Math.random() > 0.5 ? '#ffff99' : '#ccccff',
+                          boxShadow: `0 0 ${Math.random() * 10}px currentColor`
+                        }}
+                        animate={{
+                          opacity: [0.2, 0.8 + Math.random() * 0.2, 0.2],
+                          scale: [1, 1.2, 1]
+                        }}
+                        transition={{
+                          duration: 2 + Math.random() * 4,
+                          repeat: Infinity,
+                          delay: Math.random() * 5,
+                          ease: 'easeInOut'
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Shooting stars */}
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <motion.div
+                        key={`shooting-${i}`}
+                        className="absolute w-1 h-px"
+                        style={{
+                          background: 'linear-gradient(90deg, transparent 0%, #ffffff 50%, transparent 100%)',
+                          left: `${-10 + Math.random() * 120}%`,
+                          top: `${Math.random() * 100}%`,
+                          width: '100px',
+                          filter: 'blur(0.5px)',
+                          boxShadow: '0 0 10px #ffffff'
+                        }}
+                        animate={{
+                          x: [-100, 1000],
+                          y: [0, 200],
+                          opacity: [0, 1, 0]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          delay: i * 8 + Math.random() * 5,
+                          ease: 'linear'
+                        }}
+                      />
+                    ))}
+                    
+                    {/* Nebula clouds */}
+                    <motion.div
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        background: 'radial-gradient(circle at 30% 50%, rgba(138, 43, 226, 0.3) 0%, transparent 50%)',
+                        filter: 'blur(40px)'
+                      }}
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.15, 0.25, 0.15]
+                      }}
+                      transition={{
+                        duration: 8,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    />
+                    <motion.div
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        background: 'radial-gradient(circle at 70% 30%, rgba(0, 191, 255, 0.3) 0%, transparent 50%)',
+                        filter: 'blur(50px)'
+                      }}
+                      animate={{
+                        scale: [1.1, 1, 1.1],
+                        opacity: [0.2, 0.15, 0.2]
+                      }}
+                      transition={{
+                        duration: 10,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    />
+                  </div>
                   {/* Static TV effect overlay - tighter around text */}
                   <motion.div
                     className="absolute inset-0 pointer-events-none overflow-hidden"
@@ -1939,7 +2028,7 @@ const FrameEconomics = () => {
                 
                 <motion.p
                   variants={itemVariants}
-                  className="text-2xl md:text-3xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed"
+                  className="text-2xl md:text-4xl xl:text-5xl text-gray-300 mb-16 max-w-6xl mx-auto leading-relaxed font-light"
                 >
                   Master the hidden psychology that shapes reality. 
                   <span className="text-[#1F7A72] font-semibold"> Transform perception. Control outcomes.</span>
@@ -1966,14 +2055,14 @@ const FrameEconomics = () => {
               </ParallaxSection>
             </section>
 
-            <section id="mastery" className="py-32 px-6 relative">
+            <section id="mastery" className="py-32 px-4 relative">
               <ParallaxSection offset={0.2}>
-                <div className="max-w-7xl mx-auto">
+                <div className="w-full max-w-[90vw] mx-auto">
                   <motion.h2
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="text-6xl font-bold text-center mb-20"
+                    className="text-6xl md:text-8xl xl:text-9xl font-bold text-center mb-24"
                   >
                     Psychological <span className="text-[#1F7A72]">Mastery</span>
                   </motion.h2>
