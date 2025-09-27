@@ -1,26 +1,35 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+    './index.html',
+  ],
+  darkMode: ['class', '[data-theme="dark"]'],
   theme: {
     extend: {
-      screens: {
-        'xs': '475px',
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
-        '3xl': '1920px',
-      },
       colors: {
-        // Semantic colors mapped to CSS variables
-        surface: {
-          0: 'var(--surface-0)',
-          1: 'var(--surface-1)',
-          2: 'var(--surface-2)',
-          elevated: 'var(--surface-elevated)',
+        primary: {
+          900: 'oklch(20% 0.08 180)', // Deep Teal
+          800: 'oklch(25% 0.08 180)', // Jade Shadow
+          600: 'oklch(45% 0.12 180)', // Jade
+          400: 'oklch(65% 0.08 180)', // Light Jade
         },
+        accent: {
+          500: 'oklch(60% 0.20 15)', // Cherry Red
+          400: 'oklch(70% 0.15 15)', // Light Cherry
+        },
+        muted: {
+          400: 'oklch(60% 0.04 160)', // Sage Desat
+          300: 'oklch(70% 0.02 160)', // Light Sage
+        },
+        glass: {
+          100: 'rgba(255, 255, 255, 0.06)',
+          200: 'rgba(255, 255, 255, 0.12)',
+        },
+        // Legacy brand colors for compatibility
         brand: {
           50: 'var(--brand-50)',
           100: 'var(--brand-100)',
@@ -34,86 +43,48 @@ export default {
           900: 'var(--brand-900)',
           950: 'var(--brand-950)',
         },
-        accent: {
-          50: 'var(--accent-50)',
-          100: 'var(--accent-100)',
-          200: 'var(--accent-200)',
-          300: 'var(--accent-300)',
-          400: 'var(--accent-400)',
-          500: 'var(--accent-500)',
-          600: 'var(--accent-600)',
-          700: 'var(--accent-700)',
-          800: 'var(--accent-800)',
-          900: 'var(--accent-900)',
-        },
-        success: {
-          50: 'var(--success-50)',
-          500: 'var(--success-500)',
-          600: 'var(--success-600)',
-          700: 'var(--success-700)',
-        },
-        warning: {
-          50: 'var(--warning-50)',
-          500: 'var(--warning-500)',
-          600: 'var(--warning-600)',
-          700: 'var(--warning-700)',
-        },
-        danger: {
-          50: 'var(--danger-50)',
-          500: 'var(--danger-500)',
-          600: 'var(--danger-600)',
-          700: 'var(--danger-700)',
-        },
-        text: {
-          primary: 'var(--text-primary)',
-          secondary: 'var(--text-secondary)',
-          muted: 'var(--text-muted)',
-          inverse: 'var(--text-inverse)',
-        },
-      },
-      fontSize: {
-        'fluid-xs': 'var(--fs-300)',
-        'fluid-sm': 'var(--fs-400)',
-        'fluid-base': 'var(--fs-500)',
-        'fluid-lg': 'var(--fs-600)',
-        'fluid-xl': 'var(--fs-700)',
-        'fluid-2xl': 'var(--fs-800)',
-        'fluid-3xl': 'var(--fs-900)',
-      },
-      spacing: {
-        1: 'var(--space-1)',
-        2: 'var(--space-2)',
-        3: 'var(--space-3)',
-        4: 'var(--space-4)',
-        5: 'var(--space-5)',
-        6: 'var(--space-6)',
-        7: 'var(--space-7)',
-        8: 'var(--space-8)',
-        9: 'var(--space-9)',
-        10: 'var(--space-10)',
-      },
-      borderRadius: {
-        'xs': 'var(--radius-xs)',
-        'sm': 'var(--radius-sm)',
-        'md': 'var(--radius-md)',
-        'lg': 'var(--radius-lg)',
-        'xl': 'var(--radius-xl)',
-        '2xl': 'var(--radius-2xl)',
-        '3xl': 'var(--radius-3xl)',
-      },
-      boxShadow: {
-        'xs': 'var(--shadow-xs)',
-        'sm': 'var(--shadow-sm)',
-        'md': 'var(--shadow-md)',
-        'lg': 'var(--shadow-lg)',
-        'xl': 'var(--shadow-xl)',
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'fluid-xs': 'var(--font-size-xs)',
+        'fluid-sm': 'var(--font-size-sm)',
+        'fluid-base': 'var(--font-size-base)',
+        'fluid-lg': 'var(--font-size-lg)',
+        'fluid-xl': 'var(--font-size-xl)',
+        'fluid-2xl': 'var(--font-size-2xl)',
+        'fluid-3xl': 'var(--font-size-3xl)',
+        'fluid-4xl': 'var(--font-size-4xl)',
+        'fluid-5xl': 'var(--font-size-5xl)',
+        'fluid-6xl': 'var(--font-size-6xl)',
+      },
+      spacing: {
+        'fluid-xs': 'var(--space-xs)',
+        'fluid-sm': 'var(--space-sm)',
+        'fluid-md': 'var(--space-md)',
+        'fluid-lg': 'var(--space-lg)',
+        'fluid-xl': 'var(--space-xl)',
+        'fluid-2xl': 'var(--space-2xl)',
+        'fluid-3xl': 'var(--space-3xl)',
+        // Legacy spacing
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+      backgroundImage: {
+        'hero-metal': 'linear-gradient(90deg, #BFC8D4 0%, rgba(255,255,255,0.3) 100%)',
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+        'slide-down': 'slideDown 0.5s ease-out',
+        'scale-in': 'scaleIn 0.3s ease-out',
+        'rotate': 'rotate 2s linear infinite',
+        // Legacy animations
         'float': 'float 6s ease-in-out infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
         'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
@@ -124,9 +95,22 @@ export default {
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.9)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        // Legacy keyframes
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
@@ -140,37 +124,51 @@ export default {
           '50%': { transform: 'translateY(0)' },
         },
       },
-      colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+      transitionDuration: {
+        'fast': '150ms',
+        'normal': '250ms',
+        'slow': '350ms',
+        'slower': '500ms',
+      },
+      transitionTimingFunction: {
+        'ease-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'ease-elastic': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+      },
+      zIndex: {
+        'dropdown': '1000',
+        'modal': '2000',
+        'toast': '3000',
+        'tooltip': '4000',
+      },
+      backdropBlur: {
+        'xs': '2px',
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          sm: '2rem',
+          lg: '4rem',
+          xl: '5rem',
+          '2xl': '6rem',
         },
-      },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
-      },
-      utilities: {
-        '.scrollbar-hide': {
-          '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none',
-          '&::-webkit-scrollbar': {
-            display: 'none'
-          }
-        }
+        screens: {
+          'xs': '475px',
+          'sm': '640px',
+          'md': '768px',
+          'lg': '1024px',
+          'xl': '1280px',
+          '2xl': '1400px',
+          '3xl': '1920px',
+        },
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    // require('@tailwindcss/typography'),
+    // require('@tailwindcss/container-queries'),
+  ],
   safelist: [
     // Dragon Storm System Classes - Prevent purging of dynamic/arbitrary values
     'fixed', 'inset-0', 'absolute', 'isolate', 'overflow-hidden', 'pointer-events-none',
@@ -187,24 +185,11 @@ export default {
     'will-change-transform',
     'bottom-0', 'left-0', 'right-0', 'h-40', 'h-32',
     'top-4', 'left-4', 'right-4',
-    // Custom animation classes
-    'aurora-backdrop',
-    'rain-heavy-layer', 'rain-medium-layer', 'rain-light-layer',
-    'lightning-flash-overlay',
-    'rain-heavy-fast', 'rain-medium-fast', 'rain-light-fast',
-    // Container query responsive classes
-    'sm:opacity-50', 'md:opacity-75', 'lg:opacity-100',
-    // Bulletproof Dragon System safelist - prevents JIT purging
-    'inset-0','-z-10','-inset-[2%]','[filter:blur(70px)]','mix-blend-screen',
-    'opacity-[0.12]','opacity-[0.10]','opacity-[0.08]',
-    'animate-[aurora_14s_ease-in-out_infinite]',
-    'animate-[rainA_3.6s_linear_infinite]','animate-[rainB_4.6s_linear_infinite]','animate-[rainC_5.2s_linear_infinite]',
-    'animate-[rainA_2.8s_linear_infinite]','animate-[rainB_3.6s_linear_infinite]','animate-[rainC_4.2s_linear_infinite]',
-    'animate-[flash_22s_ease-in-out_infinite]',
-    // Additional classes for DragonMWD and StormLite
-    'bg-[repeating-linear-gradient(12deg,transparent_0_38px,color-mix(in_oklab,black_25%,transparent)_38px_40px)]',
-    'bg-[repeating-linear-gradient(12deg,transparent_0_46px,color-mix(in_oklab,black_22%,transparent)_46px_48px)]',
-    'bg-[repeating-linear-gradient(12deg,transparent_0_52px,color-mix(in_oklab,black_18%,transparent)_52px_54px)]',
-    'motion-reduce:animate-none',
+    // Glass morphism classes
+    'glass', 'glass-strong',
+    // Metallic classes
+    'metallic-bg', 'metallic-text',
+    // Focus ring
+    'focus-ring',
   ],
-}
+};
