@@ -166,24 +166,101 @@ export default function MatrixTrainingPage() {
 
   return (
     <div className="min-h-screen bg-black text-green-400 relative overflow-hidden">
-      {/* Matrix background */}
-      <div className="fixed inset-0 opacity-10">
-        {Array.from({ length: 20 }, (_, i) => (
+      {/* ULTRA Dense Matrix rain background - Layer 1 */}
+      <div className="fixed inset-0 opacity-30">
+        {Array.from({ length: 100 }, (_, i) => (
           <motion.div
             key={i}
-            className="absolute w-px font-mono text-xs"
-            style={{ left: `${i * 5}%`, top: '-50px' }}
-            animate={{ y: [0, typeof window !== 'undefined' ? window.innerHeight + 50 : 1050] }}
+            className="absolute font-mono text-green-400"
+            style={{ 
+              left: `${i * 1}%`, 
+              top: '-200px',
+              fontSize: `${12 + Math.random() * 10}px`,
+              filter: `brightness(${0.6 + Math.random() * 0.4})`,
+              textShadow: '0 0 10px rgba(34, 197, 94, 1)'
+            }}
+            animate={{ y: [-200, typeof window !== 'undefined' ? window.innerHeight + 400 : 1400] }}
             transition={{ 
-              duration: 3 + Math.random() * 2, 
+              duration: 0.8 + Math.random() * 1.2, 
               repeat: Infinity, 
-              delay: i * 0.1,
+              delay: Math.random() * 2,
               ease: 'linear' 
             }}
           >
-            {Array.from({ length: 20 }, (_, j) => (
-              <div key={j} className="leading-tight">
-                {Math.random() > 0.5 ? '1' : '0'}
+            {Array.from({ length: 80 }, (_, j) => (
+              <div key={j} className="leading-[0.6]" style={{ opacity: 1 - (j * 0.012) }}>
+                {Math.random() > 0.7 ? 
+                  String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96)) : // Japanese characters
+                  Math.random() > 0.4 ? '1' : '0'
+                }
+              </div>
+            ))}
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* SUPER Fast Matrix columns - Layer 2 */}
+      <div className="fixed inset-0 opacity-25">
+        {Array.from({ length: 75 }, (_, i) => (
+          <motion.div
+            key={`fast-${i}`}
+            className="absolute font-mono text-green-300"
+            style={{ 
+              left: `${Math.random() * 100}%`, 
+              top: '-300px',
+              fontSize: `${10 + Math.random() * 8}px`,
+              filter: `brightness(${0.8 + Math.random() * 0.2})`,
+              textShadow: '0 0 8px rgba(34, 197, 94, 0.9)'
+            }}
+            animate={{ y: [-300, typeof window !== 'undefined' ? window.innerHeight + 500 : 1500] }}
+            transition={{ 
+              duration: 0.5 + Math.random() * 0.8, 
+              repeat: Infinity, 
+              delay: Math.random() * 1.5,
+              ease: 'linear' 
+            }}
+          >
+            {Array.from({ length: 100 }, (_, j) => (
+              <div key={j} className="leading-[0.5]" style={{ opacity: 1 - (j * 0.01) }}>
+                {Math.random() > 0.6 ? 
+                  String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96)) : // Japanese characters
+                  Math.random() > 0.5 ? 
+                    String.fromCharCode(65 + Math.floor(Math.random() * 26)) : // Letters
+                    Math.floor(Math.random() * 10).toString() // Numbers
+                }
+              </div>
+            ))}
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* LIGHTNING Fast bright columns - Layer 3 */}
+      <div className="fixed inset-0 opacity-40">
+        {Array.from({ length: 20 }, (_, i) => (
+          <motion.div
+            key={`lightning-${i}`}
+            className="absolute font-mono text-green-200"
+            style={{ 
+              left: `${Math.random() * 100}%`, 
+              top: '-400px',
+              fontSize: `${14 + Math.random() * 12}px`,
+              filter: `brightness(1.2)`,
+              textShadow: '0 0 15px rgba(34, 197, 94, 1), 0 0 30px rgba(34, 197, 94, 0.5)'
+            }}
+            animate={{ y: [-400, typeof window !== 'undefined' ? window.innerHeight + 600 : 1600] }}
+            transition={{ 
+              duration: 0.3 + Math.random() * 0.4, 
+              repeat: Infinity, 
+              delay: Math.random() * 5,
+              ease: 'linear' 
+            }}
+          >
+            {Array.from({ length: 120 }, (_, j) => (
+              <div key={j} className="leading-[0.4]" style={{ opacity: 1 - (j * 0.008) }}>
+                {Math.random() > 0.5 ? 
+                  String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96)) : // Japanese characters
+                  Math.random() > 0.3 ? '1' : '0'
+                }
               </div>
             ))}
           </motion.div>

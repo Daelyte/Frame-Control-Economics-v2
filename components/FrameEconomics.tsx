@@ -1053,18 +1053,23 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
     y: number;
     speed: number;
     opacity: number;
+    size: number;
+    color: string;
     trail: Array<{x: number; y: number; opacity: number}>;
   }>>([]);
   
   useEffect(() => {
     if (isOpen) {
-      const newDigits = Array.from({ length: 40 }, (_, i) => ({
+      // Create MASSIVE amount of Matrix rain
+      const newDigits = Array.from({ length: 250 }, (_, i) => ({
         id: i,
-        char: String.fromCharCode(0x30A0 + Math.random() * 96),
+        char: Math.random() > 0.5 ? String.fromCharCode(0x30A0 + Math.random() * 96) : Math.random() > 0.3 ? '1' : '0',
         x: Math.random() * 100,
-        y: -10,
-        speed: 0.2 + Math.random() * 0.4,
-        opacity: Math.random(),
+        y: -Math.random() * 100,
+        speed: 0.8 + Math.random() * 2.5, // Much faster
+        opacity: 0.3 + Math.random() * 0.7,
+        size: 10 + Math.random() * 20, // Variable sizes
+        color: Math.random() > 0.9 ? '#00ff00' : Math.random() > 0.7 ? '#00ff88' : '#00cc44',
         trail: []
       }));
       setDigits(newDigits);
@@ -1078,16 +1083,18 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
       setDigits(prev => prev.map(digit => {
         const newDigit = {
           ...digit,
-          y: digit.y > 110 ? -10 : digit.y + digit.speed,
-          char: Math.random() < 0.02 ? String.fromCharCode(0x30A0 + Math.random() * 96) : digit.char,
-          opacity: 0.2 + Math.sin(Date.now() * 0.001 + digit.id) * 0.3
+          y: digit.y > 110 ? -Math.random() * 30 : digit.y + digit.speed,
+          char: Math.random() < 0.05 ? String.fromCharCode(0x30A0 + Math.random() * 96) : 
+                Math.random() < 0.1 ? Math.floor(Math.random() * 10).toString() : digit.char,
+          opacity: 0.3 + Math.sin(Date.now() * 0.002 + digit.id) * 0.5,
+          speed: digit.speed + (Math.random() - 0.5) * 0.2 // Speed variations
         };
         
-        newDigit.trail = [...(digit.trail || []), { x: digit.x, y: digit.y, opacity: digit.opacity * 0.3 }].slice(-8);
+        newDigit.trail = [...(digit.trail || []), { x: digit.x, y: digit.y, opacity: digit.opacity * 0.5 }].slice(-15);
         
         return newDigit;
       }));
-    }, 150);
+    }, 30); // Much faster update rate
 
     return () => clearInterval(interval);
   }, [isOpen]);
@@ -1103,16 +1110,21 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
       className="fixed inset-0 z-50 bg-black"
     >
       <div className="absolute inset-0 overflow-hidden">
+        {/* Multi-layer Matrix rain for extreme density */}
         {digits.map(digit => (
           <div key={digit.id}>
             {digit.trail?.map((trailPoint, idx) => (
               <motion.div
                 key={`${digit.id}-trail-${idx}`}
-                className="absolute text-green-400 font-mono text-lg"
+                className="absolute font-mono"
                 style={{
                   left: `${trailPoint.x}%`,
                   top: `${trailPoint.y}%`,
-                  opacity: trailPoint.opacity * (idx / 8)
+                  opacity: trailPoint.opacity * (idx / 15) * 0.7,
+                  fontSize: `${digit.size * 0.8}px`,
+                  color: digit.color,
+                  textShadow: `0 0 ${5 + idx}px ${digit.color}`,
+                  filter: `brightness(${0.5 + idx * 0.05})`
                 }}
               >
                 {digit.char}
@@ -1120,20 +1132,50 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
             ))}
             
             <motion.div
-              className="absolute text-green-400 font-mono text-lg"
+              className="absolute font-mono font-bold"
               style={{
                 left: `${digit.x}%`,
                 top: `${digit.y}%`,
-                opacity: digit.opacity
+                opacity: digit.opacity,
+                fontSize: `${digit.size}px`,
+                color: digit.color,
+                textShadow: `0 0 10px ${digit.color}, 0 0 20px ${digit.color}80`,
+                filter: 'brightness(1.2)'
               }}
               animate={{
-                opacity: [digit.opacity * 0.5, digit.opacity, digit.opacity * 0.7]
+                opacity: [digit.opacity * 0.5, digit.opacity, digit.opacity * 0.7],
+                scale: [0.95, 1.05, 0.95]
               }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
               {digit.char}
             </motion.div>
           </div>
+        ))}
+        
+        {/* Extra layer of super fast mini characters */}
+        {Array.from({ length: 100 }, (_, i) => (
+          <motion.div
+            key={`extra-${i}`}
+            className="absolute font-mono text-green-300"
+            style={{
+              left: `${Math.random() * 100}%`,
+              fontSize: `${8 + Math.random() * 6}px`,
+              textShadow: '0 0 5px #00ff00',
+              opacity: 0.3 + Math.random() * 0.4
+            }}
+            animate={{
+              y: [-100, typeof window !== 'undefined' ? window.innerHeight : 1000]
+            }}
+            transition={{
+              duration: 0.5 + Math.random() * 1,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+              ease: 'linear'
+            }}
+          >
+            {Math.random() > 0.7 ? String.fromCharCode(0x30A0 + Math.random() * 96) : Math.floor(Math.random() * 2)}
+          </motion.div>
         ))}
       </div>
 
@@ -2119,8 +2161,8 @@ const FrameEconomics = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                   >
-                    <LiquidButton onClick={() => window.location.href = 'mailto:contact@frameeconomics.com'}>
-                      Claim Your Access
+                    <LiquidButton onClick={() => window.location.href = '/treasure'}>
+                      🔐 Claim Your Access 🔐
                     </LiquidButton>
                   </motion.div>
                 </div>
