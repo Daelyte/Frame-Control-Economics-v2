@@ -23,7 +23,9 @@
     "safe-push": "npm run validate && git push",
     "quick-check": "npm run validate",
     "deploy-ready": "node scripts/deploy.js",
-    "emergency-deploy": "npm run fix-and-deploy"
+    "emergency-deploy": "npm run fix-and-deploy",
+    "deploy-workflow": "node scripts/deploy-workflow.js",
+    "verify-deployment": "curl -f -s -o /dev/null https://frame-control.netlify.app && echo 'Deployment verified!' || echo 'Deployment failed!'"
   },
   "dependencies": {
     "@arcjet/node": "^1.0.0-beta.12",
