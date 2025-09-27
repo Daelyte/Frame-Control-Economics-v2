@@ -1693,58 +1693,154 @@ const FrameEconomics = () => {
                   </motion.div>
 
                   {/* Main text with enhanced effects */}
-                  <motion.h1
-                    className="relative z-10"
+                  <motion.div
+                    className="relative z-10 leading-[0.85] select-none"
                     style={{
-                      background: 'linear-gradient(135deg, #ffffff 0%, #1F7A72 50%, #FF3B30 100%)',
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      color: 'transparent',
-                      textShadow: '0 0 30px rgba(31,122,114,0.3)',
-                      filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))'
-                    }}
-                    animate={{
-                      textShadow: [
-                        '0 0 30px rgba(31,122,114,0.3)',
-                        '0 0 40px rgba(31,122,114,0.5), 0 0 20px rgba(255,255,255,0.3)',
-                        '0 0 30px rgba(31,122,114,0.3)'
-                      ]
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: 'easeInOut'
+                      perspective: '1000px',
+                      transformStyle: 'preserve-3d'
                     }}
                   >
-                    <motion.div
+                    {/* FRAME text with 3D rotation */}
+                    <motion.h1
+                      className="text-8xl md:text-9xl font-black tracking-tight"
+                      style={{
+                        background: 'linear-gradient(135deg, #ffffff 0%, #00ffff 25%, #1F7A72 50%, #FF3B30 75%, #ffffff 100%)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        color: 'transparent',
+                        backgroundSize: '200% 200%',
+                        textShadow: '0 0 40px rgba(31,122,114,0.4)',
+                        filter: 'drop-shadow(0 0 20px rgba(0,255,255,0.3)) drop-shadow(0 0 10px rgba(255,255,255,0.2))'
+                      }}
                       animate={{
-                        x: [0, -1, 1, -0.5, 0.5, 0],
-                        y: [0, -0.5, 0.5, -0.2, 0.2, 0]
+                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                        rotateX: [0, 2, -2, 0],
+                        rotateY: [0, -3, 3, 0],
+                        scale: [1, 1.02, 1]
                       }}
                       transition={{
-                        duration: 0.3,
-                        repeat: Infinity,
-                        repeatDelay: 4
+                        backgroundPosition: {
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: 'linear'
+                        },
+                        rotateX: {
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        },
+                        rotateY: {
+                          duration: 5,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        },
+                        scale: {
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        }
                       }}
                     >
-                      FRAME
-                    </motion.div>
-                    <br />
-                    <motion.div
+                      <motion.span
+                        className="inline-block"
+                        animate={{
+                          x: [0, -2, 2, -1, 1, 0],
+                          y: [0, -1, 1, 0]
+                        }}
+                        transition={{
+                          duration: 0.15,
+                          repeat: Infinity,
+                          repeatDelay: 6,
+                          times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+                        }}
+                      >
+                        FRAME
+                      </motion.span>
+                    </motion.h1>
+                    
+                    {/* ECONOMICS text with wave effect */}
+                    <motion.h1
+                      className="text-8xl md:text-9xl font-black -mt-6 md:-mt-8 tracking-tight"
+                      style={{
+                        background: 'linear-gradient(135deg, #FF3B30 0%, #ff6b35 25%, #1F7A72 50%, #00ffff 75%, #ffffff 100%)',
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        color: 'transparent',
+                        backgroundSize: '200% 200%',
+                        textShadow: '0 0 40px rgba(255,59,48,0.3)',
+                        filter: 'drop-shadow(0 0 20px rgba(255,107,53,0.3)) drop-shadow(0 0 10px rgba(255,255,255,0.2))'
+                      }}
                       animate={{
-                        x: [0, 1, -1, 0.5, -0.5, 0],
-                        y: [0, 0.5, -0.5, 0.2, -0.2, 0]
+                        backgroundPosition: ['100% 50%', '0% 50%', '100% 50%'],
+                        rotateX: [0, -2, 2, 0],
+                        rotateY: [0, 3, -3, 0],
+                        scale: [1, 1.02, 1]
                       }}
                       transition={{
-                        duration: 0.3,
-                        repeat: Infinity,
-                        repeatDelay: 4,
-                        delay: 0.1
+                        backgroundPosition: {
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: 'linear'
+                        },
+                        rotateX: {
+                          duration: 5,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        },
+                        rotateY: {
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: 'easeInOut'
+                        },
+                        scale: {
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 0.5
+                        }
                       }}
                     >
-                      ECONOMICS
-                    </motion.div>
-                  </motion.h1>
+                      {/* Animated individual letters */}
+                      {'ECONOMICS'.split('').map((letter, i) => (
+                        <motion.span
+                          key={i}
+                          className="inline-block"
+                          animate={{
+                            y: [0, -5 * Math.sin((i + 1) * 0.5), 0],
+                            rotateZ: [0, 2 * Math.sin((i + 1) * 0.3), 0]
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: i * 0.1,
+                            ease: 'easeInOut'
+                          }}
+                        >
+                          {letter}
+                        </motion.span>
+                      ))}
+                    </motion.h1>
+                    
+                    {/* Glowing underline effect */}
+                    <motion.div
+                      className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 h-1 rounded-full"
+                      style={{
+                        background: 'linear-gradient(90deg, transparent, #00ffff, #ffffff, #ff6b35, transparent)',
+                        width: '80%',
+                        filter: 'blur(1px)',
+                        boxShadow: '0 0 20px rgba(0,255,255,0.6)'
+                      }}
+                      animate={{
+                        scaleX: [0.5, 1, 0.5],
+                        opacity: [0.3, 1, 0.3]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'easeInOut'
+                      }}
+                    />
+                  </motion.div>
 
                   {/* Electric sparks around the text */}
                   {Array.from({ length: 8 }, (_, i) => (
