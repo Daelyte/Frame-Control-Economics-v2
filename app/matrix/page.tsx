@@ -57,7 +57,7 @@ const MatrixTrainingModule = ({ title, description, progress, isActive, onClick,
         <span className="text-green-400 text-sm">Progress: {progress}%</span>
         <motion.div
           className="px-3 py-1 bg-green-400/20 rounded text-green-400 text-xs"
-          whileHover={{ bg: 'rgba(34, 197, 94, 0.3)' }}
+          whileHover={{ backgroundColor: 'rgba(34, 197, 94, 0.3)' }}
         >
           {isActive ? 'ACTIVE' : 'ENTER'}
         </motion.div>
