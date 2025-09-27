@@ -22,16 +22,16 @@ const NeuralBackground = () => {
     const nodes = Array.from({ length: 30 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.08, // Much slower base speed
+      vx: (Math.random() - 0.5) * 0.08,
       vy: (Math.random() - 0.5) * 0.08,
       baseVx: (Math.random() - 0.5) * 0.08,
       baseVy: (Math.random() - 0.5) * 0.08,
       size: 3 + Math.random() * 4,
       baseSize: 3 + Math.random() * 4,
       morphTimer: Math.random() * Math.PI * 2,
-      morphSpeed: 0.003 + Math.random() * 0.002, // Very slow morphing
+      morphSpeed: 0.003 + Math.random() * 0.002,
       connections: [],
-      shape: Math.floor(Math.random() * 4), // 0: circle, 1: triangle, 2: square, 3: diamond
+      shape: Math.floor(Math.random() * 4),
       nextShape: Math.floor(Math.random() * 4),
       morphProgress: 0,
       morphing: false
@@ -44,7 +44,6 @@ const NeuralBackground = () => {
       ctx.translate(x, y);
       
       if (morphProgress > 0 && morphProgress < 1) {
-        // Morphing between shapes
         ctx.globalAlpha = 1 - morphProgress;
         drawSingleShape(ctx, size, shape);
         ctx.globalAlpha = morphProgress;
@@ -60,19 +59,19 @@ const NeuralBackground = () => {
     const drawSingleShape = (ctx: CanvasRenderingContext2D, size: number, shape: number) => {
       ctx.beginPath();
       switch(shape) {
-        case 0: // Circle
+        case 0:
           ctx.arc(0, 0, size, 0, Math.PI * 2);
           break;
-        case 1: // Triangle
+        case 1:
           ctx.moveTo(0, -size);
           ctx.lineTo(-size * 0.866, size * 0.5);
           ctx.lineTo(size * 0.866, size * 0.5);
           ctx.closePath();
           break;
-        case 2: // Square
+        case 2:
           ctx.rect(-size, -size, size * 2, size * 2);
           break;
-        case 3: // Diamond
+        case 3:
           ctx.moveTo(0, -size);
           ctx.lineTo(size, 0);
           ctx.lineTo(0, size);
@@ -85,23 +84,19 @@ const NeuralBackground = () => {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.005; // Very slow time progression
+      time += 0.005;
       
-      // Neural network animation
       nodes.forEach((node, i) => {
-        // Update morph timer
         node.morphTimer += node.morphSpeed;
         
-        // Trigger morphing occasionally
         if (!node.morphing && Math.sin(node.morphTimer) > 0.99) {
           node.morphing = true;
           node.nextShape = (node.shape + 1) % 4;
           node.morphProgress = 0;
         }
         
-        // Update morph progress
         if (node.morphing) {
-          node.morphProgress += 0.01; // Slow morphing
+          node.morphProgress += 0.01;
           if (node.morphProgress >= 1) {
             node.shape = node.nextShape;
             node.morphing = false;
@@ -109,7 +104,6 @@ const NeuralBackground = () => {
           }
         }
         
-        // Bullet-time movement with wave distortion
         const waveX = Math.sin(time + node.y * 0.01) * 0.02;
         const waveY = Math.cos(time + node.x * 0.01) * 0.02;
         
@@ -119,22 +113,19 @@ const NeuralBackground = () => {
         node.x += node.vx;
         node.y += node.vy;
         
-        // Slow magnetic attraction to mouse
         const dx = mousePos.x - node.x;
         const dy = mousePos.y - node.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < 300 && distance > 1) {
           const force = (300 - distance) / 300;
-          node.vx += (dx / distance) * force * 0.00005; // Much weaker force
+          node.vx += (dx / distance) * force * 0.00005;
           node.vy += (dy / distance) * force * 0.00005;
         }
         
-        // Gentle size pulsing
         const pulse = Math.sin(time * 0.5 + i * 0.2) * 0.3 + 1;
         node.size = node.baseSize * pulse;
         
-        // Bounce off edges with damping
         if (node.x < 0 || node.x > canvas.width) {
           node.vx *= -0.8;
           node.baseVx *= -0.8;
@@ -144,11 +135,10 @@ const NeuralBackground = () => {
           node.baseVy *= -0.8;
         }
         
-        // Draw connections (slower fade-in/out)
         nodes.slice(i + 1).forEach(otherNode => {
           const dist = Math.sqrt((node.x - otherNode.x) ** 2 + (node.y - otherNode.y) ** 2);
           if (dist < 150) {
-            const opacity = (1 - (dist / 150)) * 0.2; // Much more subtle
+            const opacity = (1 - (dist / 150)) * 0.2;
             const connectionPulse = Math.sin(time * 0.3 + dist * 0.01) * 0.1 + 0.9;
             
             ctx.strokeStyle = `rgba(31, 122, 114, ${opacity * connectionPulse})`;
@@ -158,7 +148,6 @@ const NeuralBackground = () => {
             ctx.lineTo(otherNode.x, otherNode.y);
             ctx.stroke();
             
-            // Add occasional data packet along connection
             if (Math.sin(time * 2 + dist) > 0.98) {
               const packetX = node.x + (otherNode.x - node.x) * ((Math.sin(time * 3) + 1) / 2);
               const packetY = node.y + (otherNode.y - node.y) * ((Math.sin(time * 3) + 1) / 2);
@@ -171,11 +160,9 @@ const NeuralBackground = () => {
           }
         });
         
-        // Draw morphing nodes
         const nodeDistance = Math.sqrt((mousePos.x - node.x) ** 2 + (mousePos.y - node.y) ** 2);
         const proximityHeat = Math.max(0, 1 - nodeDistance / 200);
         
-        // Color based on proximity and shape
         const hue = nodeDistance < 200 ? 
           `rgba(255, ${Math.floor(59 + proximityHeat * 100)}, 48, ${0.7 + proximityHeat * 0.3})` :
           `rgba(31, 122, 114, ${0.6 + Math.sin(time + i) * 0.2})`;
@@ -241,6 +228,131 @@ const LiquidButton = ({ children, className = "", onClick }: { children: React.R
   );
 };
 
+const DragonEye = () => {
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return (
+    <div className="relative w-32 h-32">
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-800 via-gray-900 to-black shadow-2xl" />
+      
+      <motion.div
+        className="absolute w-20 h-20 rounded-full top-1/2 left-1/2"
+        style={{
+          background: 'radial-gradient(circle at 30% 30%, #1F7A72, #0F3B38, #000)',
+          transform: 'translate(-50%, -50%)'
+        }}
+        animate={{
+          x: (mousePos.x - 0.5) * 20,
+          y: (mousePos.y - 0.5) * 20
+        }}
+        transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+      >
+        <div className="absolute w-8 h-8 bg-black rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute w-3 h-3 bg-white rounded-full opacity-80 top-1/4 left-1/4" />
+      </motion.div>
+      
+      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/20 to-transparent animate-pulse" />
+    </div>
+  );
+};
+
+const ParallaxSection = ({ children, offset = 0.5, className = "" }: { children: React.ReactNode; offset?: number; className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [100 * offset, -100 * offset]);
+
+  return (
+    <motion.div ref={ref} style={{ y }} className={className}>
+      {children}
+    </motion.div>
+  );
+};
+
+const PredictiveHoverCard = ({ title, description, icon }: { title: string; description: string; icon: string }) => {
+  const [isPredicted, setIsPredicted] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    let mouseVelocity = { x: 0, y: 0 };
+    let lastMouse = { x: 0, y: 0 };
+    let predictiveTimer: NodeJS.Timeout;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseVelocity.x = e.clientX - lastMouse.x;
+      mouseVelocity.y = e.clientY - lastMouse.y;
+      lastMouse = { x: e.clientX, y: e.clientY };
+
+      const rect = card.getBoundingClientRect();
+      const predictedX = e.clientX + mouseVelocity.x * 10;
+      const predictedY = e.clientY + mouseVelocity.y * 10;
+
+      const isHeadingTowards = 
+        predictedX >= rect.left && predictedX <= rect.right &&
+        predictedY >= rect.top && predictedY <= rect.bottom &&
+        (Math.abs(mouseVelocity.x) > 2 || Math.abs(mouseVelocity.y) > 2);
+
+      if (isHeadingTowards && !isPredicted) {
+        clearTimeout(predictiveTimer);
+        predictiveTimer = setTimeout(() => setIsPredicted(true), 100);
+      } else if (!isHeadingTowards && isPredicted) {
+        clearTimeout(predictiveTimer);
+        predictiveTimer = setTimeout(() => setIsPredicted(false), 200);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(predictiveTimer);
+    };
+  }, [isPredicted]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className="relative p-8 rounded-2xl backdrop-blur-md border border-white/10 overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)'
+      }}
+      animate={{
+        scale: isPredicted ? 1.02 : 1,
+        y: isPredicted ? -5 : 0
+      }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      whileHover={{ scale: 1.05, y: -10 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-[#1F7A72]/20 to-transparent"
+        animate={{ opacity: isPredicted ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      />
+      
+      <div className="relative z-10">
+        <div className="text-4xl mb-4">{icon}</div>
+        <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
+        <p className="text-gray-300 leading-relaxed">{description}</p>
+      </div>
+    </motion.div>
+  );
+};
+
 const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) => {
   const [digits, setDigits] = useState<Array<{
     id: number;
@@ -259,7 +371,7 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
         char: String.fromCharCode(0x30A0 + Math.random() * 96),
         x: Math.random() * 100,
         y: -10,
-        speed: 0.2 + Math.random() * 0.4, // Much slower falling speed
+        speed: 0.2 + Math.random() * 0.4,
         opacity: Math.random(),
         trail: []
       }));
@@ -275,16 +387,15 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
         const newDigit = {
           ...digit,
           y: digit.y > 110 ? -10 : digit.y + digit.speed,
-          char: Math.random() < 0.02 ? String.fromCharCode(0x30A0 + Math.random() * 96) : digit.char, // Less frequent changes
-          opacity: 0.2 + Math.sin(Date.now() * 0.001 + digit.id) * 0.3 // Slow pulsing
+          char: Math.random() < 0.02 ? String.fromCharCode(0x30A0 + Math.random() * 96) : digit.char,
+          opacity: 0.2 + Math.sin(Date.now() * 0.001 + digit.id) * 0.3
         };
         
-        // Add to trail for morphing effect
         newDigit.trail = [...(digit.trail || []), { x: digit.x, y: digit.y, opacity: digit.opacity * 0.3 }].slice(-8);
         
         return newDigit;
       }));
-    }, 150); // Slower update rate
+    }, 150);
 
     return () => clearInterval(interval);
   }, [isOpen]);
@@ -296,14 +407,12 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1.2 }} // Slower fade in
+      transition={{ duration: 1.2 }}
       className="fixed inset-0 z-50 bg-black"
     >
-      {/* Slower Matrix Rain with Trails */}
       <div className="absolute inset-0 overflow-hidden">
         {digits.map(digit => (
           <div key={digit.id}>
-            {/* Trail effect */}
             {digit.trail?.map((trailPoint, idx) => (
               <motion.div
                 key={`${digit.id}-trail-${idx}`}
@@ -311,14 +420,13 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
                 style={{
                   left: `${trailPoint.x}%`,
                   top: `${trailPoint.y}%`,
-                  opacity: trailPoint.opacity * (idx / 8) // Fade trail
+                  opacity: trailPoint.opacity * (idx / 8)
                 }}
               >
                 {digit.char}
               </motion.div>
             ))}
             
-            {/* Main character */}
             <motion.div
               className="absolute text-green-400 font-mono text-lg"
               style={{
@@ -337,13 +445,12 @@ const MatrixPortal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose:
         ))}
       </div>
 
-      {/* Portal Content with slower entrance */}
       <motion.div
         initial={{ scale: 0, rotateZ: 360, rotateX: 90 }}
         animate={{ scale: 1, rotateZ: 0, rotateX: 0 }}
         transition={{ 
           duration: 2.5, 
-          ease: [0.25, 0.46, 0.45, 0.94], // More cinematic easing
+          ease: [0.25, 0.46, 0.45, 0.94],
           delay: 0.8 
         }}
         className="absolute inset-0 flex items-center justify-center perspective-1000"
@@ -404,159 +511,6 @@ const GlitchText = ({ children, className = "" }: { children: React.ReactNode; c
   );
 };
 
-const FloatingIsland = ({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) => {
-  return (
-    <motion.div
-      animate={{
-        y: [-10, 10, -10],
-        rotateX: [-2, 2, -2],
-        rotateY: [-1, 1, -1]
-      }}
-      transition={{
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay
-      }}
-      className="transform-gpu"
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-const DragonEye = () => {
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
-  
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  return (
-    <div className="relative w-32 h-32">
-      {/* Eye socket */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-800 via-gray-900 to-black shadow-2xl" />
-      
-      {/* Iris */}
-      <motion.div
-        className="absolute w-20 h-20 rounded-full top-1/2 left-1/2"
-        style={{
-          background: 'radial-gradient(circle at 30% 30%, #1F7A72, #0F3B38, #000)',
-          transform: 'translate(-50%, -50%)'
-        }}
-        animate={{
-          x: (mousePos.x - 0.5) * 20,
-          y: (mousePos.y - 0.5) * 20
-        }}
-        transition={{ type: 'spring', stiffness: 150, damping: 20 }}
-      >
-        {/* Pupil */}
-        <div className="absolute w-8 h-8 bg-black rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-        
-        {/* Highlight */}
-        <div className="absolute w-3 h-3 bg-white rounded-full opacity-80 top-1/4 left-1/4" />
-      </motion.div>
-      
-      {/* Glow effect */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/20 to-transparent animate-pulse" />
-    </div>
-  );
-};
-
-const ParallaxSection = ({ children, offset = 0.5, className = "" }: { children: React.ReactNode; offset?: number; className?: string }) => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [100 * offset, -100 * offset]);
-
-  return (
-    <motion.div ref={ref} style={{ y }} className={className}>
-      {children}
-    </motion.div>
-  );
-};
-
-const PredictiveHoverCard = ({ title, description, icon }: { title: string; description: string; icon: string }) => {
-  const [isPredicted, setIsPredicted] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    let mouseVelocity = { x: 0, y: 0 };
-    let lastMouse = { x: 0, y: 0 };
-    let predictiveTimer: NodeJS.Timeout;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseVelocity.x = e.clientX - lastMouse.x;
-      mouseVelocity.y = e.clientY - lastMouse.y;
-      lastMouse = { x: e.clientX, y: e.clientY };
-
-      // Predict if mouse is heading towards this element
-      if (!card) return;
-      const rect = card.getBoundingClientRect();
-      const predictedX = e.clientX + mouseVelocity.x * 10;
-      const predictedY = e.clientY + mouseVelocity.y * 10;
-
-      const isHeadingTowards = 
-        predictedX >= rect.left && predictedX <= rect.right &&
-        predictedY >= rect.top && predictedY <= rect.bottom &&
-        Math.abs(mouseVelocity.x) > 2 || Math.abs(mouseVelocity.y) > 2;
-
-      if (isHeadingTowards && !isPredicted) {
-        clearTimeout(predictiveTimer);
-        predictiveTimer = setTimeout(() => setIsPredicted(true), 100);
-      } else if (!isHeadingTowards && isPredicted) {
-        clearTimeout(predictiveTimer);
-        predictiveTimer = setTimeout(() => setIsPredicted(false), 200);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(predictiveTimer);
-    };
-  }, [isPredicted]);
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className="relative p-8 rounded-2xl backdrop-blur-md border border-white/10 overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)'
-      }}
-      animate={{
-        scale: isPredicted ? 1.02 : 1,
-        y: isPredicted ? -5 : 0
-      }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      whileHover={{ scale: 1.05, y: -10 }}
-    >
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-[#1F7A72]/20 to-transparent"
-        animate={{ opacity: isPredicted ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
-      
-      <div className="relative z-10">
-        <div className="text-4xl mb-4">{icon}</div>
-        <h3 className="text-2xl font-bold text-white mb-3">{title}</h3>
-        <p className="text-gray-300 leading-relaxed">{description}</p>
-      </div>
-    </motion.div>
-  );
-};
 
 const FrameEconomics = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -597,7 +551,6 @@ const FrameEconomics = () => {
             animate="visible"
             className="relative z-10"
           >
-            {/* Hero Section */}
             <section className="min-h-screen flex items-center justify-center relative px-6">
               <ParallaxSection offset={0.3} className="text-center max-w-6xl mx-auto">
                 <motion.div variants={itemVariants} className="mb-12">
@@ -615,9 +568,9 @@ const FrameEconomics = () => {
                     textShadow: '0 0 30px rgba(31,122,114,0.3)'
                   }}
                 >
-                  <GlitchText>FRAME</GlitchText>
+                  FRAME
                   <br />
-                  <GlitchText>ECONOMICS</GlitchText>
+                  ECONOMICS
                 </motion.h1>
                 
                 <motion.p
@@ -629,32 +582,25 @@ const FrameEconomics = () => {
                 </motion.p>
                 
                 <motion.div variants={itemVariants} className="flex gap-6 justify-center flex-wrap">
-                  <FloatingIsland delay={0}>
-                    <LiquidButton onClick={() => {}}>
-                      Enter The Matrix
-                    </LiquidButton>
-                  </FloatingIsland>
-                  <FloatingIsland delay={0.2}>
-                    <LiquidButton 
-                      className="bg-transparent border border-white/30"
-                      onClick={() => {}}
-                    >
-                      Experience Demo
-                    </LiquidButton>
-                  </FloatingIsland>
-                  <FloatingIsland delay={0.4}>
-                    <LiquidButton 
-                      className="bg-gradient-to-r from-green-600 to-teal-600"
-                      onClick={() => setShowAbout(true)}
-                    >
-                      About Me
-                    </LiquidButton>
-                  </FloatingIsland>
+                  <LiquidButton onClick={() => {}}>
+                    Enter The Matrix
+                  </LiquidButton>
+                  <LiquidButton 
+                    className="bg-transparent border border-white/30"
+                    onClick={() => {}}
+                  >
+                    Experience Demo
+                  </LiquidButton>
+                  <LiquidButton 
+                    className="bg-gradient-to-r from-red-600/80 to-blue-600/80 border border-cyan-400/50"
+                    onClick={() => setShowAbout(true)}
+                  >
+                    🔍 Discover Daelyte
+                  </LiquidButton>
                 </motion.div>
               </ParallaxSection>
             </section>
 
-            {/* Capabilities Section */}
             <section className="py-32 px-6 relative">
               <ParallaxSection offset={0.2}>
                 <div className="max-w-7xl mx-auto">
@@ -688,7 +634,6 @@ const FrameEconomics = () => {
               </ParallaxSection>
             </section>
 
-            {/* Interactive Demo Section */}
             <section className="py-32 px-6 relative">
               <ParallaxSection offset={-0.1}>
                 <div className="max-w-4xl mx-auto text-center">
@@ -737,7 +682,6 @@ const FrameEconomics = () => {
               </ParallaxSection>
             </section>
 
-            {/* CTA Section */}
             <section className="py-32 px-6 relative">
               <ParallaxSection offset={0.1}>
                 <div className="max-w-4xl mx-auto text-center">
@@ -775,60 +719,301 @@ const FrameEconomics = () => {
         )}
       </AnimatePresence>
 
-      {/* Matrix Portal */}
-      <MatrixPortal isOpen={showAbout} onClose={() => setShowAbout(false)}>
-        <div className="text-center space-y-6">
-          <motion.h2 
-            className="text-4xl font-bold text-green-400"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-          >
-            <GlitchText>About Me</GlitchText>
-          </motion.h2>
-          
-          <motion.div 
-            className="space-y-4 text-left max-w-2xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.6, duration: 0.8 }}
-          >
-            <p className="text-green-300 leading-relaxed">
-              Hello! I'm a passionate developer and researcher exploring the fascinating intersection of artificial intelligence, 
-              economics, and human potential. Through Frame Economics, I aim to create immersive digital experiences that 
-              help people understand complex economic concepts and AI's role in shaping our future.
-            </p>
-            
-            <p className="text-green-300 leading-relaxed">
-              My work focuses on making advanced economic theories accessible through interactive visualizations and 
-              AI-powered insights. I believe that by democratizing access to economic knowledge, we can empower individuals 
-              to make better decisions in an increasingly complex world.
-            </p>
-            
-            <p className="text-green-300 leading-relaxed">
-              When I'm not coding or researching, you'll find me experimenting with new technologies, contributing to 
-              open-source projects, and exploring the latest developments in machine learning and blockchain technology.
-            </p>
-            
-            <motion.div 
-              className="flex justify-center mt-8"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <a 
-                href="https://frame-control.netlify.app" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-3 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-full 
-                         hover:from-green-500 hover:to-teal-500 transition-all duration-300 shadow-lg
-                         border border-green-400/40 hover:shadow-green-400/30"
+      {/* Matrix Portal About Page */}
+      <AnimatePresence>
+        {showAbout && (
+          <MatrixPortal isOpen={showAbout} onClose={() => setShowAbout(false)}>
+            <div className="text-green-400">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
               >
-                <GlitchText>Visit My Project: Frame Control</GlitchText>
-              </a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </MatrixPortal>
+                {/* Terminal Header */}
+                <div className="mb-8 text-center font-mono">
+                  <motion.div
+                    animate={{
+                      opacity: [0, 1, 1, 0, 1]
+                    }}
+                    transition={{ duration: 0.1, repeat: 3, repeatDelay: 0.5 }}
+                    className="text-green-400 text-sm mb-2"
+                  >
+                    INITIATING QUANTUM FINANCIAL SCAN...
+                  </motion.div>
+                  
+                  {/* Barcode Scanner Animation */}
+                  <div className="flex justify-center mb-4">
+                    <div className="bg-black p-4 rounded border border-green-400/30">
+                      <div className="font-mono text-xs text-green-400 mb-2">ENTITY_BARCODE:</div>
+                      <motion.div 
+                        className="flex space-x-1"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 0.5, repeat: Infinity }}
+                      >
+                        {[1,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0,0,1,0,1,1,0,1,0,0,1].map((bar, i) => (
+                          <div 
+                            key={i}
+                            className={`bg-green-400 ${bar ? 'w-1' : 'w-0.5'} h-8`}
+                          />
+                        ))}
+                      </motion.div>
+                      <div className="text-xs text-green-400 mt-1">DAE-LYT3-7749-X1</div>
+                    </div>
+                  </div>
+
+                  {/* Financial Ticker */}
+                  <div className="bg-black/80 border border-yellow-400/50 p-2 rounded mb-4 overflow-hidden">
+                    <motion.div 
+                      className="flex space-x-8 text-xs whitespace-nowrap"
+                      animate={{ x: [300, -800] }}
+                      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    >
+                      <span className="text-green-400">💰 DAECOINS: +847.23% ▲</span>
+                      <span className="text-red-400">📈 NVDA: $892.45 ▼</span>
+                      <span className="text-yellow-400">₿ BTC: $67,840 ▲</span>
+                      <span className="text-blue-400">💎 ETH: $3,240 ▲</span>
+                      <span className="text-purple-400">🚀 TSLA: $245.67 ▼</span>
+                      <span className="text-cyan-400">💡 AMZN: $3,456 ▲</span>
+                      <span className="text-pink-400">🔥 FRAME: $∞ ▲▲▲</span>
+                      <span className="text-green-400">¥ RARE_EARTH: +234% ▲</span>
+                      <span className="text-orange-400">€ NEURAL_NET: $777.77 ▲</span>
+                    </motion.div>
+                  </div>
+                  
+                  <div className="border border-green-400/30 bg-black/70 p-4 rounded-lg mb-6">
+                    <div className="text-xs text-green-600 mb-2 flex items-center justify-between">
+                      <span>PARALLEL_UNIVERSE_DATABASE &gt; ENTITY_SCAN &gt; DAELYTE.exe</span>
+                      <div className="flex space-x-2 text-xs">
+                        <span className="text-yellow-400">💳 AMEX</span>
+                        <span className="text-blue-400">💳 VISA</span>
+                        <span className="text-green-400">💳 MC</span>
+                        <span className="text-purple-400">💰 CRYPTO</span>
+                      </div>
+                    </div>
+                    
+                    <div className="text-green-400 mb-2">
+                      <span className="animate-pulse">█</span> SCANNING DIMENSIONAL SIGNATURES...
+                    </div>
+                    
+                    {/* Struggling Progress Bar */}
+                    <div className="relative">
+                      <div className="w-full bg-gray-800 h-3 rounded overflow-hidden">
+                        <motion.div 
+                          className="h-full rounded transition-colors duration-300"
+                          initial={{ width: "0%", backgroundColor: "#ef4444" }}
+                          animate={{
+                            width: ["0%", "15%", "12%", "28%", "25%", "45%", "40%", "67%", "63%", "82%", "78%", "95%", "92%", "98%", "100%", "120%"],
+                            backgroundColor: [
+                              "#ef4444", "#ef4444", "#ef4444", "#f59e0b", "#f59e0b", "#f59e0b", 
+                              "#eab308", "#eab308", "#84cc16", "#84cc16", "#22c55e", "#22c55e", 
+                              "#10b981", "#00ff00", "#00ff00", "#00ffff"
+                            ]
+                          }}
+                          transition={{ 
+                            duration: 4, 
+                            times: [0, 0.1, 0.12, 0.25, 0.27, 0.4, 0.42, 0.6, 0.62, 0.75, 0.77, 0.85, 0.87, 0.92, 0.95, 1],
+                            delay: 1.5 
+                          }}
+                        />
+                      </div>
+                      
+                      {/* Overflow effect */}
+                      <motion.div
+                        className="absolute top-0 left-0 h-full bg-cyan-400 opacity-0"
+                        animate={{ 
+                          opacity: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+                          width: ["100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "100%", "120%", "150%"]
+                        }}
+                        transition={{ duration: 4, delay: 1.5, times: [0, 0.1, 0.12, 0.25, 0.27, 0.4, 0.42, 0.6, 0.62, 0.75, 0.77, 0.85, 0.87, 0.92, 0.95, 1] }}
+                      />
+                      
+                      {/* Progress Text */}
+                      <motion.div 
+                        className="absolute inset-0 flex items-center justify-center text-xs font-bold"
+                        animate={{
+                          color: ["#ef4444", "#ef4444", "#f59e0b", "#eab308", "#84cc16", "#22c55e", "#10b981", "#00ff00", "#00ffff"]
+                        }}
+                        transition={{ duration: 4, delay: 1.5 }}
+                      >
+                        <motion.span
+                          initial={{ opacity: 1 }}
+                          animate={{ opacity: [1, 1, 1, 1, 1, 1, 1, 0, 1] }}
+                          transition={{ duration: 4, delay: 1.5, times: [0, 0.7, 0.75, 0.8, 0.85, 0.9, 0.92, 0.95, 1] }}
+                        >
+                          BREACH DETECTED
+                        </motion.span>
+                      </motion.div>
+                    </div>
+                    
+                    <motion.div 
+                      className="text-xs mt-2 text-center"
+                      initial={{ opacity: 0 }}
+                      animate={{ 
+                        opacity: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                        color: ["#00ff00", "#00ffff", "#ff00ff", "#00ff00"]
+                      }}
+                      transition={{ 
+                        duration: 4, 
+                        delay: 1.5,
+                        times: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.92, 0.95, 1]
+                      }}
+                    >
+                      FIREWALL BYPASSED | REALITY.EXE COMPROMISED
+                    </motion.div>
+                  </div>
+
+                  <GlitchText>
+                    <h2 className="text-4xl font-bold text-white mb-4">MULTIVERSE ENTITY LOCATED</h2>
+                  </GlitchText>
+                  
+                  <div className="grid grid-cols-3 gap-4 text-sm font-mono">
+                    <div className="bg-black/50 p-3 rounded border border-green-400/20">
+                      <div className="text-cyan-400">UNIVERSE α-7749</div>
+                      <div className="text-white">TECH SALES SPECIALIST</div>
+                      <div className="text-green-400 text-xs">STATUS: ACTIVE</div>
+                      <div className="text-xs text-yellow-400 mt-1">💰 $$ REVENUE_STREAM</div>
+                    </div>
+                    <div className="bg-black/50 p-3 rounded border border-blue-400/20">
+                      <div className="text-blue-400">UNIVERSE β-2184</div>
+                      <div className="text-white">NIGHTLIFE ARCHITECT</div>
+                      <div className="text-blue-400 text-xs">STATUS: SYNCHRONOUS</div>
+                      <div className="text-xs text-purple-400 mt-1">🎭 INFLUENCE_CAPITAL</div>
+                    </div>
+                    <div className="bg-black/50 p-3 rounded border border-purple-400/20">
+                      <div className="text-purple-400">UNIVERSE γ-9021</div>
+                      <div className="text-white">REALITY ENGINEER</div>
+                      <div className="text-purple-400 text-xs">STATUS: TRANSCENDENT</div>
+                      <div className="text-xs text-green-400 mt-1">∞ UNLIMITED_POTENTIAL</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simple Terminal Content */}
+                <div className="space-y-4 max-h-96 overflow-y-auto font-mono text-sm bg-black/90 p-6 rounded-lg border border-green-400/30">
+                  
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 3, duration: 0.8 }}
+                    className="flex items-start space-x-3"
+                  >
+                    <span className="text-cyan-400 flex-shrink-0">[SCAN_001]</span>
+                    <div className="text-green-400">
+                      <div>🔭 CURRENT_OPERATIONS_DETECTED...</div>
+                      <div className="ml-4 mt-2 space-y-1">
+                        <div>&gt; Building_career_in_tech_sales.exe 💰 HIGH_ROI</div>
+                        <div>&gt; Focus_onboarding_post_sales_management.dll ₿ +127%</div>
+                        <div>&gt; Systems_optimization_specialist.mod 💎 PREMIUM</div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 3.5, duration: 0.8 }}
+                    className="flex items-start space-x-3"
+                  >
+                    <span className="text-yellow-400 flex-shrink-0">[SCAN_002]</span>
+                    <div className="text-green-400">
+                      <div>🌱 SKILL_ACQUISITION_PROTOCOLS...</div>
+                      <div className="ml-4 mt-2 space-y-1">
+                        <div>&gt; Cloud_architecture_fundamentals.learning € AZURE_CERTS</div>
+                        <div>&gt; Cybersecurity_protocols.downloading ¥ THREAT_INTEL</div>
+                        <div>&gt; AI_integration_strategies.compiling $ ML_TOKENS</div>
+                        <div>&gt; Technical_client_bridge_mastery.installing £ COMMISSION++</div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 6, duration: 0.8 }}
+                    className="border-t border-cyan-400/30 pt-4"
+                  >
+                    <div className="text-center">
+                      <div className="text-cyan-400 mb-4">🚀 ACTIVE_PROJECT_TRANSMISSION_DETECTED</div>
+                      <motion.div
+                        animate={{ 
+                          boxShadow: [
+                            '0 0 20px rgba(0,255,255,0.3)', 
+                            '0 0 40px rgba(0,255,255,0.6)', 
+                            '0 0 20px rgba(0,255,255,0.3)'
+                          ]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="inline-block p-4 bg-black/90 rounded-lg border border-cyan-400"
+                      >
+                        <div className="text-cyan-300 text-xs mb-2">QUANTUM_LINK_ESTABLISHED:</div>
+                        <a 
+                          href="https://icecoldfroste.com/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-white hover:text-cyan-400 transition-colors font-bold"
+                        >
+                          https://icecoldfroste.com/
+                        </a>
+                        <div className="mt-2 text-xs text-green-400">
+                          STATUS: <span className="animate-pulse text-green-300">DIMENSION_BRIDGE_ACTIVE</span>
+                        </div>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 6.5, duration: 0.8 }}
+                    className="bg-gray-900/50 p-4 rounded border border-gray-600 text-xs"
+                  >
+                    <div className="text-gray-400 mb-2">// ENCRYPTED_WISDOM_PROTOCOLS_DETECTED:</div>
+                    <div className="text-gray-300 space-y-1 italic">
+                      <div>consciousness.anger_detection() → mind.capture_prevent()</div>
+                      <div>lake.disturbed() → ripples.fade() → truth.reflect()</div>
+                      <div>bamboo.flexibility() &gt; mountain.rigid_pride()</div>
+                      <div>sun.walk_toward() → shadows.auto_behind()</div>
+                      <div>human.stumble() + nature.rise() === growth.infinite()</div>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 7, duration: 0.8 }}
+                    className="text-center pt-4 border-t border-green-400/30"
+                  >
+                    <div className="text-green-400 font-mono text-xs mb-2">
+                      CONTACT_PROTOCOLS_ESTABLISHED:
+                    </div>
+                    <div className="space-y-1">
+                      <div>
+                        GITHUB_LINK: <a href="https://github.com/Daelyte" className="text-cyan-400 hover:text-white">github.com/Daelyte</a>
+                      </div>
+                      <div className="text-gray-400 text-xs">
+                        PRONOUNS: he/him | AUTHENTICATION: <span className="text-green-400">✓ MULTIVERSE_VERIFIED</span>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                </div>
+
+                <div className="mt-4 text-center">
+                  <motion.div
+                    animate={{ 
+                      color: ['#00ff00', '#00ffff', '#ff00ff', '#00ff00']
+                    }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className="text-xs font-mono"
+                  >
+                    SCAN_COMPLETE | ENTITY_CLASSIFICATION: REALITY_ARCHITECT | THREAT_LEVEL: INSPIRING
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </MatrixPortal>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
