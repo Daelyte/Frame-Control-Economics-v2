@@ -96,13 +96,13 @@ const PsychProfileCard = ({ metric, value, change, icon }: {
 
 export default function MatrixTrainingPage() {
   const [activeModule, setActiveModule] = useState<number | null>(null);
-  const [userProfile, setUserProfile] = useState({
+  const [userProfile] = useState({
     influence: 78,
     perception: 85,
     persuasion: 72,
-    psychology: 91
+    manipulation: 65,
+    charisma: 81,
   });
-  
   const [terminalOutput, setTerminalOutput] = useState<string[]>([
     '> NEURAL_INTERFACE_LOADED...',
     '> PSYCHOLOGICAL_PROFILE_SCANNED...',
