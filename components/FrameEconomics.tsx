@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Navigation from './Navigation';
 
