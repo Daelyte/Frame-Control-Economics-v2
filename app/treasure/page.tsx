@@ -7,7 +7,6 @@ import Navigation from '../../components/Navigation';
 const TreasureChest = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [shakeTrigger, setShakeTrigger] = useState(0);
-  const [showMessage, setShowMessage] = useState(false);
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const [password, setPassword] = useState('');
   const [showPasswordInput, setShowPasswordInput] = useState(false);
@@ -39,7 +38,6 @@ const TreasureChest = () => {
     if (password.toLowerCase() === 'amy') {
       setIsUnlocked(true);
       setShowPasswordInput(false);
-      setShowMessage(false);
       // Epic unlock animation
       const unlockParticles = Array.from({ length: 50 }, (_, i) => ({
         id: Date.now() + i,
