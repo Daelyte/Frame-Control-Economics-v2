@@ -11,23 +11,31 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Frame Economics Refined Color System
+        'bg-dark': 'var(--color-bg-dark)',
+        'bg-darker': 'var(--color-bg-darker)', 
+        'bg-section': 'var(--color-bg-section)',
+        
         primary: {
-          900: 'oklch(20% 0.08 180)', // Deep Teal
-          800: 'oklch(25% 0.08 180)', // Jade Shadow
-          600: 'oklch(45% 0.12 180)', // Jade
-          400: 'oklch(65% 0.08 180)', // Light Jade
+          DEFAULT: 'var(--color-primary)', // #1c7a72
+          dark: 'var(--color-primary-dark)', // #0f3b38
+          light: 'var(--color-primary-light)', // #2d8a81
+          muted: 'var(--color-primary-muted)', // with transparency
         },
         accent: {
-          500: 'oklch(60% 0.20 15)', // Cherry Red
-          400: 'oklch(70% 0.15 15)', // Light Cherry
+          DEFAULT: 'var(--color-accent)', // #e63946 electric crimson
+          gold: 'var(--color-accent-gold)', // #f4c542 electric gold
+          glow: 'var(--color-accent-glow)', // crimson with transparency
         },
         muted: {
-          400: 'oklch(60% 0.04 160)', // Sage Desat
-          300: 'oklch(70% 0.02 160)', // Light Sage
+          DEFAULT: 'var(--color-muted)', // #7f8a8c stone grey
+          light: 'var(--color-muted-light)', // #a0a8ab
+          dark: 'var(--color-muted-dark)', // #5a6164
         },
         glass: {
-          100: 'rgba(255, 255, 255, 0.06)',
-          200: 'rgba(255, 255, 255, 0.12)',
+          DEFAULT: 'var(--color-glass)',
+          strong: 'var(--color-glass-strong)',
+          tinted: 'var(--color-glass-tinted)',
         },
         // Legacy brand colors for compatibility
         brand: {

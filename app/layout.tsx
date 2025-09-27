@@ -110,7 +110,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-gradient-to-b from-primary-900 via-primary-800 to-primary-900 text-white antialiased">
+      <body className="min-h-screen text-white antialiased" style={{ background: 'linear-gradient(to bottom, var(--color-primary-dark), var(--color-bg-dark), var(--color-primary-dark))' }}>
         <div id="root">
           {children}
         </div>

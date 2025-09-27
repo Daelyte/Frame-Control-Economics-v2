@@ -2,24 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design System Variables */
+/* Design System Variables - Refined for Frame Economics */
 :root {
-  /* Color System - Tactile Neo-Luxury Palette */
-  --primary-900: oklch(20% 0.08 180); /* Deep Teal */
-  --primary-800: oklch(25% 0.08 180); /* Jade Shadow */
-  --primary-600: oklch(45% 0.12 180); /* Jade */
-  --primary-400: oklch(65% 0.08 180); /* Light Jade */
+  /* Base Foundation Colors */
+  --color-bg-dark: #0c0f12; /* Deep charcoal foundation */
+  --color-bg-darker: #080a0d; /* Darker sections */
+  --color-bg-section: #111419; /* Section backgrounds */
   
-  --accent-500: oklch(60% 0.20 15); /* Cherry Red */
-  --accent-400: oklch(70% 0.15 15); /* Light Cherry */
+  /* Primary Jade-Teal System */
+  --color-primary: #1c7a72; /* Core brand jade-teal */
+  --color-primary-dark: #0f3b38; /* Deep jade for depth */
+  --color-primary-light: #2d8a81; /* Lighter jade for hover */
+  --color-primary-muted: #1c7a7240; /* Transparent jade */
   
-  --muted-400: oklch(60% 0.04 160); /* Sage Desat */
-  --muted-300: oklch(70% 0.02 160); /* Light Sage */
+  /* Electric Accent System */
+  --color-accent: #e63946; /* Electric crimson for CTAs */
+  --color-accent-gold: #f4c542; /* Electric gold alternative */
+  --color-accent-glow: #e6394680; /* Crimson with transparency */
   
-  --glass-100: rgba(255, 255, 255, 0.06); /* Frosted Panels */
-  --glass-200: rgba(255, 255, 255, 0.12);
+  /* Neutral System */
+  --color-muted: #7f8a8c; /* Stone grey for secondary text */
+  --color-muted-light: #a0a8ab; /* Lighter stone */
+  --color-muted-dark: #5a6164; /* Darker stone */
   
-  --metallic-gradient: linear-gradient(90deg, #BFC8D4 0%, rgba(255,255,255,0.3) 100%);
+  /* Glass + Frosted Effects */
+  --color-glass: rgba(255, 255, 255, 0.06); /* Subtle glass */
+  --color-glass-strong: rgba(255, 255, 255, 0.12); /* Stronger glass */
+  --color-glass-tinted: rgba(28, 122, 114, 0.1); /* Jade-tinted glass */
+  
+  /* Metallic + Sheen Effects */
+  --metallic-gradient: linear-gradient(90deg, #c1ccd7 0%, rgba(255,255,255,0.4) 50%, #c1ccd7 100%);
+  --metallic-sheen: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  --frame-metal: linear-gradient(135deg, #8a9ba8, #b4c3d0, #8a9ba8);
   
   /* Typography Scale */
   --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
@@ -42,15 +56,19 @@
   --space-2xl: clamp(3rem, 2.4rem + 3vw, 4.5rem);
   --space-3xl: clamp(4rem, 3.2rem + 4vw, 6rem);
   
-  /* Motion System */
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-  --duration-slow: 350ms;
-  --duration-slower: 500ms;
+  /* Refined Motion System */
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 350ms;
+  --duration-slow: 550ms;
+  --duration-reveal: 800ms;
   
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  /* Custom Easing for Frame Economics */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1); /* Gradual reveal entrance */
+  --ease-micro: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Micro interactions */
+  --ease-glint: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Button glints */
+  --ease-float: cubic-bezier(0.4, 0, 0.2, 1); /* Floating elements */
+  --ease-slide: cubic-bezier(0.16, 1, 0.3, 1); /* Sliding panels */
   
   /* Z-Index Scale */
   --z-dropdown: 1000;
@@ -119,22 +137,32 @@ body {
 .text-fluid-5xl { font-size: var(--font-size-5xl); }
 .text-fluid-6xl { font-size: var(--font-size-6xl); }
 
-/* Glass Morphism Utilities */
+/* Frame Economics Signature Glass System */
 .glass {
-  background: var(--glass-100);
+  background: var(--color-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-glass-strong);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .glass-strong {
-  background: var(--glass-200);
+  background: var(--color-glass-strong);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Metallic Gradient Utilities */
+.glass-tinted {
+  background: var(--color-glass-tinted);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-primary-muted);
+  box-shadow: 0 8px 32px var(--color-primary-dark);
+}
+
+/* Frame Shard + Metallic Effects */
 .metallic-bg {
   background: var(--metallic-gradient);
 }
@@ -144,6 +172,56 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.frame-shard {
+  background: var(--frame-metal);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.sheen-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.sheen-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--metallic-sheen);
+  transition: left var(--duration-slow) var(--ease-slide);
+}
+
+.sheen-effect:hover::before {
+  left: 100%;
+}
+
+/* Electric Accent Effects */
+.electric-glow {
+  box-shadow: 
+    0 0 20px var(--color-accent-glow),
+    0 0 40px var(--color-accent-glow),
+    0 0 60px var(--color-accent-glow);
+}
+
+.electric-text {
+  color: var(--color-accent);
+  text-shadow: 0 0 10px var(--color-accent-glow);
+}
+
+/* Node Network Background Pattern */
+.node-network-bg {
+  background-image: 
+    radial-gradient(circle at 25% 25%, var(--color-primary-muted) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--color-primary-muted) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;
 }
 
 /* Motion Utilities */
@@ -156,7 +234,8 @@ body {
 
 /* Focus Styles */
 .focus-ring {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
+  --tw-ring-offset-color: var(--color-primary-dark);
 }
 
 /* Custom Scrollbar */
@@ -179,7 +258,7 @@ body {
 
 /* Skip Link for Accessibility */
 .skip-link {
-  @apply absolute left-4 top-4 z-50 -translate-y-16 transform bg-accent-500 px-4 py-2 text-white transition-transform focus:translate-y-0;
+  @apply absolute left-4 top-4 z-50 -translate-y-16 transform bg-accent px-4 py-2 text-white transition-transform focus:translate-y-0;
 }
 
 /* Loading Animation */
@@ -206,6 +285,15 @@ body {
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
 /* Utility Classes */
 .animate-spin {
   animation: spin 1s linear infinite;
@@ -217,6 +305,10 @@ body {
 
 .animate-bounce {
   animation: bounce 1s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
 
 /* Container Queries */

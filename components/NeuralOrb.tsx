@@ -12,7 +12,11 @@ interface NeuralOrbProps {
 }
 
 // Neural Network Orb with pulsing energy
-export default function NeuralOrb({ position = [0, 0, 0], scale = 1, deviceTier = 'medium' }: NeuralOrbProps) {
+export default function NeuralOrb({ 
+  position = [0, 0, 0], 
+  scale = 1, 
+  deviceTier = 'medium'
+}: NeuralOrbProps) {
   const orbRef = useRef<THREE.Mesh>(null)
   const networkRef = useRef<THREE.Group>(null)
   const particlesRef = useRef<THREE.Points>(null)
