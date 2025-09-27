@@ -1,0 +1,41 @@
+<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="dragonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1F7A72;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#45A097;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Dragon body -->
+  <ellipse cx="100" cy="60" rx="60" ry="25" fill="url(#dragonGradient)" filter="url(#glow)"/>
+  
+  <!-- Dragon head -->
+  <ellipse cx="160" cy="50" rx="30" ry="20" fill="url(#dragonGradient)" filter="url(#glow)"/>
+  
+  <!-- Dragon eye -->
+  <circle cx="170" cy="45" r="3" fill="#FF3B30"/>
+  
+  <!-- Dragon horns -->
+  <polygon points="175,35 180,25 185,35" fill="#9BB0A7"/>
+  <polygon points="165,35 170,25 175,35" fill="#9BB0A7"/>
+  
+  <!-- Wing suggestion -->
+  <path d="M 80 40 Q 60 20 40 30 Q 50 50 80 55 Z" fill="url(#dragonGradient)" opacity="0.7"/>
+  
+  <style>
+    svg {
+      animation: dragonFloat 3s ease-in-out infinite alternate;
+    }
+    @keyframes dragonFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-10px); }
+    }
+  </style>
+</svg>
