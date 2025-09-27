@@ -1,10 +1,9 @@
-// components/NeuralOrb.tsx - Transformed into Magical Snowflake with Dragon Balls
+// components/NeuralOrb.tsx - Optimized Snowflake with Fiery Skulls
 'use client'
 import React, { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Float, Text } from '@react-three/drei'
+import { Float } from '@react-three/drei'
 import * as THREE from 'three'
-import IcySnowflake from './IcySnowflake'
 
 interface NeuralOrbProps {
   position?: [number, number, number];
@@ -12,7 +11,7 @@ interface NeuralOrbProps {
   deviceTier?: 'low' | 'medium' | 'high';
 }
 
-// Magical Snowflake with Dragon Ball Network
+// Optimized Snowflake with Fiery Skulls Network
 export default function NeuralOrb({ 
   position = [0, 0, 0], 
   scale = 1, 
@@ -21,48 +20,45 @@ export default function NeuralOrb({
   const networkRef = useRef<THREE.Group>(null)
   const particlesRef = useRef<THREE.Points>(null)
   const connectionsRef = useRef<THREE.Group>(null)
+  const snowflakeRef = useRef<THREE.Group>(null)
 
-
-  // Generate dragon ball positions (7 dragon balls arranged in a sphere)
-  const dragonBalls = useMemo(() => {
-    const balls: { position: THREE.Vector3; stars: number }[] = []
-    const ballCount = 7 // Classic 7 dragon balls
+  // Generate fiery skull positions (reduced to 5 for better performance)
+  const fieryskulls = useMemo(() => {
+    const skulls: { position: THREE.Vector3; id: number }[] = []
+    const skullCount = 5 // Reduced for performance
     
-    for (let i = 0; i < ballCount; i++) {
-      const phi = Math.acos(-1 + (2 * i) / ballCount)
-      const theta = Math.sqrt(ballCount * Math.PI) * phi
+    for (let i = 0; i < skullCount; i++) {
+      const angle = (i / skullCount) * Math.PI * 2
+      const radius = deviceTier === 'high' ? 3.0 : deviceTier === 'medium' ? 2.5 : 2.2
+      const height = (Math.random() - 0.5) * 1.5 // Random height variation
       
-      const radius = deviceTier === 'high' ? 2.5 : deviceTier === 'medium' ? 2.2 : 2.0
-      const x = Math.cos(theta) * Math.sin(phi) * radius
-      const y = Math.cos(phi) * radius
-      const z = Math.sin(theta) * Math.sin(phi) * radius
-      
-      balls.push({
-        position: new THREE.Vector3(x, y, z),
-        stars: i + 1 // 1-7 stars for each dragon ball
+      skulls.push({
+        position: new THREE.Vector3(
+          Math.cos(angle) * radius,
+          height,
+          Math.sin(angle) * radius
+        ),
+        id: i
       })
     }
-    return balls
+    return skulls
   }, [deviceTier])
 
-  // Generate magical dancing connections between dragon balls
+  // Generate simple connections between skulls (only to center)
   const connections = useMemo(() => {
     const lines: { start: THREE.Vector3; end: THREE.Vector3; id: number }[] = []
+    const center = new THREE.Vector3(0, 0, 0)
     
-    dragonBalls.forEach((ball1, i) => {
-      dragonBalls.forEach((ball2, j) => {
-        if (i < j && ball1.position.distanceTo(ball2.position) < 4.0) {
-          lines.push({
-            start: ball1.position,
-            end: ball2.position,
-            id: i * 10 + j // Unique ID for each connection
-          })
-        }
+    fieryskulls.forEach((skull, i) => {
+      lines.push({
+        start: center,
+        end: skull.position,
+        id: i
       })
     })
     
     return lines
-  }, [dragonBalls])
+  }, [fieryskulls])
 
   // Particle system for energy flow
   const particles = useMemo(() => {
@@ -85,50 +81,27 @@ export default function NeuralOrb({
   useFrame((state) => {
     const time = state.clock.elapsedTime
 
+    // Simple snowflake rotation
+    if (snowflakeRef.current) {
+      snowflakeRef.current.rotation.z = time * 0.2
+    }
+
+    // Simple skull network rotation
     if (networkRef.current) {
-      // Dragon balls orbital dance
-      networkRef.current.rotation.y = time * 0.15
-      networkRef.current.rotation.x = Math.sin(time * 0.7) * 0.2
+      networkRef.current.rotation.y = time * 0.1
     }
 
-    if (connectionsRef.current) {
-      // Dancing connection sticks - unique wave patterns
-      connectionsRef.current.children.forEach((connection, index) => {
-        if (connection instanceof THREE.Mesh) {
-          // Each stick dances differently based on its index
-          const phase = index * 0.5
-          const waveSpeed = 2 + (index % 3) * 0.5
-          const amplitude = 0.1 + (index % 4) * 0.05
-          
-          // Sine wave dance
-          connection.rotation.z = Math.sin(time * waveSpeed + phase) * amplitude
-          connection.rotation.x = Math.cos(time * (waveSpeed * 0.7) + phase) * amplitude
-          
-          // Scale pulsing
-          const scalePulse = Math.sin(time * 3 + phase) * 0.2 + 1
-          connection.scale.y = scalePulse
-          
-          // Color shifting through material
-          if (connection.material instanceof THREE.MeshStandardMaterial) {
-            const hue = (time * 0.5 + index * 0.3) % 1
-            connection.material.color.setHSL(0.15 + hue * 0.3, 0.8, 0.5) // Golden to orange shifts
-            connection.material.emissiveIntensity = Math.sin(time * 2 + phase) * 0.1 + 0.3
-          }
-        }
-      })
-    }
-
+    // Simple fire particles animation
     if (particlesRef.current) {
-      // Magical ice particles swirling around
       const positions = particlesRef.current.geometry.attributes.position
       
       for (let i = 0; i < positions.count; i++) {
-        const originalRadius = 1 + Math.random() * 2
-        const angle = time * 0.3 + i * 0.1
-        const height = Math.sin(time + i * 0.5) * 0.5
+        const angle = time * 0.5 + i * 0.2
+        const radius = 0.3 + Math.sin(time * 2 + i) * 0.2
+        const height = Math.sin(time * 1.5 + i * 0.3) * 1.5
         
-        positions.setX(i, Math.cos(angle) * originalRadius)
-        positions.setZ(i, Math.sin(angle) * originalRadius)
+        positions.setX(i, Math.cos(angle) * radius)
+        positions.setZ(i, Math.sin(angle) * radius)
         positions.setY(i, height)
       }
       
@@ -137,63 +110,85 @@ export default function NeuralOrb({
   })
 
   return (
-    <Float speed={1.5} rotationIntensity={0.15} floatIntensity={0.3}>
+    <Float speed={1.0} rotationIntensity={0.1} floatIntensity={0.2}>
       <group position={position} scale={scale}>
-        {/* Central Blender-Generated Icy Blue Snowflake */}
-        <IcySnowflake 
-          position={[0, 0, 0]} 
-          scale={scale} 
-          deviceTier={deviceTier}
-        />
+        {/* Simple Icy Snowflake Center */}
+        <group ref={snowflakeRef}>
+          {Array.from({ length: 6 }, (_, i) => {
+            const angle = (i / 6) * Math.PI * 2
+            return (
+              <mesh
+                key={`snowflake-${i}`}
+                position={[Math.cos(angle) * 0.4, Math.sin(angle) * 0.4, 0]}
+                rotation={[0, 0, angle]}
+              >
+                <cylinderGeometry args={[0.015, 0.015, 0.8, 6]} />
+                <meshStandardMaterial
+                  color="#87CEEB"
+                  emissive="#4169E1"
+                  emissiveIntensity={0.2}
+                  transparent
+                  opacity={0.8}
+                />
+              </mesh>
+            )
+          })}
+        </group>
 
-        {/* Dragon Ball Network */}
+        {/* Fiery Skull Network */}
         <group ref={networkRef}>
-          {/* Dragon Balls with Stars */}
-          {dragonBalls.map((ball, index) => (
-            <group key={`dragonball-${index}`} position={[ball.position.x, ball.position.y, ball.position.z]}>
-              {/* Main Dragon Ball */}
+          {fieryskulls.map((skull) => (
+            <group key={`skull-${skull.id}`} position={[skull.position.x, skull.position.y, skull.position.z]}>
+              {/* Skull Shape - simplified */}
               <mesh>
-                <sphereGeometry args={[0.15, 16, 16]} />
-                <meshPhysicalMaterial
-                  color="#FF8C00" // Dark orange
-                  emissive="#FFD700" // Gold
-                  emissiveIntensity={0.3}
-                  metalness={0.2}
-                  roughness={0.3}
-                  clearcoat={1}
-                  clearcoatRoughness={0.1}
+                <sphereGeometry args={[0.12, 8, 8]} />
+                <meshStandardMaterial
+                  color="#8B0000" // Dark red
+                  emissive="#FF4500" // Orange red
+                  emissiveIntensity={0.5}
                 />
               </mesh>
               
-              {/* Star pattern on each ball */}
-              {Array.from({ length: ball.stars }, (_, starIndex) => (
-                <Text
-                  key={`star-${starIndex}`}
-                  position={[
-                    Math.cos(starIndex * (2 * Math.PI / ball.stars)) * 0.12,
-                    Math.sin(starIndex * (2 * Math.PI / ball.stars)) * 0.12,
-                    0.16
-                  ]}
-                  fontSize={0.08}
-                  color="#DC143C" // Crimson red
-                  anchorX="center"
-                  anchorY="middle"
-                >
-                  ★
-                </Text>
-              ))}
+              {/* Eye sockets */}
+              <mesh position={[-0.04, 0.02, 0.1]}>
+                <sphereGeometry args={[0.02, 6, 6]} />
+                <meshStandardMaterial color="#000000" />
+              </mesh>
+              <mesh position={[0.04, 0.02, 0.1]}>
+                <sphereGeometry args={[0.02, 6, 6]} />
+                <meshStandardMaterial color="#000000" />
+              </mesh>
+              
+              {/* Fire particles around skull */}
+              <points>
+                <bufferGeometry>
+                  <bufferAttribute
+                    attach="attributes-position"
+                    args={[new Float32Array([
+                      0.1, 0.1, 0, -0.1, 0.1, 0, 0, 0.15, 0.05,
+                      0.08, -0.05, 0, -0.08, -0.05, 0, 0.05, 0.12, -0.03
+                    ]), 3]}
+                  />
+                </bufferGeometry>
+                <pointsMaterial
+                  color="#FF6347"
+                  size={0.03}
+                  transparent
+                  opacity={0.8}
+                  blending={THREE.AdditiveBlending}
+                />
+              </points>
             </group>
           ))}
         </group>
 
-        {/* Dancing Magic Connections */}
+        {/* Simple Connections */}
         <group ref={connectionsRef}>
           {connections.map((connection) => {
             const direction = new THREE.Vector3().subVectors(connection.end, connection.start)
             const length = direction.length()
             const midpoint = new THREE.Vector3().addVectors(connection.start, connection.end).multiplyScalar(0.5)
             
-            // Calculate rotation to align cylinder with direction
             const quaternion = new THREE.Quaternion()
             quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize())
             
@@ -203,20 +198,18 @@ export default function NeuralOrb({
                 position={[midpoint.x, midpoint.y, midpoint.z]}
                 quaternion={quaternion}
               >
-                <cylinderGeometry args={[0.02, 0.02, length, 8]} />
+                <cylinderGeometry args={[0.008, 0.008, length, 6]} />
                 <meshStandardMaterial
-                  color="#FFD700" // Gold
-                  emissive="#FF8C00" // Dark orange
-                  emissiveIntensity={0.4}
-                  metalness={0.7}
-                  roughness={0.3}
+                  color="#696969"
+                  emissive="#2F2F2F"
+                  emissiveIntensity={0.2}
                 />
               </mesh>
             )
           })}
         </group>
 
-        {/* Magical Ice Particles */}
+        {/* Fire Particles */}
         <points ref={particlesRef}>
           <bufferGeometry>
             <bufferAttribute
@@ -225,10 +218,10 @@ export default function NeuralOrb({
             />
           </bufferGeometry>
           <pointsMaterial
-            color="#B0E0E6" // Powder blue
-            size={0.08}
+            color="#FF6347" // Fire orange
+            size={0.05}
             transparent
-            opacity={0.7}
+            opacity={0.6}
             blending={THREE.AdditiveBlending}
           />
         </points>
