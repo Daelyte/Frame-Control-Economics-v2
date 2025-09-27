@@ -1,9 +1,457 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import Navigation from './Navigation';
 
-const NeuralBackground = () => {
+const EarthGodTrail = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [vines, setVines] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    size: number;
+    opacity: number;
+    life: number;
+    angle: number;
+    growth: number;
+  }>>([]);
+  const [earthParticles, setEarthParticles] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    size: number;
+    opacity: number;
+    life: number;
+    type: 'stone' | 'leaf' | 'ember';
+    vx: number;
+    vy: number;
+  }>>([]);
+  const [mouseTrail, setMouseTrail] = useState<Array<{ x: number; y: number; opacity: number }>>([]);
+  const particleIdRef = useRef(0);
+  const lastMouseRef = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<number>();
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const newPos = { x: e.clientX, y: e.clientY };
+      setMousePos(newPos);
+      
+      // Update mouse trail for earthy energy effect
+      setMouseTrail(prev => [
+        { x: newPos.x, y: newPos.y, opacity: 1 },
+        ...prev.slice(0, 12)
+      ].map((point, i) => ({ ...point, opacity: 1 - (i * 0.08) })));
+      
+      // Calculate mouse velocity for vine and particle generation
+      const dx = newPos.x - lastMouseRef.current.x;
+      const dy = newPos.y - lastMouseRef.current.y;
+      const speed = Math.sqrt(dx * dx + dy * dy);
+      
+      // Generate vines based on movement
+      if (speed > 2) {
+        const vineCount = Math.min(Math.floor(speed / 10), 2);
+        const newVines = Array.from({ length: vineCount }, (_, i) => ({
+          id: particleIdRef.current++,
+          x: newPos.x + (Math.random() - 0.5) * 30,
+          y: newPos.y + (Math.random() - 0.5) * 30,
+          size: 8 + Math.random() * 20,
+          opacity: 0.8 + Math.random() * 0.2,
+          life: 1,
+          angle: Math.random() * 360,
+          growth: 0
+        }));
+        
+        setVines(prev => [...prev, ...newVines]);
+      }
+      
+      // Generate earth particles
+      if (speed > 4) {
+        const particleCount = Math.min(Math.floor(speed / 15), 3);
+        const newParticles = Array.from({ length: particleCount }, (_, i) => ({
+          id: particleIdRef.current++,
+          x: newPos.x + (Math.random() - 0.5) * 40,
+          y: newPos.y + (Math.random() - 0.5) * 40,
+          size: 3 + Math.random() * 8,
+          opacity: 0.7 + Math.random() * 0.3,
+          life: 1,
+          type: Math.random() < 0.4 ? 'stone' : Math.random() < 0.7 ? 'leaf' : 'ember' as 'stone' | 'leaf' | 'ember',
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3 - 1
+        }));
+        
+        setEarthParticles(prev => [...prev, ...newParticles]);
+      }
+      
+      lastMouseRef.current = newPos;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Animate vines and particles
+  useEffect(() => {
+    const animate = () => {
+      setVines(prev => 
+        prev
+          .map(vine => ({
+            ...vine,
+            life: vine.life - 0.03,
+            opacity: vine.opacity * 0.95,
+            growth: vine.growth + 0.1,
+            size: vine.size * 1.02
+          }))
+          .filter(vine => vine.life > 0 && vine.opacity > 0.05)
+      );
+      
+      setEarthParticles(prev => 
+        prev
+          .map(particle => ({
+            ...particle,
+            x: particle.x + particle.vx,
+            y: particle.y + particle.vy,
+            life: particle.life - 0.02,
+            opacity: particle.opacity * 0.96,
+            vy: particle.vy + 0.02 // Gravity
+          }))
+          .filter(particle => particle.life > 0 && particle.opacity > 0.02)
+      );
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-10">
+      {/* Earthy energy trail */}
+      {mouseTrail.map((point, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: point.x - 8,
+            top: point.y - 8,
+            width: 16,
+            height: 16,
+            background: `radial-gradient(circle, rgba(101, 67, 33, ${point.opacity * 0.8}) 0%, rgba(139, 69, 19, ${point.opacity * 0.6}) 50%, transparent 100%)`,
+            filter: `blur(${1 + i * 0.3}px)`,
+            opacity: point.opacity,
+            boxShadow: `0 0 ${10 + i * 3}px rgba(101, 67, 33, ${point.opacity * 0.4})`
+          }}
+        />
+      ))}
+      
+      {/* Growing vines */}
+      {vines.map(vine => (
+        <motion.div
+          key={vine.id}
+          className="absolute"
+          style={{
+            left: vine.x - vine.size / 2,
+            top: vine.y - vine.size / 2,
+            width: vine.size,
+            height: vine.size * (1 + vine.growth),
+            background: `linear-gradient(${vine.angle}deg, transparent 0%, rgba(34, 139, 34, ${vine.opacity}) 30%, rgba(107, 142, 35, ${vine.opacity * 0.8}) 70%, transparent 100%)`,
+            filter: `blur(1px) drop-shadow(0 0 ${3}px rgba(34, 139, 34, ${vine.opacity * 0.5}))`,
+            transformOrigin: 'center bottom',
+            transform: `rotate(${vine.angle}deg)`,
+            opacity: vine.opacity
+          }}
+          animate={{
+            opacity: [vine.opacity, 0]
+          }}
+          transition={{
+            duration: vine.life * 2,
+            ease: 'easeOut'
+          }}
+        />
+      ))}
+      
+      {/* Earth particles */}
+      {earthParticles.map(particle => {
+        const getParticleStyle = () => {
+          switch (particle.type) {
+            case 'stone':
+              return {
+                background: `radial-gradient(circle, rgba(105, 105, 105, ${particle.opacity}) 0%, rgba(169, 169, 169, ${particle.opacity * 0.8}) 50%, transparent 100%)`,
+                borderRadius: '2px'
+              };
+            case 'leaf':
+              return {
+                background: `radial-gradient(ellipse, rgba(34, 139, 34, ${particle.opacity}) 0%, rgba(107, 142, 35, ${particle.opacity * 0.7}) 60%, transparent 100%)`,
+                borderRadius: '50% 0 50% 0'
+              };
+            case 'ember':
+              return {
+                background: `radial-gradient(circle, rgba(255, 69, 0, ${particle.opacity}) 0%, rgba(255, 140, 0, ${particle.opacity * 0.8}) 50%, transparent 100%)`,
+                borderRadius: '50%',
+                boxShadow: `0 0 ${particle.size}px rgba(255, 69, 0, ${particle.opacity * 0.6})`
+              };
+          }
+        };
+        
+        return (
+          <motion.div
+            key={particle.id}
+            className="absolute"
+            style={{
+              left: particle.x - particle.size / 2,
+              top: particle.y - particle.size / 2,
+              width: particle.size,
+              height: particle.size,
+              ...getParticleStyle(),
+              opacity: particle.opacity
+            }}
+            animate={{
+              opacity: [particle.opacity, 0]
+            }}
+            transition={{
+              duration: particle.life,
+              ease: 'easeOut'
+            }}
+          />
+        );
+      })}
+      
+      {/* Mystical earth ripple at cursor */}
+      <motion.div
+        className="absolute w-12 h-12 rounded-full border-2"
+        style={{
+          left: mousePos.x - 24,
+          top: mousePos.y - 24,
+          pointerEvents: 'none',
+          borderColor: 'rgba(107, 142, 35, 0.6)',
+          boxShadow: '0 0 15px rgba(107, 142, 35, 0.4)'
+        }}
+        animate={{
+          scale: [1, 2.2, 1],
+          opacity: [0.7, 0, 0.7]
+        }}
+        transition={{
+          duration: 1.8,
+          repeat: Infinity,
+          ease: 'easeOut'
+        }}
+      />
+      
+      {/* Secondary nature ripple */}
+      <motion.div
+        className="absolute w-20 h-20 rounded-full border"
+        style={{
+          left: mousePos.x - 40,
+          top: mousePos.y - 40,
+          pointerEvents: 'none',
+          borderColor: 'rgba(34, 139, 34, 0.4)',
+          background: 'radial-gradient(circle, transparent 60%, rgba(34, 139, 34, 0.1) 80%, transparent 100%)',
+          boxShadow: 'inset 0 0 20px rgba(34, 139, 34, 0.3), 0 0 30px rgba(34, 139, 34, 0.2)'
+        }}
+        animate={{
+          scale: [1, 3.5, 1],
+          opacity: [0.5, 0, 0.5]
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: 'easeOut',
+          delay: 0.4
+        }}
+      />
+    </div>
+  );
+};
+
+const MatrixLightning = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [lightningBolts, setLightningBolts] = useState<Array<{
+    id: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    opacity: number;
+    life: number;
+    angle: number;
+    intensity: number;
+  }>>([]);
+  const [mouseTrail, setMouseTrail] = useState<Array<{ x: number; y: number; opacity: number }>>([]);
+  const particleIdRef = useRef(0);
+  const lastMouseRef = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<number>();
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const newPos = { x: e.clientX, y: e.clientY };
+      setMousePos(newPos);
+      
+      // Update mouse trail for dark energy effect
+      setMouseTrail(prev => [
+        { x: newPos.x, y: newPos.y, opacity: 1 },
+        ...prev.slice(0, 8)
+      ].map((point, i) => ({ ...point, opacity: 1 - (i * 0.12) })));
+      
+      // Calculate mouse velocity for lightning generation
+      const dx = newPos.x - lastMouseRef.current.x;
+      const dy = newPos.y - lastMouseRef.current.y;
+      const speed = Math.sqrt(dx * dx + dy * dy);
+      
+      // Generate lightning bolts based on movement speed
+      if (speed > 3) {
+        const boltCount = Math.min(Math.floor(speed / 8), 2);
+        const newBolts = Array.from({ length: boltCount }, (_, i) => ({
+          id: particleIdRef.current++,
+          x: newPos.x + (Math.random() - 0.5) * 40,
+          y: newPos.y + (Math.random() - 0.5) * 40,
+          width: 2 + Math.random() * 4,
+          height: 20 + Math.random() * 60,
+          opacity: 0.8 + Math.random() * 0.2,
+          life: 1,
+          angle: Math.random() * 360,
+          intensity: 0.5 + Math.random() * 0.5
+        }));
+        
+        setLightningBolts(prev => [...prev, ...newBolts]);
+      }
+      
+      lastMouseRef.current = newPos;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Animate lightning bolts
+  useEffect(() => {
+    const animate = () => {
+      setLightningBolts(prev => 
+        prev
+          .map(bolt => ({
+            ...bolt,
+            life: bolt.life - 0.05,
+            opacity: bolt.opacity * 0.92,
+            intensity: bolt.intensity * 0.95,
+            height: bolt.height * 1.05, // Grow and fade
+            angle: bolt.angle + (Math.random() - 0.5) * 10 // Slight wobble
+          }))
+          .filter(bolt => bolt.life > 0 && bolt.opacity > 0.02)
+      );
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-10">
+      {/* Dark energy trail */}
+      {mouseTrail.map((point, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            left: point.x - 6,
+            top: point.y - 6,
+            width: 12,
+            height: 12,
+            background: `radial-gradient(circle, rgba(0, 0, 0, ${point.opacity * 0.8}) 0%, rgba(20, 20, 20, ${point.opacity * 0.6}) 50%, transparent 100%)`,
+            filter: `blur(${1 + i * 0.5}px)`,
+            opacity: point.opacity,
+            boxShadow: `0 0 ${8 + i * 2}px rgba(0, 0, 0, ${point.opacity * 0.5})`
+          }}
+        />
+      ))}
+      
+      {/* Lightning bolts */}
+      {lightningBolts.map(bolt => (
+        <motion.div
+          key={bolt.id}
+          className="absolute"
+          style={{
+            left: bolt.x - bolt.width / 2,
+            top: bolt.y - bolt.height / 2,
+            width: bolt.width,
+            height: bolt.height,
+            background: `linear-gradient(${bolt.angle}deg, transparent 0%, rgba(0, 255, 255, ${bolt.intensity * bolt.opacity}) 20%, rgba(255, 255, 255, ${bolt.opacity}) 50%, rgba(0, 255, 255, ${bolt.intensity * bolt.opacity}) 80%, transparent 100%)`,
+            filter: `blur(0.5px) drop-shadow(0 0 ${4 * bolt.intensity}px rgba(0, 255, 255, ${bolt.opacity}))`,
+            transform: `rotate(${bolt.angle}deg)`,
+            opacity: bolt.opacity
+          }}
+          animate={{
+            opacity: [bolt.opacity, 0]
+          }}
+          transition={{
+            duration: bolt.life,
+            ease: 'easeOut'
+          }}
+        />
+      ))}
+      
+      {/* Dark energy ripple at cursor */}
+      <motion.div
+        className="absolute w-8 h-8 rounded-full border-2"
+        style={{
+          left: mousePos.x - 16,
+          top: mousePos.y - 16,
+          pointerEvents: 'none',
+          borderColor: 'rgba(0, 255, 255, 0.6)',
+          boxShadow: '0 0 10px rgba(0, 255, 255, 0.4)'
+        }}
+        animate={{
+          scale: [1, 2.5, 1],
+          opacity: [0.8, 0, 0.8]
+        }}
+        transition={{
+          duration: 1.2,
+          repeat: Infinity,
+          ease: 'easeOut'
+        }}
+      />
+      
+      {/* Secondary dark ripple */}
+      <motion.div
+        className="absolute w-16 h-16 rounded-full border"
+        style={{
+          left: mousePos.x - 32,
+          top: mousePos.y - 32,
+          pointerEvents: 'none',
+          borderColor: 'rgba(0, 0, 0, 0.8)',
+          boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.3)'
+        }}
+        animate={{
+          scale: [1, 4, 1],
+          opacity: [0.6, 0, 0.6]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: 'easeOut',
+          delay: 0.3
+        }}
+      />
+    </div>
+  );
+};
+
+const NeuralBackground = React.memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const animationIdRef = useRef<number>();
+  const lastFrameTimeRef = useRef(0);
+  const TARGET_FPS = 30; // Reduced from 60fps for better performance
+  const FRAME_INTERVAL = 1000 / TARGET_FPS;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -19,7 +467,8 @@ const NeuralBackground = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const nodes = Array.from({ length: 30 }, () => ({
+    // Reduced node count for better performance
+    const nodes = Array.from({ length: 15 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       vx: (Math.random() - 0.5) * 0.08,
@@ -82,9 +531,16 @@ const NeuralBackground = () => {
       ctx.fill();
     };
 
-    const animate = () => {
+    const animate = (currentTime: number) => {
+      // Frame throttling for consistent performance
+      if (currentTime - lastFrameTimeRef.current < FRAME_INTERVAL) {
+        animationIdRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTimeRef.current = currentTime;
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.005;
+      time += 0.01; // Slightly faster increment to compensate for lower FPS
       
       nodes.forEach((node, i) => {
         node.morphTimer += node.morphSpeed;
@@ -135,9 +591,10 @@ const NeuralBackground = () => {
           node.baseVy *= -0.8;
         }
         
+        // Optimized connection drawing with reduced distance
         nodes.slice(i + 1).forEach(otherNode => {
           const dist = Math.sqrt((node.x - otherNode.x) ** 2 + (node.y - otherNode.y) ** 2);
-          if (dist < 150) {
+          if (dist < 100) { // Reduced from 150 to 100 for fewer calculations
             const opacity = (1 - (dist / 150)) * 0.2;
             const connectionPulse = Math.sin(time * 0.3 + dist * 0.01) * 0.1 + 0.9;
             
@@ -171,34 +628,260 @@ const NeuralBackground = () => {
         drawShape(ctx, node.x, node.y, node.size, node.shape, node.morphProgress, node.nextShape);
       });
       
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
     };
-    animate();
+    animationIdRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
     };
   }, [mousePos]);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+  const throttledMouseUpdate = useCallback((e: MouseEvent) => {
+    // Throttle mouse updates for better performance
+    setMousePos({ x: e.clientX, y: e.clientY });
   }, []);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const handleMouseMove = (e: MouseEvent) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => throttledMouseUpdate(e), 16); // ~60fps throttle
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeoutId);
+    };
+  }, [throttledMouseUpdate]);
 
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ background: 'radial-gradient(ellipse at center, #0f3b38 0%, #083230 50%, #041e1c 100%)' }}
+      style={{ 
+        background: 'radial-gradient(ellipse at center, #0f3b38 0%, #083230 50%, #041e1c 100%)',
+        willChange: 'transform' // Optimize for hardware acceleration
+      }}
     />
   );
-};
+});
 
-const LiquidButton = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
+const LiquidButton = ({ children, className = "", onClick, isSpecial = false }: { children: React.ReactNode; className?: string; onClick?: () => void; isSpecial?: boolean }) => {
   const [isHovered, setIsHovered] = useState(false);
+  
+  if (isSpecial) {
+    return (
+      <motion.button
+        className={`relative overflow-hidden px-8 py-4 text-white font-semibold tracking-wide ${className}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={onClick}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        style={{
+          background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #ff6b35 50%, #f7931e 75%, #ffdd44 100%)',
+          borderRadius: '25px', // More skateboard-like rounded corners
+          border: '3px solid #333',
+          backgroundClip: 'padding-box',
+          boxShadow: '0 8px 16px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 221, 68, 0.1)',
+        }}
+      >
+        {/* Skateboard Wheels */}
+        <motion.div
+          className="absolute -bottom-2 left-4 w-6 h-6 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, #333 30%, #666 60%, #999 100%)',
+            border: '2px solid #ff6b35',
+            boxShadow: '0 0 10px rgba(255, 107, 53, 0.5)'
+          }}
+          animate={{
+            rotate: isHovered ? [0, 360] : [0, 45],
+            scale: isHovered ? [1, 1.2, 1] : [1],
+            boxShadow: isHovered ? 
+              ['0 0 10px rgba(255, 107, 53, 0.5)', '0 0 20px rgba(255, 107, 53, 0.8)', '0 0 10px rgba(255, 107, 53, 0.5)'] 
+              : ['0 0 10px rgba(255, 107, 53, 0.3)']
+          }}
+          transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+        />
+        
+        <motion.div
+          className="absolute -bottom-2 right-4 w-6 h-6 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, #333 30%, #666 60%, #999 100%)',
+            border: '2px solid #ff6b35',
+            boxShadow: '0 0 10px rgba(255, 107, 53, 0.5)'
+          }}
+          animate={{
+            rotate: isHovered ? [0, -360] : [0, -45],
+            scale: isHovered ? [1, 1.2, 1] : [1],
+            boxShadow: isHovered ? 
+              ['0 0 10px rgba(255, 107, 53, 0.5)', '0 0 20px rgba(255, 107, 53, 0.8)', '0 0 10px rgba(255, 107, 53, 0.5)'] 
+              : ['0 0 10px rgba(255, 107, 53, 0.3)']
+          }}
+          transition={{ duration: 0.8, repeat: Infinity, ease: 'linear', delay: 0.1 }}
+        />
+        
+        {/* Skateboard Sparks */}
+        {Array.from({ length: 4 }, (_, i) => (
+          <motion.div
+            key={`spark-${i}`}
+            className="absolute w-1 h-3"
+            style={{
+              background: 'linear-gradient(180deg, #ffdd44 0%, #ff6b35 50%, transparent 100%)',
+              left: `${20 + (i * 15)}%`,
+              bottom: '2px',
+              filter: 'drop-shadow(0 0 3px #ffdd44)',
+              transformOrigin: 'bottom'
+            }}
+            animate={{
+              scaleY: isHovered ? [0, 1, 0.3, 1.5, 0] : [0, 0.2, 0],
+              x: isHovered ? [0, -3, 2, -5, 8] : [0],
+              opacity: isHovered ? [0, 1, 0.4, 0.9, 0] : [0, 0.3, 0],
+              rotate: isHovered ? [0, -10, 5, -15, 10] : [0]
+            }}
+            transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.15, ease: 'easeOut' }}
+          />
+        ))}
+        
+        {/* Quantum Energy Beams */}
+        <motion.div
+          className="absolute top-1/2 left-0 w-full h-0.5"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, #00ff41 20%, #ffffff 50%, #00ff41 80%, transparent 100%)',
+            transformOrigin: 'center',
+            filter: 'drop-shadow(0 0 6px #00ff41)'
+          }}
+          animate={{
+            scaleX: isHovered ? [0, 1.8, 0] : [0],
+            opacity: isHovered ? [0, 1, 0] : [0]
+          }}
+          transition={{ duration: 0.3, repeat: isHovered ? Infinity : 0, repeatDelay: 1.2 }}
+        />
+        
+        {/* Glitch Lines */}
+        <motion.div
+          className="absolute top-1/3 left-0 w-full h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, #ff0040 30%, #00ff41 50%, #0040ff 70%, transparent 100%)',
+            filter: 'drop-shadow(0 0 2px #ffffff)'
+          }}
+          animate={{
+            scaleX: isHovered ? [0, 2, 0.5, 1.5, 0] : [0],
+            opacity: isHovered ? [0, 1, 0.3, 0.8, 0] : [0],
+            x: isHovered ? [0, 10, -5, 8, 0] : [0]
+          }}
+          transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0, repeatDelay: 0.6, delay: 0.2 }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/3 left-0 w-full h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent 0%, #00ff41 25%, #ffffff 50%, #00ff41 75%, transparent 100%)',
+            filter: 'drop-shadow(0 0 3px #00ff41)'
+          }}
+          animate={{
+            scaleX: isHovered ? [0, 1.6, 0] : [0],
+            opacity: isHovered ? [0, 0.9, 0] : [0],
+            x: isHovered ? [0, -8, 12, -4, 0] : [0]
+          }}
+          transition={{ duration: 0.7, repeat: isHovered ? Infinity : 0, repeatDelay: 0.9, delay: 0.4 }}
+        />
+        
+        {/* Light Rays - Reduced count */}
+        {Array.from({ length: 4 }, (_, i) => (
+          <motion.div
+            key={i}
+            className="absolute top-1/2 left-1/2 w-0.5 h-8"
+            style={{
+              background: 'linear-gradient(180deg, transparent 0%, #ffffff 50%, transparent 100%)',
+              transformOrigin: 'center top',
+              filter: 'blur(0.5px)'
+            }}
+            animate={{
+              rotate: isHovered ? [i * 45, (i * 45) + 360] : [i * 45],
+              scale: isHovered ? [0, 1, 0.5, 1, 0] : [0],
+              opacity: isHovered ? [0, 0.8, 0.4, 0.9, 0] : [0]
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: isHovered ? Infinity : 0, 
+              ease: 'easeInOut',
+              delay: i * 0.1
+            }}
+          />
+        ))}
+        
+        {/* Pulsating Glow */}
+        <motion.div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, transparent 100%)',
+            filter: 'blur(2px)'
+          }}
+          animate={{
+            scale: isHovered ? [1, 1.3, 1.1, 1.4, 1] : [1, 1.05, 1],
+            opacity: isHovered ? [0.3, 0.7, 0.4, 0.8, 0.3] : [0.1, 0.3, 0.1]
+          }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        
+        {/* Sparkles - Reduced count */}
+        {Array.from({ length: 3 }, (_, i) => (
+          <motion.div
+            key={`sparkle-${i}`}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            style={{
+              top: `${20 + (i * 12)}%`,
+              left: `${15 + (i * 15)}%`,
+              filter: 'drop-shadow(0 0 2px #ffffff)'
+            }}
+            animate={{
+              scale: isHovered ? [0, 1, 0.5, 1.2, 0] : [0, 0.3, 0],
+              opacity: isHovered ? [0, 1, 0.3, 0.9, 0] : [0, 0.2, 0],
+              rotate: isHovered ? [0, 180, 360] : [0]
+            }}
+            transition={{ 
+              duration: 1.8, 
+              repeat: isHovered ? Infinity : 0, 
+              ease: 'easeInOut',
+              delay: i * 0.2
+            }}
+          />
+        ))}
+        
+        {/* Original shine effect enhanced */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0"
+          animate={{
+            x: isHovered ? ['0%', '200%'] : '-100%',
+            opacity: isHovered ? [0, 0.6, 0] : 0
+          }}
+          transition={{ duration: 0.4, ease: 'easeInOut', repeat: isHovered ? Infinity : 0, repeatDelay: 1.5 }}
+          style={{ transform: 'skewX(-20deg)' }}
+        />
+        
+        <motion.span 
+          className="relative z-20 drop-shadow-lg font-mono"
+          animate={{
+            textShadow: isHovered ? [
+              '0 0 0px #00ff41',
+              '2px 0 0px #ff0040, -2px 0 0px #0040ff',
+              '0 0 0px #00ff41',
+              '1px 0 0px #ff0040, -1px 0 0px #0040ff',
+              '0 0 0px #00ff41'
+            ] : ['0 0 0px #00ff41']
+          }}
+          transition={{ duration: 0.15, repeat: isHovered ? Infinity : 0, repeatDelay: 2 }}
+        >
+          {children}
+        </motion.span>
+      </motion.button>
+    );
+  }
   
   return (
     <motion.button
@@ -228,19 +911,28 @@ const LiquidButton = ({ children, className = "", onClick }: { children: React.R
   );
 };
 
-const DragonEye = () => {
+const DragonEye = React.memo(() => {
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+  const throttledMouseUpdate = useCallback((e: MouseEvent) => {
+    setMousePos({
+      x: e.clientX / window.innerWidth,
+      y: e.clientY / window.innerHeight
+    });
   }, []);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const handleMouseMove = (e: MouseEvent) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => throttledMouseUpdate(e), 32); // 30fps throttle
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearTimeout(timeoutId);
+    };
+  }, [throttledMouseUpdate]);
 
   return (
     <div className="relative w-32 h-32">
@@ -265,7 +957,7 @@ const DragonEye = () => {
       <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/20 to-transparent animate-pulse" />
     </div>
   );
-};
+});
 
 const ParallaxSection = ({ children, offset = 0.5, className = "" }: { children: React.ReactNode; offset?: number; className?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -515,6 +1207,28 @@ const GlitchText = ({ children, className = "" }: { children: React.ReactNode; c
 const FrameEconomics = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+  const [cursorEffect, setCursorEffect] = useState<'matrix' | 'earth' | 'none'>('matrix');
+  const [showHeartExplosion, setShowHeartExplosion] = useState(false);
+
+  const handleShowAbout = useCallback(() => setShowAbout(true), []);
+  const handleCloseAbout = useCallback(() => setShowAbout(false), []);
+  
+  const triggerHeartExplosion = useCallback(() => {
+    setShowHeartExplosion(true);
+    setTimeout(() => setShowHeartExplosion(false), 4000); // Reset after 4 seconds
+  }, []);
+  
+  // Trigger heart explosion randomly every 30-60 seconds
+  useEffect(() => {
+    const randomTrigger = () => {
+      const delay = 30000 + Math.random() * 30000; // 30-60 seconds
+      setTimeout(() => {
+        triggerHeartExplosion();
+        randomTrigger(); // Set up next random trigger
+      }, delay);
+    };
+    randomTrigger();
+  }, [triggerHeartExplosion]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -542,6 +1256,338 @@ const FrameEconomics = () => {
   return (
     <div className="min-h-screen text-white overflow-x-hidden relative">
       <NeuralBackground />
+      {cursorEffect === 'matrix' && <MatrixLightning />}
+      {cursorEffect === 'earth' && <EarthGodTrail />}
+      <Navigation />
+      
+      {/* Floating Cursor Effect Toggle */}
+      <motion.div
+        className="fixed bottom-6 right-6 z-50 flex flex-col space-y-2"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2 }}
+      >
+        <motion.button
+          className={`p-3 rounded-full backdrop-blur-md border transition-all duration-300 ${
+            cursorEffect === 'matrix' 
+              ? 'bg-green-400/20 border-green-400/60 text-green-400' 
+              : 'bg-black/30 border-white/20 text-gray-400 hover:border-green-400/40'
+          }`}
+          onClick={() => setCursorEffect('matrix')}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          title="Matrix Lightning Trail"
+        >
+          ⚡
+        </motion.button>
+        
+        <motion.button
+          className={`p-3 rounded-full backdrop-blur-md border transition-all duration-300 ${
+            cursorEffect === 'earth' 
+              ? 'bg-green-600/20 border-green-600/60 text-green-300' 
+              : 'bg-black/30 border-white/20 text-gray-400 hover:border-green-600/40'
+          }`}
+          onClick={() => setCursorEffect('earth')}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          title="Earth God Trail"
+        >
+          🌿
+        </motion.button>
+        
+        <motion.button
+          className={`p-3 rounded-full backdrop-blur-md border transition-all duration-300 ${
+            cursorEffect === 'none' 
+              ? 'bg-gray-600/20 border-gray-600/60 text-gray-300' 
+              : 'bg-black/30 border-white/20 text-gray-400 hover:border-gray-600/40'
+          }`}
+          onClick={() => setCursorEffect('none')}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          title="No Cursor Effects"
+        >
+          🚫
+        </motion.button>
+        
+        {/* Heart Explosion Trigger */}
+        <motion.button
+          className="p-3 rounded-full backdrop-blur-md border bg-pink-600/20 border-pink-600/60 text-pink-400 hover:bg-pink-600/30 transition-all duration-300"
+          onClick={triggerHeartExplosion}
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.85 }}
+          title="Trigger Heart Explosion!"
+          animate={{
+            boxShadow: [
+              '0 0 0px rgba(236, 72, 153, 0)',
+              '0 0 20px rgba(236, 72, 153, 0.6)',
+              '0 0 0px rgba(236, 72, 153, 0)'
+            ]
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          ❤️
+        </motion.button>
+      </motion.div>
+      
+      {/* Epic Heart Explosion Effect */}
+      <AnimatePresence>
+        {showHeartExplosion && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center pointer-events-none z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Main Heart */}
+            <motion.div
+              className="text-[20rem] relative"
+              initial={{ scale: 0, rotate: 0 }}
+              animate={{ 
+                scale: [0, 1.4, 1.8, 1.0, 0],
+                rotate: [0, 10, -10, 5, 0],
+              }}
+              transition={{ 
+                duration: 4,
+                times: [0, 0.3, 0.6, 0.8, 1]
+              }}
+            >
+              {/* Big Red Heart */}
+              <motion.span
+                style={{
+                  color: '#ff1744',
+                  filter: 'drop-shadow(0 0 40px rgba(255, 23, 68, 0.9)) drop-shadow(0 0 80px rgba(255, 23, 68, 0.6))',
+                  textShadow: '0 0 30px rgba(255, 23, 68, 0.8)'
+                }}
+                animate={{
+                  filter: [
+                    'drop-shadow(0 0 40px rgba(255, 23, 68, 0.9)) drop-shadow(0 0 80px rgba(255, 23, 68, 0.6))',
+                    'drop-shadow(0 0 60px rgba(255, 23, 68, 1)) drop-shadow(0 0 120px rgba(255, 23, 68, 0.8))',
+                    'drop-shadow(0 0 40px rgba(255, 23, 68, 0.9)) drop-shadow(0 0 80px rgba(255, 23, 68, 0.6))'
+                  ]
+                }}
+                transition={{ duration: 2, repeat: 2 }}
+              >
+                ❤️
+              </motion.span>
+              
+              {/* Heart explosion particles */}
+              {Array.from({ length: 20 }, (_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute text-4xl"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                  }}
+                  initial={{ 
+                    scale: 0,
+                    x: 0,
+                    y: 0,
+                    opacity: 0
+                  }}
+                  animate={{
+                    scale: [0, 1, 0.5, 0],
+                    x: [0, (Math.cos(i * 18 * Math.PI / 180) * 200)],
+                    y: [0, (Math.sin(i * 18 * Math.PI / 180) * 200)],
+                    opacity: [0, 1, 0.7, 0],
+                    rotate: [0, 360]
+                  }}
+                  transition={{
+                    duration: 3,
+                    delay: 1,
+                    ease: 'easeOut'
+                  }}
+                >
+                  💖
+                </motion.div>
+              ))}
+              
+              {/* Love wave rings */}
+              {Array.from({ length: 5 }, (_, i) => (
+                <motion.div
+                  key={`ring-${i}`}
+                  className="absolute inset-0 border-4 border-pink-400/40 rounded-full"
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)'
+                  }}
+                  initial={{ scale: 0, opacity: 0.8 }}
+                  animate={{
+                    scale: [0, 8],
+                    opacity: [0.8, 0]
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    delay: 0.5 + i * 0.3,
+                    ease: 'easeOut'
+                  }}
+                />
+              ))}
+              
+              {/* Sparkle shower */}
+              {Array.from({ length: 30 }, (_, i) => (
+                <motion.div
+                  key={`sparkle-${i}`}
+                  className="absolute text-lg"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                  initial={{ 
+                    scale: 0,
+                    y: -100,
+                    opacity: 0,
+                    rotate: 0
+                  }}
+                  animate={{
+                    scale: [0, 1, 0],
+                    y: [-100, 200],
+                    opacity: [0, 1, 0],
+                    rotate: [0, 720]
+                  }}
+                  transition={{
+                    duration: 3,
+                    delay: 1.5 + Math.random() * 1,
+                    ease: 'easeOut'
+                  }}
+                >
+                  ✨
+                </motion.div>
+              ))}
+              
+              {/* EPIC DRAGON LOGO */}
+              <motion.div
+                className="absolute text-8xl"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+                initial={{ 
+                  scale: 0,
+                  rotate: -180,
+                  opacity: 0,
+                  x: 200,
+                  y: -200
+                }}
+                animate={{
+                  scale: [0, 0.8, 1.2, 1, 0.5, 0],
+                  rotate: [-180, -90, 0, 15, -15, 0],
+                  opacity: [0, 0.8, 1, 1, 0.8, 0],
+                  x: [200, 100, 0, -20, 20, 0],
+                  y: [-200, -100, 0, 10, -10, 0]
+                }}
+                transition={{
+                  duration: 4.5,
+                  delay: 0.8,
+                  times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+                  ease: 'easeOut'
+                }}
+              >
+                <motion.span
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8)) drop-shadow(0 0 40px rgba(255, 69, 0, 0.6))',
+                    textShadow: '0 0 30px rgba(255, 140, 0, 0.9)'
+                  }}
+                  animate={{
+                    filter: [
+                      'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8)) drop-shadow(0 0 40px rgba(255, 69, 0, 0.6))',
+                      'drop-shadow(0 0 40px rgba(255, 107, 53, 1)) drop-shadow(0 0 80px rgba(255, 69, 0, 0.8))',
+                      'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8)) drop-shadow(0 0 40px rgba(255, 69, 0, 0.6))'
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: 2, delay: 1 }}
+                >
+                  🐉
+                </motion.span>
+              </motion.div>
+              
+              {/* Dragon fire breath */}
+              {Array.from({ length: 8 }, (_, i) => (
+                <motion.div
+                  key={`fire-${i}`}
+                  className="absolute text-2xl"
+                  style={{
+                    left: '60%',
+                    top: '48%',
+                  }}
+                  initial={{ 
+                    scale: 0,
+                    x: 0,
+                    y: 0,
+                    opacity: 0,
+                    rotate: 0
+                  }}
+                  animate={{
+                    scale: [0, 1, 0.8, 0],
+                    x: [0, 80 + (i * 20)],
+                    y: [0, (Math.random() - 0.5) * 40],
+                    opacity: [0, 1, 0.6, 0],
+                    rotate: [0, (Math.random() - 0.5) * 60]
+                  }}
+                  transition={{
+                    duration: 2,
+                    delay: 2 + (i * 0.1),
+                    ease: 'easeOut'
+                  }}
+                >
+                  🔥
+                </motion.div>
+              ))}
+              
+              {/* Dragon roar effect */}
+              <motion.div
+                className="absolute text-4xl font-bold text-orange-400"
+                style={{
+                  left: '50%',
+                  top: '35%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+                initial={{ 
+                  scale: 0,
+                  opacity: 0,
+                  y: 20
+                }}
+                animate={{
+                  scale: [0, 1.5, 1, 0],
+                  opacity: [0, 1, 0.8, 0],
+                  y: [20, -10, -20, -40]
+                }}
+                transition={{
+                  duration: 2.5,
+                  delay: 1.8,
+                  ease: 'easeOut'
+                }}
+              >
+                ROARRR! 🔥
+              </motion.div>
+            </motion.div>
+            
+            {/* Text that appears */}
+            <motion.div
+              className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 text-4xl font-bold text-pink-400"
+              initial={{ opacity: 0, y: 50, scale: 0.8 }}
+              animate={{ 
+                opacity: [0, 1, 1, 0],
+                y: [50, 0, -10, -30],
+                scale: [0.8, 1.2, 1, 0.9]
+              }}
+              transition={{ 
+                duration: 3,
+                delay: 2,
+                times: [0, 0.3, 0.8, 1]
+              }}
+              style={{
+                textShadow: '0 0 20px rgba(236, 72, 153, 0.8)'
+              }}
+            >
+              LOVE THE PROCESS! 💫
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       <AnimatePresence>
         {isLoaded && (
@@ -551,27 +1597,207 @@ const FrameEconomics = () => {
             animate="visible"
             className="relative z-10"
           >
-            <section className="min-h-screen flex items-center justify-center relative px-6">
+            <section className="min-h-screen flex items-center justify-center relative px-6 pt-20">
               <ParallaxSection offset={0.3} className="text-center max-w-6xl mx-auto">
                 <motion.div variants={itemVariants} className="mb-12">
                   <DragonEye />
                 </motion.div>
                 
-                <motion.h1
+                <motion.div 
                   variants={itemVariants}
-                  className="text-8xl md:text-9xl font-black mb-6 tracking-tight"
-                  style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #1F7A72 50%, #FF3B30 100%)',
-                    backgroundClip: 'text',
-                    WebkitBackgroundClip: 'text',
-                    color: 'transparent',
-                    textShadow: '0 0 30px rgba(31,122,114,0.3)'
-                  }}
+                  className="relative text-8xl md:text-9xl font-black mb-6 tracking-tight"
                 >
-                  FRAME
-                  <br />
-                  ECONOMICS
-                </motion.h1>
+                  {/* Static TV effect overlay - tighter around text */}
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none overflow-hidden"
+                    animate={{ opacity: [0.05, 0.15, 0.05] }}
+                    transition={{ duration: 0.1, repeat: Infinity }}
+                  >
+                    {Array.from({ length: 80 }, (_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-px h-px bg-white"
+                        style={{
+                          left: `${25 + Math.random() * 50}%`,
+                          top: `${15 + Math.random() * 70}%`,
+                        }}
+                        animate={{
+                          opacity: [0, 0.8, 0],
+                          x: [(Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2],
+                          y: [(Math.random() - 0.5) * 2, (Math.random() - 0.5) * 2]
+                        }}
+                        transition={{
+                          duration: 0.08,
+                          repeat: Infinity,
+                          delay: Math.random() * 1
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+
+                  {/* Smoke/Steam effects */}
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <motion.div
+                      key={`smoke-${i}`}
+                      className="absolute rounded-full pointer-events-none"
+                      style={{
+                        left: `${10 + (i * 8)}%`,
+                        top: '90%',
+                        width: `${8 + Math.random() * 16}px`,
+                        height: `${8 + Math.random() * 16}px`,
+                        background: 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(128,128,128,0.2) 50%, transparent 100%)',
+                        filter: `blur(${2 + Math.random() * 3}px)`
+                      }}
+                      animate={{
+                        y: [0, -80, -120],
+                        scale: [0.5, 1.2, 2],
+                        opacity: [0.8, 0.4, 0]
+                      }}
+                      transition={{
+                        duration: 3 + Math.random() * 2,
+                        repeat: Infinity,
+                        delay: i * 0.2
+                      }}
+                    />
+                  ))}
+
+                  {/* Pound/Impact waves */}
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    animate={{
+                      scale: [1, 1.02, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
+                    }}
+                  >
+                    {/* Impact ring effects */}
+                    {Array.from({ length: 3 }, (_, i) => (
+                      <motion.div
+                        key={`ring-${i}`}
+                        className="absolute inset-0 border-2 border-white/10 rounded-lg"
+                        animate={{
+                          scale: [1, 1.05, 1],
+                          opacity: [0.3, 0.1, 0.3]
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          delay: i * 0.5,
+                          ease: 'easeOut'
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+
+                  {/* Main text with enhanced effects */}
+                  <motion.h1
+                    className="relative z-10"
+                    style={{
+                      background: 'linear-gradient(135deg, #ffffff 0%, #1F7A72 50%, #FF3B30 100%)',
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text',
+                      color: 'transparent',
+                      textShadow: '0 0 30px rgba(31,122,114,0.3)',
+                      filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.2))'
+                    }}
+                    animate={{
+                      textShadow: [
+                        '0 0 30px rgba(31,122,114,0.3)',
+                        '0 0 40px rgba(31,122,114,0.5), 0 0 20px rgba(255,255,255,0.3)',
+                        '0 0 30px rgba(31,122,114,0.3)'
+                      ]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
+                    }}
+                  >
+                    <motion.div
+                      animate={{
+                        x: [0, -1, 1, -0.5, 0.5, 0],
+                        y: [0, -0.5, 0.5, -0.2, 0.2, 0]
+                      }}
+                      transition={{
+                        duration: 0.3,
+                        repeat: Infinity,
+                        repeatDelay: 4
+                      }}
+                    >
+                      FRAME
+                    </motion.div>
+                    <br />
+                    <motion.div
+                      animate={{
+                        x: [0, 1, -1, 0.5, -0.5, 0],
+                        y: [0, 0.5, -0.5, 0.2, -0.2, 0]
+                      }}
+                      transition={{
+                        duration: 0.3,
+                        repeat: Infinity,
+                        repeatDelay: 4,
+                        delay: 0.1
+                      }}
+                    >
+                      ECONOMICS
+                    </motion.div>
+                  </motion.h1>
+
+                  {/* Electric sparks around the text */}
+                  {Array.from({ length: 8 }, (_, i) => (
+                    <motion.div
+                      key={`spark-${i}`}
+                      className="absolute w-1 h-4 pointer-events-none"
+                      style={{
+                        left: `${15 + (i * 10)}%`,
+                        top: `${20 + (i % 2 * 60)}%`,
+                        background: 'linear-gradient(180deg, #00ffff 0%, #ffffff 50%, transparent 100%)',
+                        filter: 'blur(0.5px) drop-shadow(0 0 4px #00ffff)',
+                        transformOrigin: 'bottom'
+                      }}
+                      animate={{
+                        scaleY: [0, 1, 0],
+                        opacity: [0, 1, 0],
+                        rotate: [(Math.random() - 0.5) * 30, (Math.random() - 0.5) * 30]
+                      }}
+                      transition={{
+                        duration: 0.2,
+                        repeat: Infinity,
+                        repeatDelay: 2 + Math.random() * 3,
+                        delay: i * 0.1
+                      }}
+                    />
+                  ))}
+
+                  {/* Glitch bars */}
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none overflow-hidden"
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.05, repeat: Infinity, repeatDelay: 8 }}
+                  >
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <motion.div
+                        key={`glitch-${i}`}
+                        className="absolute w-full h-2 bg-cyan-400/30"
+                        style={{
+                          top: `${20 * i}%`,
+                          mixBlendMode: 'screen'
+                        }}
+                        animate={{
+                          x: ['-100%', '100%'],
+                          opacity: [0, 0.8, 0]
+                        }}
+                        transition={{
+                          duration: 0.1,
+                          delay: i * 0.02
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+                </motion.div>
                 
                 <motion.p
                   variants={itemVariants}
@@ -582,26 +1808,27 @@ const FrameEconomics = () => {
                 </motion.p>
                 
                 <motion.div variants={itemVariants} className="flex gap-6 justify-center flex-wrap">
-                  <LiquidButton onClick={() => {}}>
+                  <LiquidButton onClick={() => window.location.href = '/matrix'}>
                     Enter The Matrix
                   </LiquidButton>
                   <LiquidButton 
                     className="bg-transparent border border-white/30"
-                    onClick={() => {}}
+                    onClick={() => window.location.href = '/demo'}
                   >
                     Experience Demo
                   </LiquidButton>
                   <LiquidButton 
                     className="bg-gradient-to-r from-red-600/80 to-blue-600/80 border border-cyan-400/50"
-                    onClick={() => setShowAbout(true)}
+                    onClick={handleShowAbout}
+                    isSpecial={true}
                   >
-                    🔍 Discover Daelyte
+                    🛹 KICKFLIP REALITY 🛹
                   </LiquidButton>
                 </motion.div>
               </ParallaxSection>
             </section>
 
-            <section className="py-32 px-6 relative">
+            <section id="mastery" className="py-32 px-6 relative">
               <ParallaxSection offset={0.2}>
                 <div className="max-w-7xl mx-auto">
                   <motion.h2
@@ -634,7 +1861,7 @@ const FrameEconomics = () => {
               </ParallaxSection>
             </section>
 
-            <section className="py-32 px-6 relative">
+            <section id="experience" className="py-32 px-6 relative">
               <ParallaxSection offset={-0.1}>
                 <div className="max-w-4xl mx-auto text-center">
                   <motion.h2
@@ -682,16 +1909,104 @@ const FrameEconomics = () => {
               </ParallaxSection>
             </section>
 
-            <section className="py-32 px-6 relative">
+            <section id="contact" className="py-32 px-6 relative">
               <ParallaxSection offset={0.1}>
                 <div className="max-w-4xl mx-auto text-center">
                   <motion.h2
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-6xl font-bold mb-8"
+                    className="text-6xl font-bold mb-8 relative overflow-hidden"
                   >
-                    Ready to <span className="text-[#1F7A72]">Transcend</span>?
+                    <motion.div
+                      animate={{
+                        x: [0, -2, 2, -1, 1, 0],
+                        y: [0, -1, 1, -0.5, 0.5, 0]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                        delay: 2
+                      }}
+                  >
+                    <span className="relative inline-block">
+                      Ready to{' '}
+                      <motion.span 
+                        className="text-[#1F7A72] relative inline-block"
+                        animate={{
+                          x: [0, -3, 3, -2, 2, 0],
+                          y: [0, -2, 2, -1, 1, 0]
+                        }}
+                        transition={{
+                          duration: 2.5,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 1.5
+                        }}
+                      >
+                        Transcend
+                        {/* Melting drips */}
+                        <motion.div
+                          className="absolute -bottom-2 left-2 w-1 bg-[#1F7A72] rounded-full"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{
+                            height: [0, 20, 25, 30],
+                            opacity: [0, 0.8, 0.6, 0]
+                          }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: 'easeOut',
+                            delay: 3
+                          }}
+                        />
+                        <motion.div
+                          className="absolute -bottom-2 right-4 w-0.5 bg-[#1F7A72] rounded-full"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{
+                            height: [0, 15, 20, 25],
+                            opacity: [0, 0.9, 0.7, 0]
+                          }}
+                          transition={{
+                            duration: 3.5,
+                            repeat: Infinity,
+                            ease: 'easeOut',
+                            delay: 3.8
+                          }}
+                        />
+                        <motion.div
+                          className="absolute -bottom-2 left-1/2 w-0.5 bg-[#1F7A72] rounded-full"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{
+                            height: [0, 18, 22, 28],
+                            opacity: [0, 0.7, 0.5, 0]
+                          }}
+                          transition={{
+                            duration: 4.2,
+                            repeat: Infinity,
+                            ease: 'easeOut',
+                            delay: 2.5
+                          }}
+                        />
+                      </motion.span>
+                      ?
+                    </span>
+                    
+                    {/* Additional melting effect from the entire text */}
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1F7A72] to-transparent"
+                      animate={{
+                        opacity: [0, 0.8, 0.4, 0],
+                        scaleX: [0, 1.2, 0.8, 0]
+                      }}
+                      transition={{
+                        duration: 5,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                        delay: 4
+                      }}
+                    />
+                    </motion.div>
                   </motion.h2>
                   
                   <motion.p
@@ -722,7 +2037,7 @@ const FrameEconomics = () => {
       {/* Matrix Portal About Page */}
       <AnimatePresence>
         {showAbout && (
-          <MatrixPortal isOpen={showAbout} onClose={() => setShowAbout(false)}>
+          <MatrixPortal isOpen={showAbout} onClose={handleCloseAbout}>
             <div className="text-green-400">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

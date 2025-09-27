@@ -1,0 +1,223 @@
+/* DragonButton - Compact glowing green button with dragon theming */
+
+.dragon-button {
+  /* Base button styling */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Sizing - compact but clickable */
+  min-height: 44px; /* Accessibility requirement */
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  
+  /* Typography */
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  
+  /* Base appearance */
+  background: linear-gradient(135deg, 
+    oklch(0.15 0.02 160) 0%, 
+    oklch(0.12 0.03 150) 100%);
+  border: 1px solid oklch(0.3 0.15 140);
+  color: oklch(0.85 0.12 140);
+  
+  /* Layout & interaction */
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  transform: translateZ(0); /* Force GPU compositing */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glow effect layer */
+.dragon-button__glow {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  
+  background: linear-gradient(135deg, 
+    oklch(0.4 0.25 140) 0%, 
+    oklch(0.3 0.2 150) 50%,
+    oklch(0.35 0.22 130) 100%);
+  
+  border-radius: inherit;
+  opacity: 0.6;
+  filter: blur(4px);
+  z-index: -1;
+  
+  /* Breathing animation */
+  animation: dragon-glow-pulse 3s ease-in-out infinite;
+}
+
+/* Button content */
+.dragon-button__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Hover state */
+.dragon-button:hover:not(.dragon-button--disabled) {
+  background: linear-gradient(135deg, 
+    oklch(0.18 0.04 160) 0%, 
+    oklch(0.15 0.05 150) 100%);
+  border-color: oklch(0.4 0.2 140);
+  color: oklch(0.9 0.15 140);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px oklch(0.1 0.1 140 / 0.3),
+    0 2px 4px oklch(0.05 0.05 140 / 0.2);
+}
+
+.dragon-button:hover:not(.dragon-button--disabled) .dragon-button__glow {
+  opacity: 0.8;
+  filter: blur(6px);
+  animation: dragon-glow-hover 2s ease-in-out infinite;
+}
+
+/* Active/pressed state */
+.dragon-button:active:not(.dragon-button--disabled) {
+  transform: translateY(-1px);
+  transition-duration: 0.1s;
+}
+
+/* Focus state for keyboard navigation */
+.dragon-button:focus-visible {
+  box-shadow: 
+    0 0 0 2px oklch(0.4 0.3 140),
+    0 0 0 4px oklch(0.4 0.3 140 / 0.2);
+}
+
+/* Variants */
+
+/* Intense variant - brighter glow */
+.dragon-button--intense .dragon-button__glow {
+  opacity: 0.9;
+  filter: blur(6px);
+  animation: dragon-glow-intense 2.5s ease-in-out infinite;
+}
+
+.dragon-button--intense {
+  border-color: oklch(0.45 0.25 140);
+  color: oklch(0.9 0.18 140);
+}
+
+/* Subtle variant - minimal glow */
+.dragon-button--subtle .dragon-button__glow {
+  opacity: 0.3;
+  filter: blur(2px);
+  animation: dragon-glow-subtle 4s ease-in-out infinite;
+}
+
+.dragon-button--subtle {
+  background: linear-gradient(135deg, 
+    oklch(0.12 0.01 160) 0%, 
+    oklch(0.1 0.02 150) 100%);
+  border-color: oklch(0.25 0.1 140);
+  color: oklch(0.75 0.08 140);
+}
+
+/* Disabled state */
+.dragon-button--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.dragon-button--disabled .dragon-button__glow {
+  display: none;
+}
+
+/* Animations */
+@keyframes dragon-glow-pulse {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: scale(1.02); 
+  }
+}
+
+@keyframes dragon-glow-hover {
+  0%, 100% { 
+    opacity: 0.8; 
+    transform: scale(1.02); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.05); 
+  }
+}
+
+@keyframes dragon-glow-intense {
+  0%, 100% { 
+    opacity: 0.9; 
+    transform: scale(1.02); 
+  }
+  50% { 
+    opacity: 1.2; 
+    transform: scale(1.08); 
+  }
+}
+
+@keyframes dragon-glow-subtle {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.5; 
+    transform: scale(1.01); 
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .dragon-button {
+    transition-duration: 0.1s;
+  }
+  
+  .dragon-button__glow {
+    animation: none !important;
+    opacity: 0.4 !important;
+    transform: none !important;
+  }
+  
+  .dragon-button:hover:not(.dragon-button--disabled) .dragon-button__glow {
+    opacity: 0.6 !important;
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dragon-button {
+    border-width: 2px;
+    border-color: oklch(0.6 0.3 140);
+  }
+  
+  .dragon-button__glow {
+    display: none;
+  }
+}
+
+/* Small screens optimization */
+@media (max-width: 480px) {
+  .dragon-button {
+    min-height: 48px; /* Larger touch target on mobile */
+    padding: 0.875rem 1.25rem;
+  }
+}
