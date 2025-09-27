@@ -1051,6 +1051,125 @@ const TreasureChest = () => {
               </motion.div>
             </motion.div>
 
+            {/* Fried Chicken Sandwich - Next to Soju */}
+            <motion.div
+              className="absolute right-48 top-80"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0.7, 1, 0.7],
+                y: [0, -15, 0],
+                x: [0, 10, 0],
+                rotate: [-5, 5, -5],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 3.5
+              }}
+            >
+              <motion.div
+                className="relative"
+                whileHover={{ scale: 1.4, rotate: 0 }}
+              >
+                {/* Golden glow for the sandwich */}
+                <motion.div
+                  className="absolute inset-0 -inset-4 bg-yellow-400/30 rounded-full blur-xl"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.4, 0.7, 0.4]
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Chicken sandwich with flames */}
+                <div className="relative text-center">
+                  <motion.div 
+                    className="text-5xl mb-1"
+                    animate={{
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    🍔
+                  </motion.div>
+                  <div className="flex justify-center gap-1 mb-2">
+                    <motion.span 
+                      className="text-2xl"
+                      animate={{ scale: [1, 1.3, 1] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    >
+                      🍗
+                    </motion.span>
+                    <motion.span 
+                      className="text-2xl"
+                      animate={{ 
+                        scale: [1, 1.5, 1],
+                        rotate: [0, 180, 360]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      🔥
+                    </motion.span>
+                  </div>
+                  <motion.div 
+                    className="text-lg font-bold text-orange-400"
+                    style={{
+                      textShadow: '0 0 20px rgba(251, 146, 60, 0.8), 0 0 40px rgba(251, 146, 60, 0.4)',
+                      fontFamily: 'sans-serif',
+                      letterSpacing: '0.1em'
+                    }}
+                    animate={{
+                      textShadow: [
+                        '0 0 20px rgba(251, 146, 60, 0.8), 0 0 40px rgba(251, 146, 60, 0.4)',
+                        '0 0 30px rgba(251, 146, 60, 1), 0 0 50px rgba(251, 146, 60, 0.6)',
+                        '0 0 20px rgba(251, 146, 60, 0.8), 0 0 40px rgba(251, 146, 60, 0.4)'
+                      ]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    SPICY CHICKEN
+                  </motion.div>
+                  
+                  {/* Steam/heat waves */}
+                  {Array.from({ length: 3 }, (_, i) => (
+                    <motion.div
+                      key={`steam-${i}`}
+                      className="absolute w-0.5 h-8 bg-gradient-to-t from-orange-300/60 to-transparent"
+                      style={{
+                        bottom: '60%',
+                        left: `${35 + i * 15}%`
+                      }}
+                      animate={{
+                        y: [-10, -30],
+                        opacity: [0.6, 0],
+                        scaleY: [1, 1.5]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 0.3,
+                        ease: "easeOut"
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+
             {/* Additional floating particles connecting the locations */}
             {Array.from({ length: 20 }, (_, i) => (
               <motion.div
